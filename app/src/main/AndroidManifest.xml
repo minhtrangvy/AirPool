@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.airportapp" >
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".Homepage"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
+        <activity
+            android:name=".SearchResultsActivity"
+            android:label="@string/title_activity_search_results" >
+        </activity>
+        <activity
+            android:name=".ViewGroupActivity"
+            android:label="@string/title_activity_view_group" >
+        </activity>
+        <activity
+            android:name=".SearchResultsMapActivity"
+            android:label="@string/title_activity_search_results_map"
+            android:parentActivityName=".SearchResultsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.airportapp.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".SearchResultsListActivity"
+            android:label="@string/title_activity_search_results_list"
+            android:parentActivityName=".SearchResultsActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.airportapp.SearchResultsActivity" />
+        </activity>
+        <activity
+            android:name=".PreferencesActivity"
+            android:label="@string/title_activity_preferences" >
+        </activity>
+        <activity
+            android:name=".CreateGroupActivity"
+            android:label="@string/title_activity_create_group" >
+        </activity>
+        <activity
+            android:name=".EditGroupActivity"
+            android:label="@string/title_activity_edit_group" >
+        </activity>
+    </application>
+
+</manifest>
