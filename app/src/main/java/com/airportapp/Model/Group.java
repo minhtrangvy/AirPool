@@ -13,7 +13,7 @@ public class Group {
     // ? pickupAddress;
     TransportationPreference preference;
     boolean travelingToAirport;
-    Airport airport;
+    // Airport airport;
     HashMap<User, ?> userLocations;
 
 }

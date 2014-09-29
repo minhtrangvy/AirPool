@@ -1,17 +1,41 @@
 package com.airportapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
-public class HomepageActivity extends Activity {
+public class HomepageActivity extends Activity implements View.OnClickListener {
+
+
+    Button searchButton, preferencesButton, logoutButton;
+    boolean isLoggedIn = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_homepage);
+
+        if(isLoggedIn != true) {
+            Intent mustLogIn = new Intent(HomepageActivity.this, LoginActivity.class);
+            startActivity(mustLogIn);
+        }
+        else{
+            setContentView(R.layout.activity_homepage);
+
+
+            searchButton = (Button) findViewById(R.id.search_button);
+            searchButton.setOnClickListener(this);
+
+            preferencesButton = (Button) findViewById(R.id.preferences_button);
+            preferencesButton.setOnClickListener(this);
+
+            logoutButton = (Button) findViewById(R.id.logout_button);
+            logoutButton.setOnClickListener(this);
+        }
     }
 
 
@@ -32,5 +56,25 @@ public class HomepageActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.search_button:
+                Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
+                startActivity(clickSearch);
+                break;
+            case R.id.preferences_button:
+                Intent clickPreference = new Intent(HomepageActivity.this, PreferencesActivity.class);
+                startActivity(clickPreference);
+                break;
+            case R.id.logout_button:
+                Intent clickLogout = new Intent(HomepageActivity.this, LoginActivity.class);
+                startActivity(clickLogout);
+                break;
+        }
+
     }
 }
