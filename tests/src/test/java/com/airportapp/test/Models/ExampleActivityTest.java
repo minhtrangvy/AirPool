@@ -10,7 +10,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 @RunWith(MyRobolectricTestRunner.class)
-public class MyClassTest {
+public class ExampleActivityTest {
     @Test
     public void testAssertEquals() {
         assertTrue(true);
