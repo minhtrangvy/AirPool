@@ -7,15 +7,28 @@
     <string name="groups">My Groups</string>
     <string name="preferences">My Preferences</string>
     <string name="logout">Logout</string>
+    
+    
     <string name="title_activity_login">LoginActivity</string>
     <string name="usernameHint">Username</string>
     <string name="passwordHint">Password</string>
     <string name="button">Login</string>
+    
+    
     <string name="title_activity_search_results">SearchResultsActivity</string>
     <string name="title_activity_view_group">ViewGroupActivity</string>
     <string name="title_activity_search_results_map">SearchResultsMapActivity</string>
     <string name="title_activity_search_results_list">SearchResultsListActivity</string>
+
     <string name="title_activity_preferences">PreferencesActivity</string>
+    <string name="taxi">Take a Taxi</string>
+    <string name="supershuttle">Take a SuperShuttle</string>
+    <string name="drive">Take a Car (driven by you or a friend)</string>
+    <string name="publictransit">Take a form of Public Transportation</string>
+    <string name="nopref">No preference</string>
+    <string name="pref">Check the following modes of transportation that you would prefer to use.</string>
+    <string name="changePreferences">Change Preferences!</string>
+    
     <string name="title_activity_create_group">CreateGroupActivity</string>
     <string name="title_activity_edit_group">EditGroupActivity</string>
     // TODO: Get rid of    <string name="hello_world">Hello world!</string>

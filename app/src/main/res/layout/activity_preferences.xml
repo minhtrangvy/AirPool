@@ -9,8 +9,41 @@
     tools:context="com.airportapp.PreferencesActivity">
 
     <TextView
-        android:text="@string/hello_world"
+        android:text="@string/pref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <CheckBox android:id="@+id/checkbox_taxi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/taxi"
+        android:onClick="onCheckboxClicked"/>
+    <CheckBox android:id="@+id/checkbox_supershuttle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/supershuttle"
+        android:onClick="onCheckboxClicked"/>
+    <CheckBox android:id="@+id/checkbox_publictransit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/publictransit"
+        android:onClick="onCheckboxClicked"/>
+    <CheckBox android:id="@+id/checkbox_drive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/drive"
+        android:onClick="onCheckboxClicked"/>
+    <CheckBox android:id="@+id/checkbox_nopref"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/nopref"
+        android:onClick="onCheckboxClicked"/>
+
+    <!-- Set OnClickListener to trigger submission of preference changes when pressed -->
+    <Button
+        android:id="@+id/changePreferences_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/changePreferences" />
 
 </RelativeLayout>

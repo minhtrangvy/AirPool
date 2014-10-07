@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:text="@string/groups" />
 
-    <!-- List whose dataset is defined in code with an adapter -->
+    <!-- List whose dataset will be defined later (pulled from Parse)-->
     <ListView
         android:id="@+id/main_listview"
         android:layout_width="match_parent"
