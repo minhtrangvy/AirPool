@@ -46,7 +46,7 @@ public class LoginActivityTest {
     @Test
     public void test_clickingLogin_shouldStartPreferencesActivity() {
         LoginActivity activity = controller.create().start().resume().get();
-        activity.findViewById(R.id.preferences_button).performClick();
+        activity.findViewById(R.id.login_button).performClick();
 
         Intent expectedIntent = new Intent(activity, PreferencesActivity.class);
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));

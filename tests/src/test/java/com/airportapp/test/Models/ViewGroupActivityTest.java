@@ -13,6 +13,7 @@ import org.robolectric.util.ActivityController;
 
 import com.airportapp.R;
 import com.airportapp.EditGroupActivity;
+import com.airportapp.SearchResultsListActivity;
 import com.airportapp.test.MyRobolectricTestRunner;
 import com.airportapp.ViewGroupActivity;
 
@@ -43,15 +44,15 @@ public class ViewGroupActivityTest {
         Assert.assertNotNull(activity);
     }
 
-    // Tests that the edit group button will send the user to Edit Group.
-    @Test
-    public void test_clickingEditGroup_shouldStartEditGroupActivity() {
-        ViewGroupActivity activity = controller.create().start().resume().get();
-        activity.findViewById(R.id.editGroup_button).performClick();
-
-        Intent expectedIntent = new Intent(activity, EditGroupActivity.class);
-        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
-    }
+//    // Tests that the edit group button will send the user to Edit Group.
+//    @Test
+//    public void test_clickingEditGroup_shouldStartEditGroupActivity() {
+//        ViewGroupActivity activity = controller.create().start().resume().get();
+//        activity.findViewById(R.id.editGroup_button).performClick();
+//
+//        Intent expectedIntent = new Intent(activity, EditGroupActivity.class);
+//        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+//    }
 
     // Tests that the back button will send the user to the search results (list).
     @Test

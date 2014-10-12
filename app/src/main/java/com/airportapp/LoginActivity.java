@@ -13,9 +13,8 @@ import android.widget.TextView;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
-    EditText editUsername;
-    EditText editPassword;
-    Button mainButton;
+    EditText editUsername, editPassword;
+    Button loginButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,8 +23,8 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         // Access the Button defined in login XML
         // and listen for it here
-        mainButton = (Button) findViewById(R.id.main_button);
-        mainButton.setOnClickListener(this);
+        loginButton = (Button) findViewById(R.id.login_button);
+        loginButton.setOnClickListener(this);
 
         editUsername = (EditText) findViewById(R.id.username_edittext);
         editPassword = (EditText) findViewById(R.id.password_edittext);
