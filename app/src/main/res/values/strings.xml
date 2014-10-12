@@ -2,6 +2,7 @@
 <resources>
 
     <string name="app_name">AirPool</string>
+    <string name="facebook_app_id">797893480262143</string>
     <string name="action_settings">Settings</string>
     <string name="search">Search for Group</string>
     <string name="groups">My Groups</string>
