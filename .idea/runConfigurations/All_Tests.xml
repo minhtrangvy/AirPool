@@ -2,7 +2,7 @@
   <configuration default="false" name="All Tests" type="JUnit" factoryName="JUnit">
     <module name="tests" />
     <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-    <option name="ALTERNATIVE_JRE_PATH" value="" />
+    <option name="ALTERNATIVE_JRE_PATH" value="/Library/Java/JavaVirtualMachines/jdk1.7.0_25.jdk/Contents/Home" />
     <option name="PACKAGE_NAME" value="com.airportapp.test" />
     <option name="MAIN_CLASS_NAME" value="" />
     <option name="METHOD_NAME" value="" />
