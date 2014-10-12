@@ -4,15 +4,15 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.parse.Parse;
-import com.parse.ParseAnalytics;
+//import com.parse.Parse;
+//import com.parse.ParseAnalytics;
 
 
 public class CreateGroupActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
+//        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
     }
