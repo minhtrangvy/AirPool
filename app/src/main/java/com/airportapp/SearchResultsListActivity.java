@@ -20,7 +20,7 @@ public class SearchResultsListActivity extends Activity implements View.OnClickL
 
         // Access the Button defined in login XML
         // and listen for it here
-        mapButton = (Button) findViewById(R.id.searchResultsList_button);
+        mapButton = (Button) findViewById(R.id.searchResultsMap_button);
         mapButton.setOnClickListener(this);
     }
 
@@ -46,7 +46,7 @@ public class SearchResultsListActivity extends Activity implements View.OnClickL
 
     @Override
     public void onClick(View view) {
-        Intent clickLogin = new Intent(SearchResultsListActivity.this, SearchResultsMapActivity.class);
-        startActivity(clickLogin);
+        Intent clickMap = new Intent(SearchResultsListActivity.this, SearchResultsMapActivity.class);
+        startActivity(clickMap);
     }
 }

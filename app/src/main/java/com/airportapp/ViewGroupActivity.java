@@ -1,17 +1,27 @@
 package com.airportapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
-public class ViewGroupActivity extends Activity {
+public class ViewGroupActivity extends Activity implements View.OnClickListener {
+
+    Button backButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_group);
+
+        // Access the Button defined in login XML
+        // and listen for it here
+        backButton = (Button) findViewById(R.id.searchResultsList_button);
+        backButton.setOnClickListener(this);
     }
 
 
@@ -32,5 +42,11 @@ public class ViewGroupActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent clickLogin = new Intent(ViewGroupActivity.this, SearchResultsListActivity.class);
+        startActivity(clickLogin);
     }
 }

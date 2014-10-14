@@ -15,11 +15,21 @@
 
 
     <string name="title_activity_search_results">SearchResultsActivity</string>
-    <string name="title_activity_view_group">ViewGroupActivity</string>
-    <string name="title_activity_search_results_map">SearchResultsMapActivity</string>
 
 
-    <string name="title_activity_search_results_list">SearchResultsListActivity</string>
+    <string name="title_activity_view_group">View a Group</string>
+    <string name="groupMembers">Current Group Members</string>
+    <string name="groupInfo">Current Group Information</string>
+    <string name="pickUpLocation">Pick-up Location: None selected</string>
+    <string name="dropOffLocation">Drop-off Location: None selected</string>
+    <string name="modeOfTransit">Mode of Transportation: None selected</string>
+    <string name="backToSearch">Back to Search Results</string>
+
+    <string name="title_activity_search_results_map">Search Results: Map</string>
+    <string name="switchToList">Switch to List View</string>
+
+
+    <string name="title_activity_search_results_list">Search Results: List</string>
     <string name="groupResults">Group Results</string>
     <string name="switchToMap">Switch to Map View</string>
 
@@ -35,8 +45,18 @@
     <string name="noPref">No preference</string>
     <string name="savePrefs">Save Preferences</string>
 
-    <string name="title_activity_create_group">CreateGroupActivity</string>
-    <string name="title_activity_edit_group">EditGroupActivity</string>
+    <string name="title_activity_create_group">Create a New Group</string>
+    <string name="createGroupInstruc">In order to create a new group, please fill out the following information:</string>
+    <string name="createGroup_button">Create Group</string>
+
+
+    <string name="title_activity_edit_group">Edit Group</string>
+    <string name="pickUpHint">Group Pick-up Address</string>
+    <string name="dropOffHint">Group Drop-off Address</string>
+    <string name="editGroup_button">Save Edits</string>
+    <string name="transportation_spinner">Choose Mode of Transportation</string>
+
+
     // TODO: Get rid of    <string name="hello_world">Hello world!</string>
     <string name="title_activity_search">Search</string>
     <string name="toHint">Pick-Up Location</string>

@@ -1,17 +1,28 @@
 package com.airportapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
-public class SearchResultsMapActivity extends Activity {
+public class SearchResultsMapActivity extends Activity implements View.OnClickListener{
+
+    Button listButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results_map);
+
+        // Access the Button defined in login XML
+        // and listen for it here
+        listButton = (Button) findViewById(R.id.searchResultsMap_button);
+        listButton.setOnClickListener(this);
+
     }
 
 
@@ -32,5 +43,12 @@ public class SearchResultsMapActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+
+    @Override
+    public void onClick(View view) {
+        Intent clickList = new Intent(SearchResultsMapActivity.this, SearchResultsListActivity.class);
+        startActivity(clickList);
     }
 }

@@ -13,6 +13,7 @@ import org.robolectric.util.ActivityController;
 
 import com.airportapp.R;
 import com.airportapp.SearchResultsActivity;
+import com.airportapp.SearchResultsListActivity;
 import com.airportapp.test.MyRobolectricTestRunner;
 import com.airportapp.SearchActivity;
 
@@ -47,7 +48,7 @@ public class SearchActivityTest {
         SearchActivity activity = controller.create().start().resume().get();
         activity.findViewById(R.id.searchResultsList_button).performClick();
 
-        Intent expectedIntent = new Intent(activity, SearchResultsActivity.class);
+        Intent expectedIntent = new Intent(activity, SearchResultsListActivity.class);
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
     }
 }
