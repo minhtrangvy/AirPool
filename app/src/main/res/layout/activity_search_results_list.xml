@@ -22,7 +22,7 @@
 
     <!-- Set OnClickListener to trigger map result page when pressed -->
     <Button
-        android:id="@+id/searchResultsList_button"
+        android:id="@+id/searchResultsMap_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/switchToList" />

@@ -41,12 +41,12 @@ public class CreateGroupActivityTest {
         Assert.assertNotNull(activity);
     }
 
-//    @Test
-//    public void test_clickingViewGroup_shouldStartViewGroupActivity() {
-//        CreateGroupActivity activity = controller.create().start().resume().get();
-//        activity.findViewById(R.id.viewGroup_button).performClick();
-//
-//        Intent expectedIntent = new Intent(activity, ViewGroupActivity.class);
-//        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
-//    }
+    @Test
+    public void test_clickingViewGroup_shouldStartViewGroupActivity() {
+        CreateGroupActivity activity = controller.create().start().resume().get();
+        activity.findViewById(R.id.viewGroup_button).performClick();
+
+        Intent expectedIntent = new Intent(activity, ViewGroupActivity.class);
+        assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
+    }
 }
