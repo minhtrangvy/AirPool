@@ -1,17 +1,28 @@
 package com.airportapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 
-public class EditGroupActivity extends Activity {
+public class EditGroupActivity extends Activity implements View.OnClickListener {
+
+    Button saveEditButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
+
+
+        // Access the Button defined in login XML
+        // and listen for it here
+        saveEditButton = (Button) findViewById(R.id.viewGroup_button);
+        saveEditButton.setOnClickListener(this);
     }
 
 
@@ -32,5 +43,11 @@ public class EditGroupActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent clickSaveEdits = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
+        startActivity(clickSaveEdits);
     }
 }

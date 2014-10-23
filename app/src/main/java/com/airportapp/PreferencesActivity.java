@@ -1,17 +1,33 @@
 package com.airportapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
 
 
-public class PreferencesActivity extends Activity {
+public class PreferencesActivity extends Activity implements View.OnClickListener {
+
+    Button homepageButton;
+    boolean taxi, superShuttle, publicTransit, drive, noPref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_preferences);
+
+        taxi = false;
+        superShuttle = false;
+        publicTransit = false;
+        drive = false;
+        noPref = false;
+
+        homepageButton = (Button) findViewById(R.id.homepage_button);
+        homepageButton.setOnClickListener(this);
     }
 
 
@@ -33,4 +49,51 @@ public class PreferencesActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    // Checks the state of a checkbox whenever checked. TODO: Update after Parse is implemented
+    public void onCheckboxClicked(View view) {
+        // Is the view now checked?
+        boolean checked = ((CheckBox) view).isChecked();
+
+        // Check which checkbox was clicked
+        switch(view.getId()) {
+            case R.id.checkbox_taxi:
+                if (checked)
+                    taxi = true;
+                else
+                    taxi = false;
+                break;
+            case R.id.checkbox_superShuttle:
+                if (checked)
+                    superShuttle = true;
+                else
+                    superShuttle = false;
+                break;
+            case R.id.checkbox_publicTransit:
+                if (checked)
+                    publicTransit = true;
+                else
+                    publicTransit = false;
+                break;
+            case R.id.checkbox_drive:
+                if (checked)
+                    drive = true;
+                else
+                    drive = false;
+                break;
+            case R.id.checkbox_noPref:
+                if (checked)
+                    noPref = true;
+                else
+                    noPref = false;
+                break;
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent clickSavePref = new Intent(PreferencesActivity.this, HomepageActivity.class);
+        startActivity(clickSavePref);
+    }
+
 }
