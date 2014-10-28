@@ -22,7 +22,7 @@ import java.util.Calendar;
 
 public class EditGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    Button saveEditButton, selectDateButton, selectTimeButton;
+    Button saveEditButton, cancelEditButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID=1;
@@ -50,8 +50,11 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
 
         // Access the Button defined in EditGroup XML
         // and listen for it here
-        saveEditButton = (Button) findViewById(R.id.viewGroup_button);
+        saveEditButton = (Button) findViewById(R.id.viewGroupSave_button);
         saveEditButton.setOnClickListener(this);
+
+        cancelEditButton = (Button) findViewById(R.id.viewGroupCancel_button);
+        cancelEditButton.setOnClickListener(this);
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(this);
@@ -70,9 +73,6 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         // Apply the adapter to the spinner
         transPrefSpinner.setAdapter(adapter);
         transPrefSpinner.setOnItemSelectedListener(this);
-
-
-
     }
 
 
@@ -99,8 +99,13 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.viewGroup_button:
+                // TODO: Save changes with Parse
                 Intent clickSaveEdits = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickSaveEdits);
+                break;
+            case R.id.viewGroupCancel_button:
+                Intent clickCancel = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
+                startActivity(clickCancel);
                 break;
             case R.id.selectDate_button:
                 onCreated(DATE_DIALOG_ID).show();

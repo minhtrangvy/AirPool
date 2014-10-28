@@ -25,7 +25,7 @@ import java.util.Calendar;
 
 public class CreateGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    Button createGroupButton, selectDateButton, selectTimeButton;
+    Button createGroupButton, backButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID=1;
@@ -55,6 +55,9 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         // and listen for it here
         createGroupButton = (Button) findViewById(R.id.viewGroup_button);
         createGroupButton.setOnClickListener(this);
+
+        backButton = (Button) findViewById(R.id.searchResultsList_button);
+        backButton.setOnClickListener(this);
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(this);
@@ -101,6 +104,10 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
             case R.id.viewGroup_button:
                 Intent clickCreateGroup = new Intent(CreateGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickCreateGroup);
+                break;
+            case R.id.searchResultsList_button:
+                Intent clickBack = new Intent(CreateGroupActivity.this, SearchResultsListActivity.class);
+                startActivity(clickBack);
                 break;
             case R.id.selectDate_button:
                 onCreated(DATE_DIALOG_ID).show();
