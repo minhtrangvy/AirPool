@@ -47,6 +47,18 @@
 
     <!-- Set OnClickListener to trigger map result page when pressed -->
     <Button
+        android:id="@+id/editGroup_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/editGroup" />
+
+    <Button
+        android:id="@+id/joinGroup_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/joinGroup" />
+
+    <Button
         android:id="@+id/searchResultsList_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
