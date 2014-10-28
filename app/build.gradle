@@ -22,9 +22,6 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-<<<<<<< HEAD
     compile files('libs/Parse-1.7.0.jar')
-=======
     compile project(':facebook')
->>>>>>> d26c9146fa42e0733ea59844be29ce552ea1ce70
 }
