@@ -10,8 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import com.parse.Parse;
-//import com.parse.ParseAnalytics;
-
+import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
@@ -33,7 +33,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         editPassword = (EditText) findViewById(R.id.password_edittext);
 
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
-
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
     }
 
 
