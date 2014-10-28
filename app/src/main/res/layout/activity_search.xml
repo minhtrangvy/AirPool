@@ -5,25 +5,46 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-    <!-- Field for user to input username -->
+    <!-- Field for user to input pick-up location -->
     <EditText
         android:id="@+id/location_editTo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/toHint" />
 
-    <!-- Field for user to input password -->
+    <!-- Field for user to drop-off location -->
     <EditText
         android:id="@+id/location_editFrom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/fromHint" />
 
-    <!-- Set OnClickListener to trigger login when pressed -->
+    <!--Date and Time selection for leaving location-->
+    <Button
+        android:id="@+id/selectDate_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/selectDate" />
+
+    <Button
+        android:id="@+id/selectTime_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/selectTime" />
+
+    <!-- Set OnClickListener to trigger search when pressed -->
     <Button
         android:id="@+id/searchResultsList_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/search" />
+
+    <!-- Set OnClickListener to go back to homepage when pressed -->
+    <Button
+        android:id="@+id/homepage_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/backToHomepage" />
+
 
 </LinearLayout>
