@@ -2,7 +2,11 @@ package com.airportapp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,14 +22,18 @@ import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
-public class LoginActivity extends Activity {
-    private static final String TAG = "MainFragment";
+
+public class LoginActivity extends Activity implements View.OnClickListener {
+    private static final String TAG = "LoginActivity";
+
+    Button searchButton, preferencesButton;
 
     private Session.StatusCallback loginCallback = new Session.StatusCallback() {
         @Override
         public void call(Session session, SessionState state, Exception exception) {
-            Log.i("LoginActivity", "HAI");
             onSessionStateChange(session, state, exception);
         }
     };
@@ -69,12 +77,25 @@ public class LoginActivity extends Activity {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
-                        Log.i(TAG, "Hello " + user.getId());
+                        Log.i(TAG, "Hello " + user.getName());
+                        Log.i(TAG, "Unique ID " + user.getId());
                     }
                 }
             }).executeAsync();
+
+            setContentView(R.layout.activity_homepage);
+
+
+            searchButton = (Button) findViewById(R.id.search_button);
+            searchButton.setOnClickListener(this);
+
+            preferencesButton = (Button) findViewById(R.id.preferences_button);
+            preferencesButton.setOnClickListener(this);
+
         } else if (session.isClosed()) {
             Log.i(TAG, "User has logged out...");
+
+            setContentView(R.layout.activity_login);
         }
     }
 
@@ -106,6 +127,20 @@ public class LoginActivity extends Activity {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.search_button:
+                Intent clickSearch = new Intent(LoginActivity.this, SearchActivity.class);
+                startActivity(clickSearch);
+                break;
+            case R.id.preferences_button:
+                Intent clickPreference = new Intent(LoginActivity.this, PreferencesActivity.class);
+                startActivity(clickPreference);
+                break;
+        }
     }
 
 }

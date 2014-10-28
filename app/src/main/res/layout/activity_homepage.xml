@@ -35,11 +35,19 @@
         android:text="@string/preferences" />
 
 
-    <Button
-        android:id="@+id/logout_button"
-        android:layout_width="match_parent"
+    <!--<Button-->
+        <!--android:id="@+id/logout_button"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="@string/logout" />-->
+
+    <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/logout" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:hint="@string/usernameHint" />
 
 
 </LinearLayout>
