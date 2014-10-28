@@ -52,6 +52,7 @@
     <string name="title_activity_create_group">Create a New Group</string>
     <string name="createGroupInstruc">In order to create a new group, please fill out the following information:</string>
     <string name="createGroup_button">Create Group</string>
+    <string name="goBackResults">Back to Search Results</string>
 
     <string-array name="transPrefs_array">
         <item>Take a taxi</item>
@@ -66,6 +67,7 @@
     <string name="pickUpHint">Group Pick-up Address</string>
     <string name="dropOffHint">Group Drop-off Address</string>
     <string name="editGroup_button">Save Edits</string>
+    <string name="cancelEdits">Cancel Changes</string>
     <string name="transportation_spinner">Choose Mode of Transportation</string>
     <string name="selectDate">Select Departure Date</string>
     <string name="selectTime">Select Departure Time</string>

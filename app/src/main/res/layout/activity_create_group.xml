@@ -51,11 +51,18 @@
 
 
 
-    <!-- Set OnClickListener to trigger login when pressed -->
+    <!-- Set OnClickListener to create group when pressed -->
     <Button
         android:id="@+id/viewGroup_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/createGroup_button" />
+
+    <!-- Set OnClickListener to go back to Search when pressed -->
+    <Button
+        android:id="@+id/searchResultsList_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/goBackResults" />
 
 </LinearLayout>

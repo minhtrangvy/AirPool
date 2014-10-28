@@ -42,9 +42,16 @@
 
     <!-- Set OnClickListener to save edits when pressed -->
     <Button
-        android:id="@+id/viewGroup_button"
+        android:id="@+id/viewGroupSave_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/editGroup_button" />
+
+    <!-- Set OnClickListener to cancel edits when pressed -->
+    <Button
+        android:id="@+id/viewGroupCancel_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/cancelEdits" />
 
 </LinearLayout>
