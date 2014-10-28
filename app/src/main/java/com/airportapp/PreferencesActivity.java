@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 
+
 public class PreferencesActivity extends Activity implements View.OnClickListener {
 
     Button homepageButton;

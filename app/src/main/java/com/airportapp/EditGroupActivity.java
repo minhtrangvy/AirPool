@@ -8,14 +8,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-<<<<<<< HEAD
-public class EditGroupActivity extends Activity {
-=======
+//public class EditGroupActivity extends Activity {
 
 public class EditGroupActivity extends Activity implements View.OnClickListener {
 
     Button saveEditButton;
->>>>>>> d26c9146fa42e0733ea59844be29ce552ea1ce70
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

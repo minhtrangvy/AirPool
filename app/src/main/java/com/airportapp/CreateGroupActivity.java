@@ -5,13 +5,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-<<<<<<< HEAD
 //import com.parse.Parse;
 //import com.parse.ParseAnalytics;
-=======
 import android.view.View;
 import android.widget.Button;
->>>>>>> d26c9146fa42e0733ea59844be29ce552ea1ce70
 
 
 public class CreateGroupActivity extends Activity implements View.OnClickListener {

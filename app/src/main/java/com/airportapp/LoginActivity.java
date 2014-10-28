@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.parse.Parse;
+//import com.parse.Parse;
 //import com.parse.ParseAnalytics;
 
 import com.facebook.Request;
@@ -28,10 +28,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
+
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
 
     Button searchButton, preferencesButton;
+//    EditText editUsername, editPassword;
 
     private Session.StatusCallback loginCallback = new Session.StatusCallback() {
         @Override
@@ -46,21 +48,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-<<<<<<< HEAD
-        // Access the Button defined in login XML
-        // and listen for it here
-        mainButton = (Button) findViewById(R.id.main_button);
-        mainButton.setOnClickListener(this);
-
-        editUsername = (EditText) findViewById(R.id.username_edittext);
-        editPassword = (EditText) findViewById(R.id.password_edittext);
-
-        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
-
-=======
+//        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
         uiHelper = new UiLifecycleHelper(this, loginCallback);
         uiHelper.onCreate(savedInstanceState);
->>>>>>> d26c9146fa42e0733ea59844be29ce552ea1ce70
     }
 
     @Override

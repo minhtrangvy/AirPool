@@ -47,7 +47,7 @@ public class HomepageActivityTest {
     @Test
     public void test_clickingLogin_shouldStartLoginActivity() {
         HomepageActivity activity = controller.create().start().resume().get();
-        activity.findViewById(R.id.logout_button).performClick();
+//        activity.findViewById(R.id.logout_button).performClick();
 
         Intent expectedIntent = new Intent(activity, LoginActivity.class);
         assertThat(shadowOf(activity).getNextStartedActivity(), equalTo(expectedIntent));
