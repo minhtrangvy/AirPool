@@ -1,20 +1,33 @@
 package com.airportapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+<<<<<<< HEAD
 //import com.parse.Parse;
 //import com.parse.ParseAnalytics;
+=======
+import android.view.View;
+import android.widget.Button;
+>>>>>>> d26c9146fa42e0733ea59844be29ce552ea1ce70
 
 
-public class CreateGroupActivity extends Activity {
+public class CreateGroupActivity extends Activity implements View.OnClickListener {
+
+    Button createGroupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 //        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+
+        // Access the Button defined in login XML
+        // and listen for it here
+        createGroupButton = (Button) findViewById(R.id.viewGroup_button);
+        createGroupButton.setOnClickListener(this);
     }
 
 
@@ -36,4 +49,11 @@ public class CreateGroupActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    @Override
+    public void onClick(View view) {
+        Intent clickCreateGroup = new Intent(CreateGroupActivity.this, ViewGroupActivity.class);
+        startActivity(clickCreateGroup);
+    }
+
 }

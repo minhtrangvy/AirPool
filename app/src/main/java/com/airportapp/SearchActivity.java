@@ -1,17 +1,32 @@
 package com.airportapp;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 
-public class SearchActivity extends Activity {
+public class SearchActivity extends Activity implements View.OnClickListener {
+
+    EditText toEdit, fromEdit;
+    Button searchButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
+        // Access the Button defined in login XML
+        // and listen for it here
+        searchButton = (Button) findViewById(R.id.searchResultsList_button);
+        searchButton.setOnClickListener(this);
+
+        toEdit = (EditText) findViewById(R.id.location_editTo);
+        fromEdit = (EditText) findViewById(R.id.location_editFrom);
     }
 
 
@@ -32,5 +47,11 @@ public class SearchActivity extends Activity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Intent clickLogin = new Intent(SearchActivity.this, SearchResultsListActivity.class);
+        startActivity(clickLogin);
     }
 }

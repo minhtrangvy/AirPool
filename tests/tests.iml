@@ -68,9 +68,18 @@
     <orderEntry type="library" exported="" scope="TEST" name="wagon-http-shared-1.0-beta-6" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="wagon-http-lightweight-1.0-beta-6" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="maven-ant-tasks-2.1.3" level="project" />
+<<<<<<< HEAD
     <orderEntry type="library" exported="" scope="TEST" name="Parse-1.7.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="_Users_minhtrangvy_Documents_2014_Fall_CS121_AndroidApp_AirPool_app_build_intermediates_classes_debug" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="_Users_minhtrangvy_Documents_2014_Fall_CS121_AndroidApp_AirPool_app_build_intermediates_dependency_cache_debug" level="project" />
+=======
+    <orderEntry type="library" exported="" scope="TEST" name="_Users_angelachin_Documents_Android_Projects_AirPool_app_build_intermediates_exploded_aar_com_android_support_support_v4_20_0_0_classes_jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="support-annotations-20.0.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="_Users_angelachin_Documents_Android_Projects_AirPool_app_build_intermediates_exploded_aar_AirPool_facebook_unspecified_classes_jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="bolts-android-1.1.2" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="_Users_angelachin_Documents_Android_Projects_AirPool_app_build_intermediates_classes_debug" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="_Users_angelachin_Documents_Android_Projects_AirPool_app_build_intermediates_dependency_cache_debug" level="project" />
+>>>>>>> d26c9146fa42e0733ea59844be29ce552ea1ce70
     <orderEntry type="library" exported="" scope="TEST" name="android" level="project" />
   </component>
 </module>
