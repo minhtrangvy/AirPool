@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <string name="app_name">AirPool</string>
     <string name="facebook_app_id">797893480262143</string>
     <string name="action_settings">Settings</string>
@@ -10,12 +11,10 @@
 
     <string name="title_activity_login">Login</string>
     <string name="usernameHint">Username</string>
-    <string name="passwordHint">Password</string>
+    <!--<string name="passwordHint">Password</string>-->
     <string name="login_button">Login</string>
 
-
     <string name="title_activity_search_results">SearchResultsActivity</string>
-
 
     <string name="title_activity_view_group">View a Group</string>
     <string name="groupMembers">Current Group Members</string>
@@ -23,13 +22,13 @@
     <string name="pickUpLocation">Pick-up Location: None selected</string>
     <string name="dropOffLocation">Drop-off Location: None selected</string>
     <string name="modeOfTransit">Mode of Transportation: None selected</string>
-    <string name="backToSearch">Back to Search Results</string>
+    <!--<string name="backToSearch">Back to Search Results</string>-->
     <string name="joinGroup">Join Group</string>
     <string name="editGroup">Edit Group</string>
+    <string name="groupWall">Group Wall</string>
 
     <string name="title_activity_search_results_map">Search Results: Map</string>
     <string name="switchToList">Switch to List View</string>
-
 
     <string name="title_activity_search_results_list">Search Results: List</string>
     <string name="groupResults">Group Results</string>
@@ -62,7 +61,6 @@
         <item>No preference</item>
     </string-array>
 
-
     <string name="title_activity_edit_group">Edit Group</string>
     <string name="pickUpHint">Group Pick-up Address</string>
     <string name="dropOffHint">Group Drop-off Address</string>
@@ -71,11 +69,39 @@
     <string name="transportation_spinner">Choose Mode of Transportation</string>
     <string name="selectDate">Select Departure Date</string>
     <string name="selectTime">Select Departure Time</string>
-
-
     <string name="title_activity_search">Search</string>
     <string name="backToHomepage">Back to Homepage</string>
-    <string name="toHint">Pick-Up Location</string>
-    <string name="fromHint">Drop-Off Location</string>
+    <!--<string name="toHint">Pick-Up Location</string>-->
+    <!--<string name="fromHint">Drop-Off Location</string>-->
+    <string name="airport_spinner">Choose an Airport</string>
+    <string name="colleges_spinner">Choose a College/University</string>
+    <string name="toFrom_spinner">Select your direction of travel</string>
+
+    <string-array name="airport_array">
+        <item>BUR - Bob Hope Airport</item>
+        <item>LAX - Los Angeles International Aiport</item>
+        <item>LGB - Long Beach Airport</item>
+        <item>ONT - Ontario International Airport</item>
+        <item>SNA - John Wayne Airport</item>
+    </string-array>
+
+    <string-array name="colleges_array">
+        <item>Cal Poly Pomona</item>
+        <item>Claremont Colleges</item>
+        <item>Pepperdine</item>
+        <item>UCLA</item>
+        <item>UC Fullerton</item>
+        <item>UC Irvine</item>
+        <item>UC Riverside</item>
+        <item>USC</item>
+    </string-array>
+
+    <string-array name="toFrom_array">
+        <item>To the Airport</item>
+        <item>From the Airport</item>
+    </string-array>
+
+    <string name="title_activity_group_wall">GroupWallActivity</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>

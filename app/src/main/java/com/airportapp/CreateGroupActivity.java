@@ -24,7 +24,7 @@ import java.util.Calendar;
 
 public class CreateGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
-    Button createGroupButton, backButton, selectDateButton, selectTimeButton;
+    Button createGroupButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID=1;
@@ -55,9 +55,6 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         createGroupButton = (Button) findViewById(R.id.viewGroup_button);
         createGroupButton.setOnClickListener(this);
 
-        backButton = (Button) findViewById(R.id.searchResultsList_button);
-        backButton.setOnClickListener(this);
-
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(this);
 
@@ -66,15 +63,52 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
 
         // Set the spinner requirements
+        Spinner toFromSpinner = (Spinner) findViewById(R.id.toFrom_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> toFromAdapter = ArrayAdapter.createFromResource(this,
+                R.array.toFrom_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        toFromAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        toFromSpinner.setAdapter(toFromAdapter);
+        toFromSpinner.setOnItemSelectedListener(this);
+
+
+        // Set the spinner requirements
+        Spinner collegeSpinner = (Spinner) findViewById(R.id.colleges_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> collegeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.colleges_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        collegeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        collegeSpinner.setAdapter(collegeAdapter);
+        collegeSpinner.setOnItemSelectedListener(this);
+
+        // Set the spinner requirements
+        Spinner airportSpinner = (Spinner) findViewById(R.id.airport_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> airportAdapter = ArrayAdapter.createFromResource(this,
+                R.array.airport_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        airportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        airportSpinner.setAdapter(airportAdapter);
+        airportSpinner.setOnItemSelectedListener(this);
+
+
+        // Set the spinner requirements
         Spinner transPrefSpinner = (Spinner) findViewById(R.id.transPrefs_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> transPrefAdapter = ArrayAdapter.createFromResource(this,
                 R.array.transPrefs_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        transPrefAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        transPrefSpinner.setAdapter(adapter);
+        transPrefSpinner.setAdapter(transPrefAdapter);
         transPrefSpinner.setOnItemSelectedListener(this);
+
+
     }
 
 
@@ -103,10 +137,6 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
             case R.id.viewGroup_button:
                 Intent clickCreateGroup = new Intent(CreateGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickCreateGroup);
-                break;
-            case R.id.searchResultsList_button:
-                Intent clickBack = new Intent(CreateGroupActivity.this, SearchResultsListActivity.class);
-                startActivity(clickBack);
                 break;
             case R.id.selectDate_button:
                 onCreated(DATE_DIALOG_ID).show();

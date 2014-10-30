@@ -5,19 +5,29 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-    <!-- Field for user to input pick-up location -->
-    <EditText
-        android:id="@+id/location_editTo"
-        android:layout_width="match_parent"
+    <!-- Spinner Element for direction preference -->
+    <Spinner
+        android:id="@+id/toFrom_spinner"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/toHint" />
+        android:prompt="@string/toFrom_spinner"
+        />
 
-    <!-- Field for user to drop-off location -->
-    <EditText
-        android:id="@+id/location_editFrom"
-        android:layout_width="match_parent"
+    <!-- Spinner Element for airport preference -->
+    <Spinner
+        android:id="@+id/airport_spinner"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/fromHint" />
+        android:prompt="@string/airport_spinner"
+        />
+
+    <!-- Spinner Element for college preference -->
+    <Spinner
+        android:id="@+id/colleges_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/colleges_spinner"
+        />
 
     <!--Date and Time selection for leaving location-->
     <Button
@@ -38,13 +48,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/search" />
-
-    <!-- Set OnClickListener to go back to homepage when pressed -->
-    <Button
-        android:id="@+id/homepage_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/backToHomepage" />
 
 
 </LinearLayout>
