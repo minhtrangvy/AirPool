@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class SearchResultsMapActivity extends Activity implements View.OnClickListener{
 
-    Button listButton;
+    Button listButton, backButton, groupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,8 +20,14 @@ public class SearchResultsMapActivity extends Activity implements View.OnClickLi
 
         // Access the Button defined in login XML
         // and listen for it here
-        listButton = (Button) findViewById(R.id.searchResultsMap_button);
+        listButton = (Button) findViewById(R.id.searchResultsList_button);
         listButton.setOnClickListener(this);
+
+        backButton = (Button) findViewById(R.id.search_button);
+        backButton.setOnClickListener(this);
+
+        groupButton = (Button) findViewById(R.id.createGroup_button);
+        groupButton.setOnClickListener(this);
 
     }
 
@@ -48,7 +54,19 @@ public class SearchResultsMapActivity extends Activity implements View.OnClickLi
 
     @Override
     public void onClick(View view) {
-        Intent clickList = new Intent(SearchResultsMapActivity.this, SearchResultsListActivity.class);
-        startActivity(clickList);
+        switch (view.getId()) {
+            case R.id.searchResultsList_button:
+                Intent clickList = new Intent(SearchResultsMapActivity.this, SearchResultsListActivity.class);
+                startActivity(clickList);
+                break;
+            case R.id.search_button:
+                Intent clickBack = new Intent(SearchResultsMapActivity.this, SearchActivity.class);
+                startActivity(clickBack);
+                break;
+            case R.id.createGroup_button:
+                Intent clickCreate = new Intent(SearchResultsMapActivity.this, CreateGroupActivity.class);
+                startActivity(clickCreate);
+                break;
+        }
     }
 }
