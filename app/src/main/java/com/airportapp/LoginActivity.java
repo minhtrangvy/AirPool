@@ -14,8 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-//import com.parse.Parse;
-//import com.parse.ParseAnalytics;
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -23,6 +23,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+import com.parse.ParseObject;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -48,7 +49,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-//        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
+        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
+        ParseObject testObject = new ParseObject("TestObject");
+        testObject.put("foo", "bar");
+        testObject.saveInBackground();
+
         uiHelper = new UiLifecycleHelper(this, loginCallback);
         uiHelper.onCreate(savedInstanceState);
     }
