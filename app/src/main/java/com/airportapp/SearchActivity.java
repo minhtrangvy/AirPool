@@ -6,21 +6,25 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TimePicker;
 
 import java.util.Calendar;
 
 
-public class SearchActivity extends Activity implements View.OnClickListener {
+public class SearchActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     EditText toEdit, fromEdit;
-    Button searchButton, backButton, selectDateButton, selectTimeButton;
+    Button searchButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID=1;
@@ -50,17 +54,45 @@ public class SearchActivity extends Activity implements View.OnClickListener {
         searchButton = (Button) findViewById(R.id.searchResultsList_button);
         searchButton.setOnClickListener(this);
 
-        backButton = (Button) findViewById(R.id.homepage_button);
-        backButton.setOnClickListener(this);
-
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(this);
 
         selectTimeButton = (Button) findViewById(R.id.selectTime_button);
         selectTimeButton.setOnClickListener(this);
 
-        toEdit = (EditText) findViewById(R.id.location_editTo);
-        fromEdit = (EditText) findViewById(R.id.location_editFrom);
+        // Set the spinner requirements
+        Spinner toFromSpinner = (Spinner) findViewById(R.id.toFrom_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> toFromAdapter = ArrayAdapter.createFromResource(this,
+                R.array.toFrom_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        toFromAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        toFromSpinner.setAdapter(toFromAdapter);
+        toFromSpinner.setOnItemSelectedListener(this);
+
+
+        // Set the spinner requirements
+        Spinner collegeSpinner = (Spinner) findViewById(R.id.colleges_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> collegeAdapter = ArrayAdapter.createFromResource(this,
+                R.array.colleges_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        collegeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        collegeSpinner.setAdapter(collegeAdapter);
+        collegeSpinner.setOnItemSelectedListener(this);
+
+        // Set the spinner requirements
+        Spinner airportSpinner = (Spinner) findViewById(R.id.airport_spinner);
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<CharSequence> airportAdapter = ArrayAdapter.createFromResource(this,
+                R.array.airport_array, android.R.layout.simple_spinner_item);
+        // Specify the layout to use when the list of choices appears
+        airportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        airportSpinner.setAdapter(airportAdapter);
+        airportSpinner.setOnItemSelectedListener(this);
     }
 
 
@@ -90,10 +122,6 @@ public class SearchActivity extends Activity implements View.OnClickListener {
                 Intent clickSearch = new Intent(SearchActivity.this, SearchResultsListActivity.class);
                 startActivity(clickSearch);
                 break;
-            case R.id.homepage_button:
-                Intent clickBack = new Intent(SearchActivity.this, HomepageActivity.class);
-                startActivity(clickBack);
-                break;
             case R.id.selectDate_button:
                 onCreated(DATE_DIALOG_ID).show();
                 break;
@@ -101,6 +129,17 @@ public class SearchActivity extends Activity implements View.OnClickListener {
                 onCreated(TIME_DIALOG_ID).show();
                 break;
         }
+    }
+
+    // Registers the item selected in the spinner
+    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+        String item = parent.getItemAtPosition(pos).toString();
+        Log.i("checkItem", item);
+        // TODO: Store the item selected in Parse
+    }
+
+    public void onNothingSelected(AdapterView<?> parent) {
+        // TODO: Store the no preference item
     }
 
     // Register  DatePickerDialog listener
