@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 
 
-
 public class HomepageActivity extends Activity implements View.OnClickListener {
 
 

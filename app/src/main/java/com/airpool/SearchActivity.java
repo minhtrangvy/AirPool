@@ -27,7 +27,7 @@ public class SearchActivity extends Activity implements View.OnClickListener, Ad
     Button searchButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
-    static final int TIME_DIALOG_ID=1;
+    static final int TIME_DIALOG_ID = 1;
 
     // variables to save user selected date and time
     public  int year,month,day,hour,minute;

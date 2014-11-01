@@ -1,8 +1,5 @@
 package com.airpool.Model;
 
-/**
- * Created by Maury on 10/17/14.
- */
 public enum Airport {
     BHM("Birmingham","Alabama","AL","Birmingham_Shuttlesworth International Airport","BHM"),
     DHN("Dothan","Alabama","AL","Dothan Regional Airport","DHN"),

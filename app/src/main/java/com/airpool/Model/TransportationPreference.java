@@ -1,8 +1,5 @@
 package com.airpool.Model;
 
-/**
- * Created by angel_000 on 9/27/2014.
- */
 public class TransportationPreference {
     boolean hasTaxi;
     boolean hasPublicTransportation;

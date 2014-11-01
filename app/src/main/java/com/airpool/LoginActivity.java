@@ -9,14 +9,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
-import com.parse.Parse;
-
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+import com.parse.Parse;
 import com.parse.ParseObject;
 
 

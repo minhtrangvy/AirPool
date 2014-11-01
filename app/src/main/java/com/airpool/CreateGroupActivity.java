@@ -9,8 +9,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-//import com.parse.Parse;
-//import com.parse.ParseAnalytics;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -27,10 +25,10 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
     Button createGroupButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
-    static final int TIME_DIALOG_ID = 1;
+    static final int TIME_DIALOG_ID=1;
 
     // variables to save user selected date and time
-    public int year,month,day,hour,minute;
+    public  int year,month,day,hour,minute;
     // declare  the variables to Show/Set the date and time when Time and  Date Picker Dialog first appears
     private int mYear, mMonth, mDay,mHour,mMinute;
 
