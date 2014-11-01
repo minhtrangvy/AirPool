@@ -5,19 +5,29 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-    <!-- Field for user to input pick-up location -->
-    <EditText
-        android:id="@+id/username_pickUp"
-        android:layout_width="match_parent"
+    <!-- Spinner Element for direction preference -->
+    <Spinner
+        android:id="@+id/toFrom_spinner"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/pickUpHint" />
+        android:prompt="@string/toFrom_spinner"
+        />
 
-    <!-- Field for user to input drop-off location-->
-    <EditText
-        android:id="@+id/password_dropOff"
-        android:layout_width="match_parent"
+    <!-- Spinner Element for airport preference -->
+    <Spinner
+        android:id="@+id/airport_spinner"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/dropOffHint" />
+        android:prompt="@string/airport_spinner"
+        />
+
+    <!-- Spinner Element for college preference -->
+    <Spinner
+        android:id="@+id/colleges_spinner"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:prompt="@string/colleges_spinner"
+        />
 
     <!-- Spinner Element for transportation preference -->
     <Spinner
@@ -46,12 +56,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/editGroup_button" />
-
-    <!-- Set OnClickListener to cancel edits when pressed -->
-    <Button
-        android:id="@+id/viewGroupCancel_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/cancelEdits" />
 
 </LinearLayout>

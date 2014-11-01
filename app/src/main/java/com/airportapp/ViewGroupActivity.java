@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 public class ViewGroupActivity extends Activity implements View.OnClickListener {
 
-    Button backButton, joinButton, editButton;
+    Button backButton, wallButton, joinButton, editButton;
     boolean userNotMember;
 
     @Override
@@ -32,6 +32,9 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         // and listen for it here
         backButton = (Button) findViewById(R.id.searchResultsList_button);
         backButton.setOnClickListener(this);
+
+        wallButton = (Button) findViewById(R.id.groupWall_button);
+        wallButton.setOnClickListener(this);
 
         joinButton = (Button) findViewById(R.id.joinGroup_button);
         joinButton.setOnClickListener(this);
@@ -64,16 +67,32 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.searchResultsList_button:
-                Intent clickLogin = new Intent(ViewGroupActivity.this, SearchResultsListActivity.class);
-                startActivity(clickLogin);
+                Intent clickHomepage = new Intent(ViewGroupActivity.this, HomepageActivity.class);
+                startActivity(clickHomepage);
+                break;
+            case R.id.groupWall_button:
+                Intent goToWall = new Intent(ViewGroupActivity.this, GroupWallActivity.class);
+                startActivity(goToWall);
                 break;
             case R.id.joinGroup_button:
                 // TODO: Store that user has joined group
-                editButton.setVisibility(View.VISIBLE);
-                Toast.makeText(getApplicationContext(),
-                        "Successfully Joined Group!",
-                        Toast.LENGTH_SHORT).show();
-                userNotMember = false;
+                if (userNotMember) {
+                    editButton.setVisibility(View.VISIBLE);
+                    joinButton.setText("Leave Group");
+
+                    Toast.makeText(getApplicationContext(),
+                            "Successfully Joined Group!",
+                            Toast.LENGTH_SHORT).show();
+                    userNotMember = false;
+                } else {
+                    editButton.setVisibility(View.GONE);
+                    joinButton.setText("Join Group");
+
+                    Toast.makeText(getApplicationContext(),
+                            "Successfully Left Group!",
+                            Toast.LENGTH_SHORT).show();
+                    userNotMember = true;
+                }
                 break;
             case R.id.editGroup_button:
                 Intent clickEdit = new Intent(ViewGroupActivity.this, EditGroupActivity.class);

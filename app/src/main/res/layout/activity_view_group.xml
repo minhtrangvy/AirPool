@@ -45,7 +45,13 @@
         android:layout_weight="1"
         android:layout_marginTop="20dp" />
 
-    <!-- Set OnClickListener to trigger map result page when pressed -->
+    <!-- Set OnClickListener to trigger when pressed -->
+    <Button
+        android:id="@+id/groupWall_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/groupWall" />
+
     <Button
         android:id="@+id/editGroup_button"
         android:layout_width="match_parent"
@@ -62,6 +68,6 @@
         android:id="@+id/searchResultsList_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/backToSearch" />
+        android:text="@string/backToHomepage" />
 
 </LinearLayout>
