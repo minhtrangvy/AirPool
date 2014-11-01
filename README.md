@@ -1,4 +1,5 @@
-AirportTeleport
+AirPool
 ===============
 
-The name is not permanent. This is a project for CS121.
+AirPool is an Android application that allows college students to coordinate
+rides to and from airports in the Los Angeles area.
