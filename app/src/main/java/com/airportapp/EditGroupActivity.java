@@ -19,6 +19,12 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
+import com.parse.Parse;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
+import org.json.JSONArray;
+
 public class EditGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Button saveEditButton, cancelEditButton, selectDateButton, selectTimeButton;
@@ -43,6 +49,9 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ParseObject.registerSubclass(Group.class);
+        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
 
@@ -177,5 +186,86 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                         mTimeSetListener, mHour, mMinute, false);
         }
         return null;
+
+    @ParseClassName("Group")
+    public class Group extends ParseObject {
+
+        public Group() {
+            // A default constructor is required.
+        }
+
+        public String getGroupID() {
+            return getString("groupID");
+        }
+
+        public void setGroupID(String groupID) {
+            put("groupID", groupID);
+        }
+
+        public String getDate() {
+            return getString("date");
+        }
+
+        public void setDate(String date) {
+            put("date", date);
+        }
+
+        public String getTime() {
+            return getString("time");
+        }
+
+        public void setTime(String time) {
+            put("time", time);
+        }
+
+        public String getTransPref() {
+            return getString("transPref");
+        }
+
+        public void setTransPref(String transPref) {
+            put("transPref", transPref);
+        }
+
+        public String getAirport() {
+            return getString("airport");
+        }
+
+        public void setAirport(String airport) {
+            put("airport", airport);
+        }
+
+        public String getCollege() {
+            return getString("college");
+        }
+
+        public void setCollege(String college) {
+            put("college", college);
+        }
+
+        public boolean getToFrom() {
+            return getBoolean("toFrom");
+        }
+
+        public void setToFrom(String toFrom) {
+            put("toFrom", toFrom);
+        }
+
+        public JSONArray getMembers() {
+            return getJSONArray("members");
+        }
+
+        public void setMembers(JSONArray members) {
+            put("members", members);
+        }
+
+        public boolean getGroupOpen() {
+            return getBoolean("groupOpen");
+        }
+
+        public void setGroupOpen(String groupOpen) {
+            put("groupOpen", groupOpen);
+        }
+
+>>>>>>> 61d738c45c231de4f0f0099fb10da5723aa92a22
     }
 }
