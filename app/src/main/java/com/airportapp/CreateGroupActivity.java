@@ -5,15 +5,18 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.app.Application;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-<<<<<<< HEAD
-=======
-//import com.parse.Parse;
-//import com.parse.ParseAnalytics;
->>>>>>> homepage and login tests not passing
+
+import com.parse.Parse;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+
+import org.json.JSONArray;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,8 +52,10 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-//        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
+        ParseObject.registerSubclass(Group.class);
+        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_create_group);
 
         // Access the Button defined in login XML
@@ -100,6 +105,7 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         return super.onOptionsItemSelected(item);
     }
 
+<<<<<<< HEAD
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -185,4 +191,89 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         return null;
     }
 
+=======
+
+    @ParseClassName("Group")
+    public class Group extends ParseObject {
+
+        public Group() {
+            // A default constructor is required.
+        }
+
+        public String getGroupID() {
+            return getString("groupID");
+        }
+
+        public void setGroupID(String groupID) {
+            put("groupID", groupID);
+        }
+
+        public String getDate() {
+            return getString("date");
+        }
+
+        public void setDate(String date) {
+            put("date", date);
+        }
+
+        public String getTime() {
+            return getString("time");
+        }
+
+        public void setTime(String time) {
+            put("time", time);
+        }
+
+        public String getTransPref() {
+            return getString("transPref");
+        }
+
+        public void setTransPref(String transPref) {
+            put("transPref", transPref);
+        }
+
+        public String getAirport() {
+            return getString("airport");
+        }
+
+        public void setAirport(String airport) {
+            put("airport", airport);
+        }
+
+        public String getCollege() {
+            return getString("college");
+        }
+
+        public void setCollege(String college) {
+            put("college", college);
+        }
+
+        public boolean getToFrom() {
+            return getBoolean("toFrom");
+        }
+
+        public void setToFrom(String toFrom) {
+            put("toFrom", toFrom);
+        }
+
+        public JSONArray getMembers() {
+            return getJSONArray("members");
+        }
+
+        public void setMembers(JSONArray members) {
+            put("members", members);
+        }
+
+        public boolean getGroupOpen() {
+            return getBoolean("groupOpen");
+        }
+
+        public void setGroupOpen(String groupOpen) {
+            put("groupOpen", groupOpen);
+        }
+
+    }
+
+
+>>>>>>> Subclassed the Group Object in Parse
 }
