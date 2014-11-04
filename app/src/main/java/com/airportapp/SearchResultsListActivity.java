@@ -76,8 +76,7 @@ public class SearchResultsListActivity extends Activity implements View.OnClickL
                 break;
         }
     }
-
-
+    
     @ParseClassName("Group")
     public class Group extends ParseObject {
 
@@ -133,13 +132,9 @@ public class SearchResultsListActivity extends Activity implements View.OnClickL
             put("college", college);
         }
 
-        public boolean getToFrom() {
-            return getBoolean("toFrom");
-        }
+        public boolean getToAirport() { return getBoolean("toAirport"); }
 
-        public void setToFrom(String toFrom) {
-            put("toFrom", toFrom);
-        }
+        public void setToAirport(Boolean toAirport) { put("toAirport", toAirport); }
 
         public JSONArray getMembers() {
             return getJSONArray("members");

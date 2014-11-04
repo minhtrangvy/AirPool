@@ -20,9 +20,10 @@
     <string name="title_activity_view_group">View a Group</string>
     <string name="groupMembers">Current Group Members</string>
     <string name="groupInfo">Current Group Information</string>
-    <string name="pickUpLocation">Pick-up Location: None selected</string>
-    <string name="dropOffLocation">Drop-off Location: None selected</string>
-    <string name="modeOfTransit">Mode of Transportation: None selected</string>
+    <string name="toAirport">Going to Airport</string>
+    <string name="college">College: N/A</string>
+    <string name="airport">Airport: N/A</string>
+    <string name="modeOfTransit">Mode of Transportation: No Preference</string>
     <string name="backToSearch">Back to Search Results</string>
     <string name="joinGroup">Join Group</string>
     <string name="editGroup">Edit Group</string>
