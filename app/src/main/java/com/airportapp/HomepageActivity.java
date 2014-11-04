@@ -113,5 +113,11 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
         public void setGroups(JSONArray groups) {
             put("groups", groups);
         }
+
+        public String getFirstName() { return getString("firstName"); }
+        public void setFirstName(String firstName) { put("firstName", firstName); }
+        public String getLastName() { return getString("LastName"); }
+        public void setLastName(String lastName) { put("lastName", lastName); }
+
     }
 }
