@@ -13,8 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-<<<<<<< HEAD
-=======
+
 import android.widget.TextView;
 
 import com.facebook.Request;
@@ -26,7 +25,6 @@ import com.facebook.model.GraphUser;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
->>>>>>> 1b117f27cdedccee162716f09b1d02cebd098956
 
 import com.parse.Parse;
 import com.parse.ParseObject;
@@ -120,41 +118,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         uiHelper.onResume();
     }
 
-<<<<<<< HEAD
-    @ParseClassName("User")
-    public class User extends ParseObject {
-
-        public User() {
-            // A default constructor is required
-        }
-
-        public String getUserId() {
-            return getString("userID");
-        }
-
-        public void setUserID(String userID) {
-            put("userID", userID);
-        }
-
-        public String getTransPref() {
-            return getString("transPref");
-        }
-
-        public void setTransPref(String transPref) {
-            put("transPref", transPref);
-        }
-
-        public JSONArray getGroups() {
-            return getJSONArray("groups");
-        }
-
-        public void setGroups(JSONArray groups) {
-            put("groups", groups);
-        }
-    }
-
-
-=======
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -193,5 +156,35 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         }
     }
 
->>>>>>> 1b117f27cdedccee162716f09b1d02cebd098956
+    @ParseClassName("User")
+    public class User extends ParseObject {
+
+        public User() {
+            // A default constructor is required
+        }
+
+        public String getUserId() {
+            return getString("userID");
+        }
+
+        public void setUserID(String userID) {
+            put("userID", userID);
+        }
+
+        public String getTransPref() {
+            return getString("transPref");
+        }
+
+        public void setTransPref(String transPref) {
+            put("transPref", transPref);
+        }
+
+        public JSONArray getGroups() {
+            return getJSONArray("groups");
+        }
+
+        public void setGroups(JSONArray groups) {
+            put("groups", groups);
+        }
+    }
 }

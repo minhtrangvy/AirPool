@@ -32,8 +32,4 @@
     android:shadowDy="1"
     android:shadowRadius="1"
     android:shadowColor="#BFFFFFFF" />
-<<<<<<< HEAD
 <!-- From: file:/Users/minhtrangvy/Documents/2014_Fall/CS121/AndroidApp/AirPool/facebook/res/layout/com_facebook_picker_list_section_header.xml -->
-=======
-<!-- From: file:/Users/angelachin/Documents/Android%20Projects/AirPool/facebook/res/layout/com_facebook_picker_list_section_header.xml -->
->>>>>>> 1b117f27cdedccee162716f09b1d02cebd098956
