@@ -19,6 +19,12 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
+import com.parse.Parse;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
+import org.json.JSONArray;
+
 public class EditGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     // TODO: get group ID that is being edited.
@@ -51,6 +57,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
     }
+
     Button saveEditButton;
 
     @Override

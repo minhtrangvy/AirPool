@@ -76,7 +76,7 @@ public class SearchResultsListActivity extends Activity implements View.OnClickL
                 break;
         }
     }
-    
+
     @ParseClassName("Group")
     public class Group extends ParseObject {
 

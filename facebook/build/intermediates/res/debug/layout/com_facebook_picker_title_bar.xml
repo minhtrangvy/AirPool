@@ -61,4 +61,4 @@
             android:layout_marginRight="10dip"
             android:layout_toLeftOf="@id/com_facebook_picker_divider"/>
 </RelativeLayout>
-<!-- From: file:/Users/angelachin/Documents/Android%20Projects/AirPool/facebook/res/layout/com_facebook_picker_title_bar.xml -->
+<!-- From: file:/Users/minhtrangvy/Documents/2014_Fall/CS121/AndroidApp/AirPool/facebook/res/layout/com_facebook_picker_title_bar.xml -->

@@ -13,6 +13,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
 import android.widget.TextView;
 
 import com.facebook.Request;
@@ -53,13 +54,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         uiHelper = new UiLifecycleHelper(this, loginCallback);
         uiHelper.onCreate(savedInstanceState);
-        // Access the Button defined in login XML
-        // and listen for it here
-        mainButton = (Button) findViewById(R.id.main_button);
-        mainButton.setOnClickListener(this);
-
-        editUsername = (EditText) findViewById(R.id.username_edittext);
-        editPassword = (EditText) findViewById(R.id.password_edittext);
 
         ParseObject.registerSubclass(User.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
@@ -190,5 +184,17 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         public void setGroups(JSONArray groups) {
             put("groups", groups);
         }
+<<<<<<< HEAD
+=======
+
+        public String getFirstName() { return getString("firstName"); }
+        public void setFirstName(String firstName) { put("firstName", firstName); }
+
+        public String getLastName() { return getString("LastName"); }
+        public void setLastName(String lastName) { put("lastName", lastName); }
+
+        public String getPicUrl() { return getString("picUrl"); }
+        public void setPicUrl(String picUrl) { put("picUrl", picUrl); }
+>>>>>>> bc586e0a31ea8446e37a52c985addf695b71d799
     }
 }

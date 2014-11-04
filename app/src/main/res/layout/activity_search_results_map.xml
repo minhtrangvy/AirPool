@@ -30,6 +30,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/goBack" />
->>>>>>> Added spinners and calendar to select departure date/time, as well as other small UI changes
 
 </LinearLayout>
