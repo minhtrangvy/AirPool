@@ -9,6 +9,8 @@ import android.view.View;
 import android.widget.Button;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
+//import com.parse.Parse;
+//import com.parse.ParseAnalytics;
 
 public class CreateGroupActivity extends Activity implements View.OnClickListener {
 
@@ -16,7 +18,7 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
+//        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
 

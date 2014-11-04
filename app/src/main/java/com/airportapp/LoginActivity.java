@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.parse.Parse;
+//import com.parse.ParseAnalytics;
 
 import com.facebook.Request;
 import com.facebook.Response;
@@ -46,6 +48,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         uiHelper = new UiLifecycleHelper(this, loginCallback);
         uiHelper.onCreate(savedInstanceState);
+        // Access the Button defined in login XML
+        // and listen for it here
+        mainButton = (Button) findViewById(R.id.main_button);
+        mainButton.setOnClickListener(this);
+
+        editUsername = (EditText) findViewById(R.id.username_edittext);
+        editPassword = (EditText) findViewById(R.id.password_edittext);
+
+        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
     }
 
     @Override
