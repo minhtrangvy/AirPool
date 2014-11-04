@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+<<<<<<< HEAD
     <!-- From: file:/Users/angelachin/Documents/Android%20Projects/AirPool/facebook/res/values-he/strings.xml -->
+=======
+    <!-- From: file:/Users/minhtrangvy/Documents/2014_Fall/CS121/AndroidApp/AirPool/facebook/res/values-he/strings.xml -->
+>>>>>>> updating user subclass
     <eat-comment />
 
     <string name="com_facebook_choose_friends">בחר חברים</string>
