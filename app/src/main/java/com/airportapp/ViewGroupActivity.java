@@ -29,6 +29,8 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_group);
 
+        // Get user ID and then get Group's user array. Check if user in the array-- if not, set userNotMember to true.
+
         userNotMember = true;
 
         // TODO: Update once Parse is working

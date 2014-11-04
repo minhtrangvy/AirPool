@@ -76,6 +76,8 @@
     <orderEntry type="library" exported="" scope="TEST" name="support-annotations-20.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="internal_impl-20.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="_Users_angelachin_Documents_Android_Projects_AirPool_app_libs_Parse_1_7_0_jar" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="support-annotations-20.0.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="internal_impl-20.0.0" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="bolts-android-1.1.2" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="_Users_angelachin_Documents_Android_Projects_AirPool_app_build_intermediates_classes_debug" level="project" />
     <orderEntry type="library" exported="" scope="TEST" name="_Users_angelachin_Documents_Android_Projects_AirPool_app_build_intermediates_dependency_cache_debug" level="project" />

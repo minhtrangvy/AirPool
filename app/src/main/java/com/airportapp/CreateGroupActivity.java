@@ -105,7 +105,6 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< HEAD
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
@@ -191,8 +190,6 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         return null;
     }
 
-=======
-
     @ParseClassName("Group")
     public class Group extends ParseObject {
 
@@ -273,7 +270,4 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
         }
 
     }
-
-
->>>>>>> Subclassed the Group Object in Parse
 }
