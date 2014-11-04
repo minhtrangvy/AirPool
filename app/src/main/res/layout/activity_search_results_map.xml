@@ -14,9 +14,22 @@
 
     <!-- Set OnClickListener to trigger list result page when pressed -->
     <Button
-        android:id="@+id/searchResultsMap_button"
+        android:id="@+id/createGroup_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/createAGroup" />
+
+    <Button
+        android:id="@+id/searchResultsList_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/switchToList" />
+
+    <Button
+        android:id="@+id/search_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/goBack" />
+>>>>>>> Added spinners and calendar to select departure date/time, as well as other small UI changes
 
 </LinearLayout>

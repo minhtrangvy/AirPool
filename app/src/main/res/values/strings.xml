@@ -24,6 +24,8 @@
     <string name="dropOffLocation">Drop-off Location: None selected</string>
     <string name="modeOfTransit">Mode of Transportation: None selected</string>
     <string name="backToSearch">Back to Search Results</string>
+    <string name="joinGroup">Join Group</string>
+    <string name="editGroup">Edit Group</string>
 
     <string name="title_activity_search_results_map">Search Results: Map</string>
     <string name="switchToList">Switch to List View</string>
@@ -32,6 +34,8 @@
     <string name="title_activity_search_results_list">Search Results: List</string>
     <string name="groupResults">Group Results</string>
     <string name="switchToMap">Switch to Map View</string>
+    <string name="createAGroup">Create a Group</string>
+    <string name="goBack">Back to Search</string>
 
     <string name="title_activity_preferences">Preferences</string>
     <string name="instructions">Instructions</string>
@@ -49,16 +53,26 @@
     <string name="createGroupInstruc">In order to create a new group, please fill out the following information:</string>
     <string name="createGroup_button">Create Group</string>
 
+    <string-array name="transPrefs_array">
+        <item>Take a taxi</item>
+        <item>Book a SuperShuttle</item>
+        <item>Take public transportation</item>
+        <item>Have a group member or a friend drive</item>
+        <item>No preference</item>
+    </string-array>
+
 
     <string name="title_activity_edit_group">Edit Group</string>
     <string name="pickUpHint">Group Pick-up Address</string>
     <string name="dropOffHint">Group Drop-off Address</string>
     <string name="editGroup_button">Save Edits</string>
     <string name="transportation_spinner">Choose Mode of Transportation</string>
+    <string name="selectDate">Select Departure Date</string>
+    <string name="selectTime">Select Departure Time</string>
 
 
-    // TODO: Get rid of    <string name="hello_world">Hello world!</string>
     <string name="title_activity_search">Search</string>
+    <string name="backToHomepage">Back to Homepage</string>
     <string name="toHint">Pick-Up Location</string>
     <string name="fromHint">Drop-Off Location</string>
 
