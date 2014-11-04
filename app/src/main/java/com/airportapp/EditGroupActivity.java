@@ -55,6 +55,9 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
 
+        // TODO: get group ID that is being edited.
+        Group currentGroup = new Group();
+
 
         // Access the Button defined in EditGroup XML
         // and listen for it here
@@ -128,7 +131,8 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
         String item = parent.getItemAtPosition(pos).toString();
         Log.i("checkItem", item);
-        // TODO: Store the item selected in Parse
+
+        // TODO: Store the item selected in Parse;
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
@@ -186,6 +190,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                         mTimeSetListener, mHour, mMinute, false);
         }
         return null;
+    }
 
     @ParseClassName("Group")
     public class Group extends ParseObject {
@@ -266,6 +271,5 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
             put("groupOpen", groupOpen);
         }
 
->>>>>>> 61d738c45c231de4f0f0099fb10da5723aa92a22
     }
 }
