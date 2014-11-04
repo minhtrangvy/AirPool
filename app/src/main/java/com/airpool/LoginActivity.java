@@ -8,20 +8,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-<<<<<<< HEAD:app/src/main/java/com/airportapp/LoginActivity.java
 import android.widget.EditText;
 
 import android.widget.TextView;
-=======
->>>>>>> 560f2573950c8829cafd0bcc9e4514d684fa908b:app/src/main/java/com/airpool/LoginActivity.java
 
+import com.airpool.Model.User;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
-<<<<<<< HEAD:app/src/main/java/com/airportapp/LoginActivity.java
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -37,6 +34,8 @@ import org.json.JSONArray;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
+    private User _thisUser;
+    private String _userId;
 
     Button searchButton, preferencesButton;
 //    EditText editUsername, editPassword;
@@ -90,8 +89,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
+                        _userId = user.getId();
                         Log.i(TAG, "Hello " + user.getName());
                         Log.i(TAG, "Unique ID " + user.getId());
+                        _thisUser = new User(_userId);
+                        _thisUser.setUserID(_userId);
+                        _thisUser.setLoggedIn(_userId, true);
                     }
                 }
             }).executeAsync();
@@ -107,7 +110,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         } else if (session.isClosed()) {
             Log.i(TAG, "User has logged out...");
-
+            _thisUser.setLoggedIn(_userId, false);
             setContentView(R.layout.activity_login);
         }
     }
@@ -154,49 +157,5 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 startActivity(clickPreference);
                 break;
         }
-    }
-
-    @ParseClassName("User")
-    public class User extends ParseObject {
-
-        public User() {
-            // A default constructor is required
-        }
-
-        public String getUserId() {
-            return getString("userID");
-        }
-
-        public void setUserID(String userID) {
-            put("userID", userID);
-        }
-
-        public String getTransPref() {
-            return getString("transPref");
-        }
-
-        public void setTransPref(String transPref) {
-            put("transPref", transPref);
-        }
-
-        public JSONArray getGroups() {
-            return getJSONArray("groups");
-        }
-
-        public void setGroups(JSONArray groups) {
-            put("groups", groups);
-        }
-<<<<<<< HEAD
-=======
-
-        public String getFirstName() { return getString("firstName"); }
-        public void setFirstName(String firstName) { put("firstName", firstName); }
-
-        public String getLastName() { return getString("LastName"); }
-        public void setLastName(String lastName) { put("lastName", lastName); }
-
-        public String getPicUrl() { return getString("picUrl"); }
-        public void setPicUrl(String picUrl) { put("picUrl", picUrl); }
->>>>>>> bc586e0a31ea8446e37a52c985addf695b71d799
     }
 }

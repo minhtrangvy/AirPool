@@ -9,11 +9,14 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 
+import com.airpool.Model.User;
+
 
 public class PreferencesActivity extends Activity implements View.OnClickListener {
 
     Button homepageButton;
     boolean taxi, superShuttle, publicTransit, drive, noPref;
+    User _thisUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +62,7 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         switch(view.getId()) {
             case R.id.checkbox_taxi:
                 if (checked)
+                    //TODO need to update to Parse for the user
                     taxi = true;
                 else
                     taxi = false;
