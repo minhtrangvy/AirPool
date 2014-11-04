@@ -52,4 +52,8 @@
       android:src="@drawable/com_facebook_tooltip_blue_bottomnub"
       />
 </RelativeLayout>
+<<<<<<< HEAD
 <!-- From: file:/Users/minhtrangvy/Documents/2014_Fall/CS121/AndroidApp/AirPool/facebook/res/layout/com_facebook_tooltip_bubble.xml -->
+=======
+<!-- From: file:/Users/angelachin/Documents/Android%20Projects/AirPool/facebook/res/layout/com_facebook_tooltip_bubble.xml -->
+>>>>>>> 1b117f27cdedccee162716f09b1d02cebd098956

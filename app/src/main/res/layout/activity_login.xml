@@ -5,25 +5,12 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-    <!-- Field for user to input username -->
-    <EditText
-        android:id="@+id/username_edittext"
-        android:layout_width="match_parent"
+    <com.facebook.widget.LoginButton
+        android:id="@+id/authButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
         android:hint="@string/usernameHint" />
-
-    <!-- Field for user to input password -->
-    <EditText
-        android:id="@+id/password_edittext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/passwordHint" />
-
-    <!-- Set OnClickListener to trigger login when pressed -->
-    <Button
-        android:id="@+id/main_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/button" />
 
 </LinearLayout>

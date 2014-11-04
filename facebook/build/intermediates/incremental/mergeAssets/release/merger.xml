@@ -2,10 +2,17 @@
 <merger version="2" >
 
     <dataSet config="main" >
+<<<<<<< HEAD
         <source path="/Users/minhtrangvy/Documents/2014_Fall/CS121/AndroidApp/AirPool/facebook/src/main/assets" />
     </dataSet>
     <dataSet config="release" >
         <source path="/Users/minhtrangvy/Documents/2014_Fall/CS121/AndroidApp/AirPool/facebook/src/release/assets" />
+=======
+        <source path="/Users/angelachin/Documents/Android Projects/AirPool/facebook/src/main/assets" />
+    </dataSet>
+    <dataSet config="release" >
+        <source path="/Users/angelachin/Documents/Android Projects/AirPool/facebook/src/release/assets" />
+>>>>>>> 1b117f27cdedccee162716f09b1d02cebd098956
     </dataSet>
 
 </merger>

@@ -18,7 +18,7 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
 
 
     Button searchButton, preferencesButton, logoutButton;
-    boolean isLoggedIn = true;
+    boolean isLoggedIn = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +38,8 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
             preferencesButton = (Button) findViewById(R.id.preferences_button);
             preferencesButton.setOnClickListener(this);
 
-            logoutButton = (Button) findViewById(R.id.logout_button);
-            logoutButton.setOnClickListener(this);
+//            logoutButton = (Button) findViewById(R.id.logout_button);
+//            logoutButton.setOnClickListener(this);
         }
     }
 
@@ -75,10 +75,10 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
                 Intent clickPreference = new Intent(HomepageActivity.this, PreferencesActivity.class);
                 startActivity(clickPreference);
                 break;
-            case R.id.logout_button:
-                Intent clickLogout = new Intent(HomepageActivity.this, LoginActivity.class);
-                startActivity(clickLogout);
-                break;
+//            case R.id.logout_button:
+//                Intent clickLogout = new Intent(HomepageActivity.this, LoginActivity.class);
+//                startActivity(clickLogout);
+//                break;
         }
 
     }
