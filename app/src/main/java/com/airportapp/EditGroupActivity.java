@@ -19,7 +19,6 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
-
 public class EditGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
     Button saveEditButton, cancelEditButton, selectDateButton, selectTimeButton;
@@ -41,6 +40,9 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         mHour = c.get(Calendar.HOUR_OF_DAY);
         mMinute = c.get(Calendar.MINUTE);
     }
+=======
+    Button saveEditButton;
+>>>>>>> homepage and login tests not passing
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

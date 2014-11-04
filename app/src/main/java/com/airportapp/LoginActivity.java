@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import com.parse.Parse;
+//import com.parse.Parse;
 //import com.parse.ParseAnalytics;
 
 import com.facebook.Request;
@@ -28,10 +28,12 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
+
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
 
     Button searchButton, preferencesButton;
+//    EditText editUsername, editPassword;
 
     private Session.StatusCallback loginCallback = new Session.StatusCallback() {
         @Override

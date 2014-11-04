@@ -9,18 +9,20 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+<<<<<<< HEAD
+=======
+//import com.parse.Parse;
+//import com.parse.ParseAnalytics;
+>>>>>>> homepage and login tests not passing
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import com.parse.Parse;
 import com.parse.ParseAnalytics;
-//import com.parse.Parse;
-//import com.parse.ParseAnalytics;
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
 
 public class CreateGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
