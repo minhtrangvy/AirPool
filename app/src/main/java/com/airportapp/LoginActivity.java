@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+<<<<<<< HEAD
 //import com.parse.Parse;
 //import com.parse.ParseAnalytics;
 
@@ -28,6 +29,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 
+=======
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.ParseObject;
+>>>>>>> tring to debug loginactivitytests
 
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
