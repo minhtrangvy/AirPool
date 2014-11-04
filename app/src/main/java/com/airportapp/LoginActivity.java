@@ -189,8 +189,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         public String getFirstName() { return getString("firstName"); }
         public void setFirstName(String firstName) { put("firstName", firstName); }
+
         public String getLastName() { return getString("LastName"); }
         public void setLastName(String lastName) { put("lastName", lastName); }
 
+        public String getPicUrl() { return getString("picUrl"); }
+        public void setPicUrl(String picUrl) { put("picUrl", picUrl); }
     }
 }
