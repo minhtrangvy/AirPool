@@ -8,6 +8,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
+
+import org.json.JSONArray;
 
 
 public class HomepageActivity extends Activity implements View.OnClickListener {
@@ -77,5 +81,37 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
                 break;
         }
 
+    }
+
+    @ParseClassName("User")
+    public class User extends ParseObject {
+
+        public User() {
+            // A default constructor is required
+        }
+
+        public String getUserId() {
+            return getString("userID");
+        }
+
+        public void setUserID(String userID) {
+            put("userID", userID);
+        }
+
+        public String getTransPref() {
+            return getString("transPref");
+        }
+
+        public void setTransPref(String transPref) {
+            put("transPref", transPref);
+        }
+
+        public JSONArray getGroups() {
+            return getJSONArray("groups");
+        }
+
+        public void setGroups(JSONArray groups) {
+            put("groups", groups);
+        }
     }
 }

@@ -8,10 +8,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+
 import com.parse.Parse;
-import com.parse.ParseAnalytics;
 import com.parse.ParseObject;
+import com.parse.ParseClassName;
+import com.parse.ParseUser;
+
+import org.json.JSONArray;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
 
@@ -32,10 +35,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         editUsername = (EditText) findViewById(R.id.username_edittext);
         editPassword = (EditText) findViewById(R.id.password_edittext);
 
+        ParseObject.registerSubclass(User.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
+//        ParseObject testObject = new ParseObject("TestObject");
+//        testObject.put("foo", "bar");
+//        testObject.saveInBackground();
     }
 
 
@@ -63,4 +67,38 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         Intent clickLogin = new Intent(LoginActivity.this, PreferencesActivity.class);
         startActivity(clickLogin);
     }
+
+    @ParseClassName("User")
+    public class User extends ParseObject {
+
+        public User() {
+            // A default constructor is required
+        }
+
+        public String getUserId() {
+            return getString("userID");
+        }
+
+        public void setUserID(String userID) {
+            put("userID", userID);
+        }
+
+        public String getTransPref() {
+            return getString("transPref");
+        }
+
+        public void setTransPref(String transPref) {
+            put("transPref", transPref);
+        }
+
+        public JSONArray getGroups() {
+            return getJSONArray("groups");
+        }
+
+        public void setGroups(JSONArray groups) {
+            put("groups", groups);
+        }
+    }
+
+
 }
