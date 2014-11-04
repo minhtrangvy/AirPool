@@ -27,6 +27,17 @@ import org.json.JSONArray;
 
 public class EditGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
+    // TODO: get group ID that is being edited.
+    Group currentGroup = new Group();
+
+    String transPref = currentGroup.getTransPref();
+    String college = currentGroup.getCollege();
+    String airport = currentGroup.getAirport();
+    Boolean toAirport = currentGroup.getToAirport();
+    String date = currentGroup.getDate();
+    String time = currentGroup.getTime();
+
+
     Button saveEditButton, cancelEditButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
@@ -55,9 +66,6 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
 
-        // TODO: get group ID that is being edited.
-        Group currentGroup = new Group();
-
 
         // Access the Button defined in EditGroup XML
         // and listen for it here
@@ -69,9 +77,11 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(this);
+        selectDateButton.setText("Departure Date: " + date);
 
         selectTimeButton = (Button) findViewById(R.id.selectTime_button);
         selectTimeButton.setOnClickListener(this);
+        selectTimeButton.setText("Departure Time: " + time);
 
 
         // Set the spinner requirements
@@ -111,6 +121,12 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         switch (view.getId()) {
             case R.id.viewGroup_button:
                 // TODO: Save changes with Parse
+                currentGroup.setAirport(airport);
+                currentGroup.setCollege(college);
+                currentGroup.setDate(date);
+                currentGroup.setTime(time);
+                currentGroup.setTransPref(transPref);
+                currentGroup.setToAirport(toAirport);
                 Intent clickSaveEdits = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickSaveEdits);
                 break;
@@ -129,14 +145,14 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
 
     // Registers the item selected in the spinner
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        String item = parent.getItemAtPosition(pos).toString();
-        Log.i("checkItem", item);
-
-        // TODO: Store the item selected in Parse;
+        // Need to check for which spinner is being called.
+        transPref = parent.getItemAtPosition(pos).toString();
+        Log.i("checkItem", transPref);
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-        // TODO: Store the no preference item
+        transPref = parent.getItemAtPosition(4).toString();
+        Log.i("checkItem", transPref);
     }
 
     // Register  DatePickerDialog listener
@@ -148,9 +164,10 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                     year = yearSelected;
                     month = monthOfYear;
                     day = dayOfMonth;
+                    date = ((month < 10) ? "0" : "") + month +"/"+
+                            ((day < 10) ? "0" : "") + day+"/"+year;
                     // Set the Selected Date in Select date Button
-                    selectDateButton.setText("Departure Date: " + ((month < 10) ? "0" : "") + month +"/"+
-                            ((day < 10) ? "0" : "") + day+"/"+year);
+                    selectDateButton.setText("Departure Date: " + date);
                 }
             };
 
@@ -170,8 +187,9 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                     else if (hour ==0) {
                         hour = 12;
                     }
-                    selectTimeButton.setText("Departure Time: " + hour + ":" + ((minute < 10) ? "0" : "") +
-                            minute + " " + twelveHrTimeStamp);
+                    time = hour + ":" + ((minute < 10) ? "0" : "") +
+                            minute + " " + twelveHrTimeStamp;
+                    selectTimeButton.setText("Departure Time: " + time);
                 }
             };
 
@@ -247,12 +265,12 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
             put("college", college);
         }
 
-        public boolean getToFrom() {
-            return getBoolean("toFrom");
+        public boolean getToAirport() {
+            return getBoolean("toAirport");
         }
 
-        public void setToFrom(String toFrom) {
-            put("toFrom", toFrom);
+        public void setToAirport(Boolean toAirport) {
+            put("toAirport", toAirport);
         }
 
         public JSONArray getMembers() {

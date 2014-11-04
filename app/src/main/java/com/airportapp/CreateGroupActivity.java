@@ -30,6 +30,9 @@ import java.util.Calendar;
 
 public class CreateGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
 
+    String transPref, college, airport, date, time;
+    Boolean toAirport;
+
     Button createGroupButton, backButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
@@ -109,6 +112,15 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.viewGroup_button:
+                Group newGroup = new Group();
+
+                newGroup.setAirport(airport);
+                newGroup.setCollege(college);
+                newGroup.setDate(date);
+                newGroup.setTime(time);
+                newGroup.setTransPref(transPref);
+                newGroup.setToAirport(toAirport);
+
                 Intent clickCreateGroup = new Intent(CreateGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickCreateGroup);
                 break;
@@ -128,14 +140,13 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
     // Registers the item selected in the spinner
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        String item = parent.getItemAtPosition(pos).toString();
-        Log.i("checkItem", item);
-        // TODO: Store the item selected in Parse
+        transPref = parent.getItemAtPosition(pos).toString();
+        Log.i("checkItem", transPref);
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-        // TODO: Store the no preference item
-    }
+        transPref = parent.getItemAtPosition(4).toString();
+        Log.i("checkItem", transPref);      }
 
     // Register  DatePickerDialog listener
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -146,9 +157,10 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
                     year = yearSelected;
                     month = monthOfYear;
                     day = dayOfMonth;
+                    date = ((month < 10) ? "0" : "") + month +"/"+
+                            ((day < 10) ? "0" : "") + day+"/"+year;
                     // Set the Selected Date in Select date Button
-                    selectDateButton.setText("Departure Date: " + ((month < 10) ? "0" : "") + month +"/"+
-                            ((day < 10) ? "0" : "") + day+"/"+year);
+                    selectDateButton.setText("Departure Date: " + date);
                 }
             };
 
@@ -168,8 +180,10 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
                     else if (hour ==0) {
                         hour = 12;
                     }
-                    selectTimeButton.setText("Departure Time: " + hour + ":" + ((minute < 10) ? "0" : "") +
-                            minute + " " + twelveHrTimeStamp);
+                    time = hour + ":" + ((minute < 10) ? "0" : "") +
+                            minute + " " + twelveHrTimeStamp;
+                    // Set the Selected Time in Select date Button
+                    selectTimeButton.setText("Departure Time: " + time);
                 }
             };
 
@@ -245,12 +259,12 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
             put("college", college);
         }
 
-        public boolean getToFrom() {
-            return getBoolean("toFrom");
+        public boolean getToAirport() {
+            return getBoolean("toAirport");
         }
 
-        public void setToFrom(String toFrom) {
-            put("toFrom", toFrom);
+        public void setToAirport(Boolean toAirport) {
+            put("toAirport", toAirport);
         }
 
         public JSONArray getMembers() {
