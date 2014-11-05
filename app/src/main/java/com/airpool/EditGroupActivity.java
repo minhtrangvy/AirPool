@@ -58,8 +58,6 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         mMinute = c.get(Calendar.MINUTE);
     }
 
-    Button saveEditButton;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ParseObject.registerSubclass(Group.class);

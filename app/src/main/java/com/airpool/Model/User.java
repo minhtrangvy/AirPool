@@ -16,6 +16,8 @@ public class User extends ParseObject {
 
     String _userId;
 
+    public User() { }
+
     public User(String userId) {
         this._userId = userId;
     }
