@@ -12,17 +12,22 @@
         android:textSize="25sp"
         android:text="@string/groupInfo" />
 
-    <!-- Shows pick up and drop off locations + mode of transportation-->
+    <!-- Shows airport and college + mode of transportation-->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="10dp"
-        android:text="@string/pickUpLocation"/>
+        android:text="@string/toAirport"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/dropOffLocation"/>
+        android:text="@string/college"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/airport"/>
 
     <TextView
         android:layout_width="match_parent"
