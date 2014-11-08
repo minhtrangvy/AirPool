@@ -19,6 +19,7 @@ import android.widget.TimePicker;
 
 import java.util.Calendar;
 
+import com.airpool.Model.Group;
 import com.parse.Parse;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
@@ -30,6 +31,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
     // TODO: get group ID that is being edited.
     Group currentGroup = new Group();
 
+    String pref;
     String transPref = currentGroup.getTransPref();
     String college = currentGroup.getCollege();
     String airport = currentGroup.getAirport();
@@ -38,7 +40,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
     String time = currentGroup.getTime();
 
 
-    Button saveEditButton, cancelEditButton, selectDateButton, selectTimeButton;
+    Button saveEditButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID=1;
@@ -150,13 +152,15 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.viewGroupSave_button:
-                // TODO: Save changes with Parse
+
                 currentGroup.setAirport(airport);
                 currentGroup.setCollege(college);
                 currentGroup.setDate(date);
                 currentGroup.setTime(time);
                 currentGroup.setTransPref(transPref);
                 currentGroup.setToAirport(toAirport);
+                currentGroup.saveInBackground();
+
                 Intent clickSaveEdits = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickSaveEdits);
                 break;
@@ -171,14 +175,30 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
 
     // Registers the item selected in the spinner
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        // Need to check for which spinner is being called.
-        transPref = parent.getItemAtPosition(pos).toString();
-        Log.i("checkItem", transPref);
+        pref = parent.getItemAtPosition(pos).toString();
+        switch(view.getId()) {
+            case R.id.airport_spinner:
+                airport = pref;
+                break;
+            case R.id.colleges_spinner:
+                college = pref;
+                break;
+            case R.id.toFrom_spinner:
+                if(pref == "To the Airport")
+                {
+                    toAirport = true;
+                } else {
+                    toAirport = false;
+                }
+                break;
+            case R.id.transPrefs_spinner:
+                transPref = pref;
+                break;
+        }
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-        transPref = parent.getItemAtPosition(4).toString();
-        Log.i("checkItem", transPref);
+
     }
 
     // Register  DatePickerDialog listener
@@ -234,85 +254,5 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                         mTimeSetListener, mHour, mMinute, false);
         }
         return null;
-    }
-
-    @ParseClassName("Group")
-    public class Group extends ParseObject {
-
-        public Group() {
-            // A default constructor is required.
-        }
-
-        public String getGroupID() {
-            return getString("groupID");
-        }
-
-        public void setGroupID(String groupID) {
-            put("groupID", groupID);
-        }
-
-        public String getDate() {
-            return getString("date");
-        }
-
-        public void setDate(String date) {
-            put("date", date);
-        }
-
-        public String getTime() {
-            return getString("time");
-        }
-
-        public void setTime(String time) {
-            put("time", time);
-        }
-
-        public String getTransPref() {
-            return getString("transPref");
-        }
-
-        public void setTransPref(String transPref) {
-            put("transPref", transPref);
-        }
-
-        public String getAirport() {
-            return getString("airport");
-        }
-
-        public void setAirport(String airport) {
-            put("airport", airport);
-        }
-
-        public String getCollege() {
-            return getString("college");
-        }
-
-        public void setCollege(String college) {
-            put("college", college);
-        }
-
-        public boolean getToAirport() {
-            return getBoolean("toAirport");
-        }
-
-        public void setToAirport(Boolean toAirport) {
-            put("toAirport", toAirport);
-        }
-
-        public JSONArray getMembers() {
-            return getJSONArray("members");
-        }
-
-        public void setMembers(JSONArray members) {
-            put("members", members);
-        }
-
-        public boolean getGroupOpen() {
-            return getBoolean("groupOpen");
-        }
-
-        public void setGroupOpen(String groupOpen) {
-            put("groupOpen", groupOpen);
-        }
     }
 }

@@ -11,9 +11,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.airpool.Model.Group;
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -28,12 +33,13 @@ import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 import java.util.Calendar;
+import java.util.List;
 
 public class CreateGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
-    String transPref, college, airport, date, time;
+    String pref, transPref, college, airport, date, time;
     Boolean toAirport;
 
-    Button createGroupButton, backButton, selectDateButton, selectTimeButton;
+    Button createGroupButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID=1;
@@ -68,9 +74,11 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(this);
+        selectDateButton.setText("Departure Date");
 
         selectTimeButton = (Button) findViewById(R.id.selectTime_button);
         selectTimeButton.setOnClickListener(this);
+        selectTimeButton.setText("Departure Time");
 
 
         // Set the spinner requirements
@@ -146,7 +154,8 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.viewGroup_button:
-                Group newGroup = new Group();
+                // If group is created, set all the variables.
+                final Group newGroup = new Group();
 
                 newGroup.setAirport(airport);
                 newGroup.setCollege(college);
@@ -154,6 +163,26 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
                 newGroup.setTime(time);
                 newGroup.setTransPref(transPref);
                 newGroup.setToAirport(toAirport);
+
+                newGroup.saveInBackground();
+                String parseId = newGroup.getObjectId();
+                newGroup.setGroupID(parseId);
+
+                // Finds the user parse object to create relation with
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+                query.whereEqualTo("userID", _userId);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    public void done(ParseObject user, ParseException e) {
+                        if (e == null) {
+                            ParseRelation<ParseObject> userRelation = newGroup.getRelation("users");
+                            userRelation.add(user);
+                        } else {
+                            // Error
+                        }
+                    }
+                });
+
+                newGroup.saveInBackground();
 
                 Intent clickCreateGroup = new Intent(CreateGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickCreateGroup);
@@ -170,13 +199,34 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
 
     // Registers the item selected in the spinner
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        transPref = parent.getItemAtPosition(pos).toString();
-        Log.i("checkItem", transPref);
+        pref = parent.getItemAtPosition(pos).toString();
+        switch(view.getId()) {
+            case R.id.airport_spinner:
+                airport = pref;
+                break;
+            case R.id.colleges_spinner:
+                college = pref;
+                break;
+            case R.id.toFrom_spinner:
+                if(pref == "To the Airport")
+                {
+                    toAirport = true;
+                } else {
+                    toAirport = false;
+                }
+                break;
+            case R.id.transPrefs_spinner:
+                transPref = pref;
+                break;
+        }
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-        transPref = parent.getItemAtPosition(4).toString();
-        Log.i("checkItem", transPref);      }
+        transPref = "TBA";
+        airport = "TBA";
+        college = "TBA";
+        toAirport = null;
+    }
 
     // Register  DatePickerDialog listener
     private DatePickerDialog.OnDateSetListener mDateSetListener =
@@ -232,86 +282,5 @@ public class CreateGroupActivity extends Activity implements View.OnClickListene
                         mTimeSetListener, mHour, mMinute, false);
         }
         return null;
-    }
-
-    @ParseClassName("Group")
-    public class Group extends ParseObject {
-
-        public Group() {
-            // A default constructor is required.
-        }
-
-        public String getGroupID() {
-            return getString("groupID");
-        }
-
-        public void setGroupID(String groupID) {
-            put("groupID", groupID);
-        }
-
-        public String getDate() {
-            return getString("date");
-        }
-
-        public void setDate(String date) {
-            put("date", date);
-        }
-
-        public String getTime() {
-            return getString("time");
-        }
-
-        public void setTime(String time) {
-            put("time", time);
-        }
-
-        public String getTransPref() {
-            return getString("transPref");
-        }
-
-        public void setTransPref(String transPref) {
-            put("transPref", transPref);
-        }
-
-        public String getAirport() {
-            return getString("airport");
-        }
-
-        public void setAirport(String airport) {
-            put("airport", airport);
-        }
-
-        public String getCollege() {
-            return getString("college");
-        }
-
-        public void setCollege(String college) {
-            put("college", college);
-        }
-
-        public boolean getToAirport() {
-            return getBoolean("toAirport");
-        }
-
-        public void setToAirport(Boolean toAirport) {
-            put("toAirport", toAirport);
-        }
-
-        public JSONArray getMembers() {
-            return getJSONArray("members");
-        }
-
-        public void setMembers(JSONArray members) {
-            put("members", members);
-        }
-
-        public boolean getGroupOpen() {
-            return getBoolean("groupOpen");
-        }
-
-        public void setGroupOpen(String groupOpen) {
-            put("groupOpen", groupOpen);
-        }
-
     }
 }

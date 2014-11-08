@@ -9,14 +9,27 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.airpool.Model.Group;
+import com.airpool.Model.User;
+import com.parse.FindCallback;
 import com.parse.Parse;
 import com.parse.ParseClassName;
+import com.parse.ParseException;
 import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
 import org.json.JSONArray;
 
+import java.util.List;
+
 
 public class ViewGroupActivity extends Activity implements View.OnClickListener {
+
+    // TODO: pass around the ParseObject user and ParseObject group.
+    User currentUser = new User();
+    Group currentGroup = new Group();
+    String groupId = currentGroup.getGroupID();
 
     Button backButton, wallButton, joinButton, editButton;
     boolean userNotMember;
@@ -29,7 +42,26 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_group);
 
+        userNotMember = true;
+
         // Get user ID and then get Group's user array. Check if user in the array-- if not, set userNotMember to true.
+        // Finds the user parse object to create relation with
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+        query.whereEqualTo("groupID", groupId);
+        query.findInBackground(new FindCallback<ParseObject>() {
+            public void done(List<ParseObject> groupUsers, ParseException e) {
+                if (e == null) {
+                    for(ParseObject user : groupUsers) {
+                        if(user == currentUser) {
+                            userNotMember = false;
+                        }
+                    }
+                } else {
+                    // Error
+                }
+            }
+        });
+
 
         userNotMember = true;
 
@@ -109,86 +141,6 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
                 Intent clickEdit = new Intent(ViewGroupActivity.this, EditGroupActivity.class);
                 startActivity(clickEdit);
                 break;
-        }
-    }
-
-    @ParseClassName("Group")
-    public class Group extends ParseObject {
-
-        public Group() {
-            // A default constructor is required.
-        }
-
-        public String getGroupID() {
-            return getString("groupID");
-        }
-
-        public void setGroupID(String groupID) {
-            put("groupID", groupID);
-        }
-
-        public String getDate() {
-            return getString("date");
-        }
-
-        public void setDate(String date) {
-            put("date", date);
-        }
-
-        public String getTime() {
-            return getString("time");
-        }
-
-        public void setTime(String time) {
-            put("time", time);
-        }
-
-        public String getTransPref() {
-            return getString("transPref");
-        }
-
-        public void setTransPref(String transPref) {
-            put("transPref", transPref);
-        }
-
-        public String getAirport() {
-            return getString("airport");
-        }
-
-        public void setAirport(String airport) {
-            put("airport", airport);
-        }
-
-        public String getCollege() {
-            return getString("college");
-        }
-
-        public void setCollege(String college) {
-            put("college", college);
-        }
-
-        public boolean getToAirport() {
-            return getBoolean("toAirport");
-        }
-
-        public void setToAirport(Boolean toAirport) {
-            put("toAirport", toAirport);
-        }
-
-        public JSONArray getMembers() {
-            return getJSONArray("members");
-        }
-
-        public void setMembers(JSONArray members) {
-            put("members", members);
-        }
-
-        public boolean getGroupOpen() {
-            return getBoolean("groupOpen");
-        }
-
-        public void setGroupOpen(String groupOpen) {
-            put("groupOpen", groupOpen);
         }
     }
 }
