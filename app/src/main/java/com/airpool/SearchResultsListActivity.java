@@ -10,10 +10,7 @@ import android.widget.Button;
 
 import com.airpool.Model.Group;
 import com.parse.Parse;
-import com.parse.ParseClassName;
 import com.parse.ParseObject;
-
-import org.json.JSONArray;
 
 
 public class SearchResultsListActivity extends Activity implements View.OnClickListener {
@@ -28,15 +25,7 @@ public class SearchResultsListActivity extends Activity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results_list);
 
-        // Access the Button defined in login XML
-        // and listen for it here
-        mapButton = (Button) findViewById(R.id.searchResultsMap_button);
-        mapButton.setOnClickListener(this);
-
-        backButton = (Button) findViewById(R.id.search_button);
-        backButton.setOnClickListener(this);
-
-        groupButton = (Button) findViewById(R.id.createGroup_button);
+        groupButton = (Button) findViewById(R.id.create_group_button);
         groupButton.setOnClickListener(this);
     }
 
@@ -63,16 +52,8 @@ public class SearchResultsListActivity extends Activity implements View.OnClickL
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.searchResultsMap_button:
-                Intent clickMap = new Intent(SearchResultsListActivity.this, SearchResultsMapActivity.class);
-                startActivity(clickMap);
-                break;
-            case R.id.search_button:
-                Intent clickBack = new Intent(SearchResultsListActivity.this, SearchActivity.class);
-                startActivity(clickBack);
-                break;
-            case R.id.createGroup_button:
-                Intent clickCreate = new Intent(SearchResultsListActivity.this, CreateGroupActivity.class);
+            case R.id.create_group_button:
+                Intent clickCreate = new Intent(SearchResultsListActivity.this, EditGroupActivity.class);
                 startActivity(clickCreate);
                 break;
         }

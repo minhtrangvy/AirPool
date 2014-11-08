@@ -5,6 +5,15 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="@string/createGroupInstruc"/>
+
+
     <!-- Spinner Element for direction preference -->
     <Spinner
         android:id="@+id/toFrom_spinner"
@@ -50,11 +59,13 @@
         android:layout_height="wrap_content"
         android:text="@string/selectTime" />
 
-    <!-- Set OnClickListener to save edits when pressed -->
+
+
+    <!-- Set OnClickListener to create group when pressed -->
     <Button
-        android:id="@+id/viewGroupSave_button"
+        android:id="@+id/create_group_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/editGroup_button" />
+        android:text="@string/createGroup_button" />
 
 </LinearLayout>

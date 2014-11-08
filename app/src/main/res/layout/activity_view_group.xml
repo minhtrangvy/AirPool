@@ -58,7 +58,7 @@
         android:text="@string/groupWall" />
 
     <Button
-        android:id="@+id/editGroup_button"
+        android:id="@+id/edit_group_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/editGroup" />
@@ -68,11 +68,5 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/joinGroup" />
-
-    <Button
-        android:id="@+id/searchResultsList_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/backToHomepage" />
 
 </LinearLayout>

@@ -51,7 +51,7 @@ public class SearchActivity extends Activity implements View.OnClickListener, Ad
 
         // Access the Button defined in search XML
         // and listen for it here
-        searchButton = (Button) findViewById(R.id.searchResultsList_button);
+        searchButton = (Button) findViewById(R.id.search_results_button);
         searchButton.setOnClickListener(this);
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
@@ -118,7 +118,7 @@ public class SearchActivity extends Activity implements View.OnClickListener, Ad
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.searchResultsList_button:
+            case R.id.search_results_button:
                 Intent clickSearch = new Intent(SearchActivity.this, SearchResultsListActivity.class);
                 startActivity(clickSearch);
                 break;

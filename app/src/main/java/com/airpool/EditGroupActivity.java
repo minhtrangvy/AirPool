@@ -6,41 +6,28 @@ import android.app.Dialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.airpool.Model.Group;
+import com.parse.Parse;
+import com.parse.ParseObject;
+
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+
 import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.TimePicker;
-
 import java.util.Calendar;
 
-import com.airpool.Model.Group;
-import com.parse.Parse;
-import com.parse.ParseClassName;
-import com.parse.ParseObject;
-
-import org.json.JSONArray;
-
 public class EditGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+    String pref, transPref, college, airport, date, time;
+    Boolean toAirport;
 
-    // TODO: get group ID that is being edited.
-    Group currentGroup = new Group();
-
-    String pref;
-    String transPref = currentGroup.getTransPref();
-    String college = currentGroup.getCollege();
-    String airport = currentGroup.getAirport();
-    Boolean toAirport = currentGroup.getToAirport();
-    String date = currentGroup.getDate();
-    String time = currentGroup.getTime();
-
-
-    Button saveEditButton, selectDateButton, selectTimeButton;
+    Button createGroupButton, selectDateButton, selectTimeButton;
 
     static final int DATE_DIALOG_ID = 0;
     static final int TIME_DIALOG_ID=1;
@@ -64,23 +51,22 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
     protected void onCreate(Bundle savedInstanceState) {
         ParseObject.registerSubclass(Group.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
-
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_edit_group);
 
-
-        // Access the Button defined in EditGroup XML
+        // Access the Button defined in login XML
         // and listen for it here
-        saveEditButton = (Button) findViewById(R.id.viewGroupSave_button);
-        saveEditButton.setOnClickListener(this);
+        createGroupButton = (Button) findViewById(R.id.create_group_button);
+        createGroupButton.setOnClickListener(this);
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(this);
-        selectDateButton.setText("Departure Date: " + date);
+        selectDateButton.setText("Departure Date");
 
         selectTimeButton = (Button) findViewById(R.id.selectTime_button);
         selectTimeButton.setOnClickListener(this);
-        selectTimeButton.setText("Departure Time: " + time);
+        selectTimeButton.setText("Departure Time");
 
 
         // Set the spinner requirements
@@ -93,6 +79,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         // Apply the adapter to the spinner
         toFromSpinner.setAdapter(toFromAdapter);
         toFromSpinner.setOnItemSelectedListener(this);
+
 
         // Set the spinner requirements
         Spinner collegeSpinner = (Spinner) findViewById(R.id.colleges_spinner);
@@ -116,23 +103,26 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         airportSpinner.setAdapter(airportAdapter);
         airportSpinner.setOnItemSelectedListener(this);
 
+
         // Set the spinner requirements
         Spinner transPrefSpinner = (Spinner) findViewById(R.id.transPrefs_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
+        ArrayAdapter<CharSequence> transPrefAdapter = ArrayAdapter.createFromResource(this,
                 R.array.transPrefs_array, android.R.layout.simple_spinner_item);
         // Specify the layout to use when the list of choices appears
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        transPrefAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         // Apply the adapter to the spinner
-        transPrefSpinner.setAdapter(adapter);
+        transPrefSpinner.setAdapter(transPrefAdapter);
         transPrefSpinner.setOnItemSelectedListener(this);
+
+
     }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.edit_group, menu);
+        getMenuInflater().inflate(R.menu.create_group, menu);
         return true;
     }
 
@@ -151,18 +141,39 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.viewGroupSave_button:
+            case R.id.create_group_button:
+//                // If group is created, set all the variables.
+//                final Group newGroup = new Group();
+//
+//                newGroup.setAirport(airport);
+//                newGroup.setCollege(college);
+//                newGroup.setDate(date);
+//                newGroup.setTime(time);
+//                newGroup.setTransPref(transPref);
+//                newGroup.setToAirport(toAirport);
+//
+//                newGroup.saveInBackground();
+//                String parseId = newGroup.getObjectId();
+//                newGroup.setGroupID(parseId);
+//
+//                // Finds the user parse object to create relation with
+//                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+//                query.whereEqualTo("userID", "1");//_userId);
+//                query.findInBackground(new FindCallback<ParseObject>() {
+//                    public void done(List<ParseObject> objects, ParseException e) {
+//                        if (e == null) {
+////                            ParseRelation<ParseObject> userRelation = newGroup.getRelation("users");
+////                            userRelation.add(user);
+//                        } else {
+//                            // Error
+//                        }
+//                    }
+//                });
+//
+//                newGroup.saveInBackground();
 
-                currentGroup.setAirport(airport);
-                currentGroup.setCollege(college);
-                currentGroup.setDate(date);
-                currentGroup.setTime(time);
-                currentGroup.setTransPref(transPref);
-                currentGroup.setToAirport(toAirport);
-                currentGroup.saveInBackground();
-
-                Intent clickSaveEdits = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
-                startActivity(clickSaveEdits);
+                Intent clickCreateGroup = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
+                startActivity(clickCreateGroup);
                 break;
             case R.id.selectDate_button:
                 onCreated(DATE_DIALOG_ID).show();
@@ -172,6 +183,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                 break;
         }
     }
+
 
     // Registers the item selected in the spinner
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
@@ -198,7 +210,10 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
     }
 
     public void onNothingSelected(AdapterView<?> parent) {
-
+        transPref = "TBA";
+        airport = "TBA";
+        college = "TBA";
+        toAirport = null;
     }
 
     // Register  DatePickerDialog listener
@@ -235,6 +250,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                     }
                     time = hour + ":" + ((minute < 10) ? "0" : "") +
                             minute + " " + twelveHrTimeStamp;
+                    // Set the Selected Time in Select date Button
                     selectTimeButton.setText("Departure Time: " + time);
                 }
             };

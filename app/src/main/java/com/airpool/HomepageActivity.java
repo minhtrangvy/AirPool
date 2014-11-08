@@ -9,17 +9,13 @@ import android.view.View;
 import android.widget.Button;
 
 import com.airpool.Model.User;
-import com.parse.ParseClassName;
-import com.parse.ParseObject;
-
-import org.json.JSONArray;
 
 
 public class HomepageActivity extends Activity implements View.OnClickListener {
 
 
     Button searchButton, preferencesButton, logoutButton;
-    boolean isLoggedIn = false; // so this is false any time the homepageactivity starts?
+    boolean isLoggedIn = true;
     User _thisUser;
 
     @Override
@@ -27,25 +23,19 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
         super.onCreate(savedInstanceState);
 
         // can we call parse loggedIn boolean?
-        if(isLoggedIn != true) {
+        if(!getIsLoggedIn()) {
             Intent mustLogIn = new Intent(HomepageActivity.this, LoginActivity.class);
             startActivity(mustLogIn);
-        }
-        else{
+        } else {
             setContentView(R.layout.activity_homepage);
-
 
             searchButton = (Button) findViewById(R.id.search_button);
             searchButton.setOnClickListener(this);
 
             preferencesButton = (Button) findViewById(R.id.preferences_button);
             preferencesButton.setOnClickListener(this);
-
-//            logoutButton = (Button) findViewById(R.id.logout_button);
-//            logoutButton.setOnClickListener(this);
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -66,7 +56,6 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
-
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -78,11 +67,14 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
                 Intent clickPreference = new Intent(HomepageActivity.this, PreferencesActivity.class);
                 startActivity(clickPreference);
                 break;
-//            case R.id.logout_button:
-//                Intent clickLogout = new Intent(HomepageActivity.this, LoginActivity.class);
-//                startActivity(clickLogout);
-//                break;
         }
+    }
 
+    public boolean getIsLoggedIn() {
+        return this.isLoggedIn;
+    }
+
+    public void setIsLoggedIn(boolean value) {
+        this.isLoggedIn = value;
     }
 }
