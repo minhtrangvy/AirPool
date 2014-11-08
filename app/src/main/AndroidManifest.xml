@@ -24,43 +24,21 @@
             android:name="com.airpool.LoginActivity"
             android:label="@string/title_activity_login" >
         </activity>
-        <activity android:name="com.facebook.LoginActivity" >
-        </activity>
-        <activity
-            android:name="com.airpool.SearchResultsActivity"
-            android:label="@string/title_activity_search_results" >
-        </activity>
         <activity
             android:name="com.airpool.ViewGroupActivity"
             android:label="@string/title_activity_view_group" >
         </activity>
         <activity
-            android:name="com.airpool.SearchResultsMapActivity"
-            android:label="@string/title_activity_search_results_map"
-            android:parentActivityName="com.airpool.SearchResultsActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.airportapp.SearchResultsActivity" />
-        </activity>
-        <activity
-            android:name="com.airpool.SearchResultsListActivity"
-            android:label="@string/title_activity_search_results_list"
-            android:parentActivityName="com.airpool.SearchResultsActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.airportapp.SearchResultsActivity" />
+            android:name=".SearchResultsActivity"
+            android:label="@string/title_activity_search_results_list" >
         </activity>
         <activity
             android:name="com.airpool.PreferencesActivity"
             android:label="@string/title_activity_preferences" >
         </activity>
         <activity
-            android:name="com.airpool.CreateGroupActivity"
+            android:name=".EditGroupActivity"
             android:label="@string/title_activity_create_group" >
-        </activity>
-        <activity
-            android:name="com.airpool.EditGroupActivity"
-            android:label="@string/title_activity_edit_group" >
         </activity>
         <activity
             android:name="com.airpool.SearchActivity"

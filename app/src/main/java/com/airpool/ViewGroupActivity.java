@@ -10,33 +10,22 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.airpool.Model.Group;
-import com.airpool.Model.User;
-import com.parse.FindCallback;
 import com.parse.Parse;
-import com.parse.ParseClassName;
-import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
-import com.parse.ParseRelation;
-
-import org.json.JSONArray;
-
-import java.util.List;
 
 
 public class ViewGroupActivity extends Activity implements View.OnClickListener {
 
     // TODO: pass around the ParseObject user and ParseObject group.
-    User currentUser = new User();
-    Group currentGroup = new Group();
-    String groupId = currentGroup.getGroupID();
+    //User currentUser = new User();
+    //Group currentGroup = new Group();
+    //String groupId = currentGroup.getObjectId();
 
     Button backButton, wallButton, joinButton, editButton;
     boolean userNotMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ParseObject.registerSubclass(Group.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
 
         super.onCreate(savedInstanceState);
@@ -44,37 +33,32 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
 
         userNotMember = true;
 
-        // Get user ID and then get Group's user array. Check if user in the array-- if not, set userNotMember to true.
-        // Finds the user parse object to create relation with
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.whereEqualTo("groupID", groupId);
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> groupUsers, ParseException e) {
-                if (e == null) {
-                    for(ParseObject user : groupUsers) {
-                        if(user == currentUser) {
-                            userNotMember = false;
-                        }
-                    }
-                } else {
-                    // Error
-                }
-            }
-        });
-
-
-        userNotMember = true;
-
-        // TODO: Update once Parse is working
-        if (userNotMember) {
-            View editButton = findViewById(R.id.editGroup_button);
-            editButton.setVisibility(View.GONE);
-        }
-
-        // Access the Button defined in login XML
-        // and listen for it here
-        backButton = (Button) findViewById(R.id.searchResultsList_button);
-        backButton.setOnClickListener(this);
+//        // Get user ID and then get Group's user array. Check if user in the array-- if not, set userNotMember to true.
+//        // Finds the user parse object to create relation with
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+//        query.whereEqualTo("groupID", groupId);
+//        query.findInBackground(new FindCallback<ParseObject>() {
+//            public void done(List<ParseObject> groupUsers, ParseException e) {
+//                if (e == null) {
+//                    for(ParseObject user : groupUsers) {
+//                        if(user == currentUser) {
+//                            userNotMember = false;
+//                        }
+//                    }
+//                } else {
+//                    // Error
+//                }
+//            }
+//        });
+//
+//
+//        userNotMember = true;
+//
+//        // TODO: Update once Parse is working
+//        if (userNotMember) {
+//            View editButton = findViewById(R.id.editGroup_button);
+//            editButton.setVisibility(View.GONE);
+//        }
 
         wallButton = (Button) findViewById(R.id.groupWall_button);
         wallButton.setOnClickListener(this);
@@ -82,7 +66,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         joinButton = (Button) findViewById(R.id.joinGroup_button);
         joinButton.setOnClickListener(this);
 
-        editButton = (Button) findViewById(R.id.editGroup_button);
+        editButton = (Button) findViewById(R.id.edit_group_button);
         editButton.setOnClickListener(this);
     }
 
@@ -109,10 +93,6 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.searchResultsList_button:
-                Intent clickHomepage = new Intent(ViewGroupActivity.this, HomepageActivity.class);
-                startActivity(clickHomepage);
-                break;
             case R.id.groupWall_button:
                 Intent goToWall = new Intent(ViewGroupActivity.this, GroupWallActivity.class);
                 startActivity(goToWall);
@@ -137,7 +117,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
                     userNotMember = true;
                 }
                 break;
-            case R.id.editGroup_button:
+            case R.id.edit_group_button:
                 Intent clickEdit = new Intent(ViewGroupActivity.this, EditGroupActivity.class);
                 startActivity(clickEdit);
                 break;

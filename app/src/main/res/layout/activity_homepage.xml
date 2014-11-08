@@ -20,7 +20,6 @@
         android:layout_weight="1"
         android:layout_marginTop="20dp" />
 
-
     <!-- Set OnClickListener to trigger search page when pressed -->
     <Button
         android:id="@+id/search_button"
@@ -34,15 +33,8 @@
         android:layout_height="wrap_content"
         android:text="@string/preferences" />
 
-
-    <!--<Button-->
-        <!--android:id="@+id/logout_button"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:text="@string/logout" />-->
-
     <com.facebook.widget.LoginButton
-        android:id="@+id/authButton"
+        android:id="@+id/facebook_login_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

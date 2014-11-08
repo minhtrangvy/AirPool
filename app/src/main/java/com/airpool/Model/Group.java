@@ -3,89 +3,65 @@ package com.airpool.Model;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-import org.json.JSONArray;
-
-import java.sql.Timestamp;
-import java.util.HashMap;
+import java.util.Date;
 
 
 @ParseClassName("Group")
 public class Group extends ParseObject {
-
     public Group() {
         // A default constructor is required.
     }
 
-    public String getGroupID() {
-        return getString("groupID");
+    public Date getTimeOfDeparture() {
+        Long date = getLong("timeOfDeparture");
+        return new Date(date);
     }
 
-    public void setGroupID(String groupID) {
-        put("groupID", groupID);
+    public void setTimeOfDeparture(Date timeOfDeparture) {
+        put("timeOfDeparture", timeOfDeparture.getTime());
     }
 
-    public String getDate() {
-        return getString("date");
+    public TransportationPreference getTransportationPreference() {
+        String enumKey = getString("transportationPreference");
+        return Enum.valueOf(TransportationPreference.class, enumKey);
     }
 
-    public void setDate(String date) {
-        put("date", date);
+    public void setTransportationPreference(TransportationPreference transportationPreference) {
+        put("transportationPreference", transportationPreference.name());
     }
 
-    public String getTime() {
-        return getString("time");
+    public Airport getAirport() {
+        String enumKey = getString("airport");
+        return Enum.valueOf(Airport.class, enumKey);
     }
 
-    public void setTime(String time) {
-        put("time", time);
+    public void setAirport(Airport airport) {
+        put("airport", airport.name());
     }
 
-    public String getTransPref() {
-        return getString("transPref");
+    public College getCollege() {
+        String enumKey = getString("college");
+        return Enum.valueOf(College.class, enumKey);
     }
 
-    public void setTransPref(String transPref) {
-        put("transPref", transPref);
+    public void setCollege(College college) {
+        put("college", college.name());
     }
 
-    public String getAirport() {
-        return getString("airport");
+    public boolean getIsToAirport() {
+        return getBoolean("isToAirport");
     }
 
-    public void setAirport(String airport) {
-        put("airport", airport);
+    public void setIsToAirport(boolean toAirport) {
+        put("isToAirport", toAirport);
     }
 
-    public String getCollege() {
-        return getString("college");
+    public boolean getIsGroupOpen() {
+        return getBoolean("isGroupOpen");
     }
 
-    public void setCollege(String college) {
-        put("college", college);
-    }
-
-    public boolean getToAirport() {
-        return getBoolean("toAirport");
-    }
-
-    public void setToAirport(Boolean toAirport) {
-        put("toAirport", toAirport);
-    }
-
-    public JSONArray getMembers() {
-        return getJSONArray("members");
-    }
-
-    public void setMembers(JSONArray members) {
-        put("members", members);
-    }
-
-    public boolean getGroupOpen() {
-        return getBoolean("groupOpen");
-    }
-
-    public void setGroupOpen(String groupOpen) {
-        put("groupOpen", groupOpen);
+    public void setIsGroupOpen(boolean isGroupOpen) {
+        put("isGroupOpen", isGroupOpen);
     }
 
 }

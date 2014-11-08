@@ -14,7 +14,7 @@
         />
 
     <!-- Spinner Element for airport preference -->
-    <Spinner
+    <com.airpool.View.AirportSpinner
         android:id="@+id/airport_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -22,8 +22,8 @@
         />
 
     <!-- Spinner Element for college preference -->
-    <Spinner
-        android:id="@+id/colleges_spinner"
+    <com.airpool.View.CollegeSpinner
+        android:id="@+id/college_spinner"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:prompt="@string/colleges_spinner"
@@ -44,7 +44,7 @@
 
     <!-- Set OnClickListener to trigger search when pressed -->
     <Button
-        android:id="@+id/searchResultsList_button"
+        android:id="@+id/search_results_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/search" />

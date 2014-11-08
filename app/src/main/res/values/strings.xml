@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
     <string name="app_name">AirPool</string>
     <string name="facebook_app_id">797893480262143</string>
     <string name="action_settings">Settings</string>
@@ -10,9 +9,6 @@
     <string name="logout">Logout</string>
 
     <string name="title_activity_login">Login</string>
-    <string name="usernameHint">Username</string>
-    <!--<string name="passwordHint">Password</string>-->
-    <string name="login_button">Login</string>
 
     <string name="title_activity_search_results">SearchResultsActivity</string>
 
@@ -27,30 +23,27 @@
     <string name="pickUpLocation">Pick-up Location: None selected</string>
     <string name="dropOffLocation">Drop-off Location: None selected</string>
     <string name="modeOfTransit">Mode of Transportation: None selected</string>
-    <!--<string name="backToSearch">Back to Search Results</string>-->
+
     <string name="joinGroup">Join Group</string>
     <string name="editGroup">Edit Group</string>
     <string name="groupWall">Group Wall</string>
 
-    <string name="title_activity_search_results_map">Search Results: Map</string>
-    <string name="switchToList">Switch to List View</string>
-
     <string name="title_activity_search_results_list">Search Results: List</string>
     <string name="groupResults">Group Results</string>
-    <string name="switchToMap">Switch to Map View</string>
     <string name="createAGroup">Create a Group</string>
-    <string name="goBack">Back to Search</string>
 
     <string name="title_activity_preferences">Preferences</string>
     <string name="instructions">Instructions</string>
     <string name="selectPrefs">Check all the different modes of transportation you prefer. If you have
     no preference, simply click the "No preference" box. Clicking the "No Preference" box will
     override any other preferences.</string>
+
     <string name="taxi">Take a taxi</string>
     <string name="superShuttle">Book a SuperShuttle</string>
     <string name="publicTransit">Take public transportation</string>
     <string name="drive">Have a group member or a friend drive</string>
     <string name="noPref">No preference</string>
+
     <string name="savePrefs">Save Preferences</string>
 
     <string name="title_activity_create_group">Create a New Group</string>
@@ -82,25 +75,6 @@
     <string name="colleges_spinner">Choose a College/University</string>
     <string name="toFrom_spinner">Select your direction of travel</string>
 
-    <string-array name="airport_array">
-        <item>BUR - Bob Hope Airport</item>
-        <item>LAX - Los Angeles International Aiport</item>
-        <item>LGB - Long Beach Airport</item>
-        <item>ONT - Ontario International Airport</item>
-        <item>SNA - John Wayne Airport</item>
-    </string-array>
-
-    <string-array name="colleges_array">
-        <item>Cal Poly Pomona</item>
-        <item>Claremont Colleges</item>
-        <item>Pepperdine</item>
-        <item>UCLA</item>
-        <item>UC Fullerton</item>
-        <item>UC Irvine</item>
-        <item>UC Riverside</item>
-        <item>USC</item>
-    </string-array>
-
     <string-array name="toFrom_array">
         <item>To the Airport</item>
         <item>From the Airport</item>
@@ -108,5 +82,6 @@
 
     <string name="title_activity_group_wall">GroupWallActivity</string>
     <string name="hello_world">Hello world!</string>
+    <string name="usernameHint">Username</string>
 
 </resources>
