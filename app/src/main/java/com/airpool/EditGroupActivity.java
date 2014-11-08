@@ -1,62 +1,44 @@
 package com.airpool;
 
-import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.airpool.Model.Group;
+import com.airpool.Fragment.DatePickerFragment;
+import com.airpool.Fragment.TimePickerFragment;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
 import com.airpool.View.TransportationPreferenceSpinner;
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 
-import android.widget.DatePicker;
 import android.widget.Spinner;
-import android.widget.TimePicker;
-import java.util.Calendar;
 
-public class EditGroupActivity extends Activity implements View.OnClickListener, AdapterView.OnItemSelectedListener {
+public class EditGroupActivity extends FragmentActivity implements View.OnClickListener,
+        AdapterView.OnItemSelectedListener, DatePickerFragment.OnDatePickedListener,
+        TimePickerFragment.OnTimePickedListener{
     String pref, transPref, college, airport, date, time;
     Boolean toAirport;
 
     Button createGroupButton, selectDateButton, selectTimeButton;
 
-    static final int DATE_DIALOG_ID = 0;
-    static final int TIME_DIALOG_ID=1;
-
-    // variables to save user selected date and time
-    public  int year,month,day,hour,minute;
-    // declare  the variables to Show/Set the date and time when Time and  Date Picker Dialog first appears
-    private int mYear, mMonth, mDay,mHour,mMinute;
-
-    public EditGroupActivity() {
-        // Assign current Date and Time Values to Variables
-        final Calendar c = Calendar.getInstance();
-        mYear = c.get(Calendar.YEAR);
-        mMonth = c.get(Calendar.MONTH);
-        mDay = c.get(Calendar.DAY_OF_MONTH);
-        mHour = c.get(Calendar.HOUR_OF_DAY);
-        mMinute = c.get(Calendar.MINUTE);
-    }
+    DatePickerFragment dateFragment;
+    TimePickerFragment timeFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ParseObject.registerSubclass(Group.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_edit_group);
+
+        dateFragment = new DatePickerFragment();
+        timeFragment = new TimePickerFragment();
 
         // Access the Button defined in login XML
         // and listen for it here
@@ -154,10 +136,10 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                 startActivity(clickCreateGroup);
                 break;
             case R.id.selectDate_button:
-                onCreated(DATE_DIALOG_ID).show();
+                this.dateFragment.show(getSupportFragmentManager(), "datePicker");
                 break;
             case R.id.selectTime_button:
-                onCreated(TIME_DIALOG_ID).show();
+                this.timeFragment.show(getSupportFragmentManager(), "timePicker");
                 break;
         }
     }
@@ -194,59 +176,12 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         toAirport = null;
     }
 
-    // Register  DatePickerDialog listener
-    private DatePickerDialog.OnDateSetListener mDateSetListener =
-            new DatePickerDialog.OnDateSetListener() {
-                // the callback received when the user "sets" the Date in the DatePickerDialog
-                public void onDateSet(DatePicker view, int yearSelected,
-                                      int monthOfYear, int dayOfMonth) {
-                    year = yearSelected;
-                    month = monthOfYear;
-                    day = dayOfMonth;
-                    date = ((month < 10) ? "0" : "") + month +"/"+
-                            ((day < 10) ? "0" : "") + day+"/"+year;
-                    // Set the Selected Date in Select date Button
-                    selectDateButton.setText("Departure Date: " + date);
-                }
-            };
+    public void onTimePicked(int hour, int minute, String twelveHrTimeStamp) {
+        selectTimeButton.setText("Departure Time: " + hour + ":" + ((minute < 10) ? "0" : "") +
+                minute + " " + twelveHrTimeStamp);
+    }
 
-    // Register  TimePickerDialog listener
-    private TimePickerDialog.OnTimeSetListener mTimeSetListener =
-            new TimePickerDialog.OnTimeSetListener() {
-                // the callback received when the user "sets" the TimePickerDialog in the dialog
-                public void onTimeSet(TimePicker view, int hourOfDay, int min) {
-                    hour = hourOfDay;
-                    minute = min;
-                    String twelveHrTimeStamp = "am";
-                    // Set the Selected Date in Select date Button
-                    if (hour > 12) {
-                        hour = hour % 12;
-                        twelveHrTimeStamp = "pm";
-                    }
-                    else if (hour ==0) {
-                        hour = 12;
-                    }
-                    time = hour + ":" + ((minute < 10) ? "0" : "") +
-                            minute + " " + twelveHrTimeStamp;
-                    // Set the Selected Time in Select date Button
-                    selectTimeButton.setText("Departure Time: " + time);
-                }
-            };
-
-
-    // Method automatically gets Called when you call showDialog()  method
-    protected Dialog onCreated(int id) {
-        switch (id) {
-            case DATE_DIALOG_ID:
-                // create a new DatePickerDialog with values you want to show
-                return new DatePickerDialog(this,
-                        mDateSetListener,
-                        mYear, mMonth, mDay);
-            // create a new TimePickerDialog with values you want to show
-            case TIME_DIALOG_ID:
-                return new TimePickerDialog(this,
-                        mTimeSetListener, mHour, mMinute, false);
-        }
-        return null;
+    public void onDatePicked(int year, int month, int day) {
+        selectDateButton.setText("Departure Date: " + month + "/" + day + "/" + year);
     }
 }

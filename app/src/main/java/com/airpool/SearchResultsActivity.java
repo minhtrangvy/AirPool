@@ -13,13 +13,12 @@ import com.parse.Parse;
 import com.parse.ParseObject;
 
 
-public class SearchResultsListActivity extends Activity implements View.OnClickListener {
+public class SearchResultsActivity extends Activity implements View.OnClickListener {
 
     Button mapButton, backButton, groupButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ParseObject.registerSubclass(Group.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
 
         super.onCreate(savedInstanceState);
@@ -53,7 +52,7 @@ public class SearchResultsListActivity extends Activity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.create_group_button:
-                Intent clickCreate = new Intent(SearchResultsListActivity.this, EditGroupActivity.class);
+                Intent clickCreate = new Intent(SearchResultsActivity.this, EditGroupActivity.class);
                 startActivity(clickCreate);
                 break;
         }

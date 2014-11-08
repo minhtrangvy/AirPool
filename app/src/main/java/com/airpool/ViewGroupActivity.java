@@ -18,15 +18,14 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
 
     // TODO: pass around the ParseObject user and ParseObject group.
     //User currentUser = new User();
-    Group currentGroup = new Group();
-    String groupId = currentGroup.getGroupID();
+    //Group currentGroup = new Group();
+    //String groupId = currentGroup.getObjectId();
 
     Button backButton, wallButton, joinButton, editButton;
     boolean userNotMember;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        ParseObject.registerSubclass(Group.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
 
         super.onCreate(savedInstanceState);

@@ -29,7 +29,7 @@
             android:label="@string/title_activity_view_group" >
         </activity>
         <activity
-            android:name="com.airpool.SearchResultsListActivity"
+            android:name=".SearchResultsActivity"
             android:label="@string/title_activity_search_results_list" >
         </activity>
         <activity

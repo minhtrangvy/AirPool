@@ -57,7 +57,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         uiHelper = new UiLifecycleHelper(this, loginCallback);
         uiHelper.onCreate(savedInstanceState);
 
-        ParseObject.registerSubclass(User.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
     }
 
