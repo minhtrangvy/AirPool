@@ -18,6 +18,9 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TimePicker;
 
+import com.airpool.View.AirportSpinner;
+import com.airpool.View.CollegeSpinner;
+
 import java.util.Calendar;
 
 
@@ -71,27 +74,12 @@ public class SearchActivity extends Activity implements View.OnClickListener, Ad
         toFromSpinner.setAdapter(toFromAdapter);
         toFromSpinner.setOnItemSelectedListener(this);
 
-
-        // Set the spinner requirements
-        Spinner collegeSpinner = (Spinner) findViewById(R.id.colleges_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> collegeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.colleges_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        collegeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        collegeSpinner.setAdapter(collegeAdapter);
+        CollegeSpinner collegeSpinner = (CollegeSpinner) findViewById(R.id.college_spinner);
+        collegeSpinner.initializeSpinner(this);
         collegeSpinner.setOnItemSelectedListener(this);
 
-        // Set the spinner requirements
-        Spinner airportSpinner = (Spinner) findViewById(R.id.airport_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> airportAdapter = ArrayAdapter.createFromResource(this,
-                R.array.airport_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        airportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        airportSpinner.setAdapter(airportAdapter);
+        AirportSpinner airportSpinner = (AirportSpinner) findViewById(R.id.airport_spinner);
+        airportSpinner.initializeSpinner(this);
         airportSpinner.setOnItemSelectedListener(this);
     }
 

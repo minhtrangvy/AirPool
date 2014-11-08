@@ -10,6 +10,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.airpool.Model.Group;
+import com.airpool.View.AirportSpinner;
+import com.airpool.View.CollegeSpinner;
+import com.airpool.View.TransportationPreferenceSpinner;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -80,42 +83,17 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
         toFromSpinner.setAdapter(toFromAdapter);
         toFromSpinner.setOnItemSelectedListener(this);
 
-
-        // Set the spinner requirements
-        Spinner collegeSpinner = (Spinner) findViewById(R.id.colleges_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> collegeAdapter = ArrayAdapter.createFromResource(this,
-                R.array.colleges_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        collegeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        collegeSpinner.setAdapter(collegeAdapter);
+        CollegeSpinner collegeSpinner = (CollegeSpinner) findViewById(R.id.college_spinner);
+        collegeSpinner.initializeSpinner(this);
         collegeSpinner.setOnItemSelectedListener(this);
 
-        // Set the spinner requirements
-        Spinner airportSpinner = (Spinner) findViewById(R.id.airport_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> airportAdapter = ArrayAdapter.createFromResource(this,
-                R.array.airport_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        airportAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        airportSpinner.setAdapter(airportAdapter);
+        AirportSpinner airportSpinner = (AirportSpinner) findViewById(R.id.airport_spinner);
+        airportSpinner.initializeSpinner(this);
         airportSpinner.setOnItemSelectedListener(this);
 
-
-        // Set the spinner requirements
-        Spinner transPrefSpinner = (Spinner) findViewById(R.id.transPrefs_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
-        ArrayAdapter<CharSequence> transPrefAdapter = ArrayAdapter.createFromResource(this,
-                R.array.transPrefs_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
-        transPrefAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
-        transPrefSpinner.setAdapter(transPrefAdapter);
-        transPrefSpinner.setOnItemSelectedListener(this);
-
-
+        TransportationPreferenceSpinner preferenceSpinner = (TransportationPreferenceSpinner) findViewById(R.id.trans_pref_spinner);
+        preferenceSpinner.initializeSpinner(this);
+        preferenceSpinner.setOnItemSelectedListener(this);
     }
 
 
@@ -192,7 +170,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
             case R.id.airport_spinner:
                 airport = pref;
                 break;
-            case R.id.colleges_spinner:
+            case R.id.college_spinner:
                 college = pref;
                 break;
             case R.id.toFrom_spinner:
@@ -203,7 +181,7 @@ public class EditGroupActivity extends Activity implements View.OnClickListener,
                     toAirport = false;
                 }
                 break;
-            case R.id.transPrefs_spinner:
+            case R.id.trans_pref_spinner:
                 transPref = pref;
                 break;
         }
