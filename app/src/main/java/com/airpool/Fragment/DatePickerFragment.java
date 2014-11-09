@@ -5,7 +5,6 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.widget.Button;
 import android.widget.DatePicker;
 
 import java.util.Calendar;
@@ -57,5 +56,17 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         mYear = calendar.get(Calendar.YEAR);
         mMonth = calendar.get(Calendar.MONTH);
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
+    }
+
+    public int getYear() {
+        return this.mYear;
+    }
+
+    public int getMonth() {
+        return this.mMonth;
+    }
+
+    public int getDay() {
+        return this.mDay;
     }
 }

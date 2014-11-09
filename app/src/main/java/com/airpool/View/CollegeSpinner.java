@@ -16,6 +16,9 @@ import java.util.Arrays;
  * Created by Maury on 11/7/14.
  */
 public class CollegeSpinner extends AirPoolSpinner {
+    College currentCollege = null;
+    CollegeAdapter adapter;
+
     public CollegeSpinner(Context context) {
         super(context);
     }

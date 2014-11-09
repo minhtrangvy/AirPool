@@ -12,27 +12,21 @@
         android:textSize="25sp"
         android:text="@string/groupInfo" />
 
-    <!-- Shows airport and college + mode of transportation-->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:text="@string/toAirport"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/college"/>
+        android:id="@+id/airport_text" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/airport"/>
+        android:id="@+id/college_text"/>
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/modeOfTransit"/>
+        android:id="@+id/mode_of_transportation_text"/>
 
 
     <TextView

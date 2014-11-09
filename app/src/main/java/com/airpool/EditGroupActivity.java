@@ -5,32 +5,40 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.airpool.Fragment.DatePickerFragment;
-import com.airpool.Fragment.TimePickerFragment;
-import com.airpool.Model.Group;
-import com.airpool.View.AirportSpinner;
-import com.airpool.View.CollegeSpinner;
-import com.airpool.View.TransportationPreferenceSpinner;
-import com.parse.FindCallback;
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import java.util.List;
+import com.airpool.Fragment.DatePickerFragment;
+import com.airpool.Fragment.TimePickerFragment;
+import com.airpool.Model.Airport;
+import com.airpool.Model.College;
+import com.airpool.Model.Group;
+import com.airpool.Model.TransportationPreference;
+import com.airpool.View.AirportSpinner;
+import com.airpool.View.CollegeSpinner;
+import com.airpool.View.TransportationPreferenceSpinner;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+
+import java.util.Date;
 
 public class EditGroupActivity extends FragmentActivity implements View.OnClickListener,
-        AdapterView.OnItemSelectedListener, DatePickerFragment.OnDatePickedListener,
-        TimePickerFragment.OnTimePickedListener{
-    String pref, transPref, college, airport, date, time;
-    Boolean toAirport;
+        DatePickerFragment.OnDatePickedListener, TimePickerFragment.OnTimePickedListener {
+    boolean isGroupExisting = false;
+
+    TransportationPreference transportationPreference;
+    College college = null;
+    Airport airport = null;
+    Long departureTime = null;
+    boolean isToAirport = false;
 
     Button createGroupButton, selectDateButton, selectTimeButton;
 
@@ -43,6 +51,9 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
 
+        Intent myIntent = getIntent(); // gets the previously created intent
+        isGroupExisting = myIntent.getBooleanExtra("isGroupExisting", false);
+
         dateFragment = new DatePickerFragment();
         timeFragment = new TimePickerFragment();
 
@@ -52,36 +63,84 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
         createGroupButton.setOnClickListener(this);
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
-        selectDateButton.setOnClickListener(this);
-        selectDateButton.setText("Departure Date");
+        selectDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dateFragment.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
 
         selectTimeButton = (Button) findViewById(R.id.selectTime_button);
-        selectTimeButton.setOnClickListener(this);
-        selectTimeButton.setText("Departure Time");
+        selectTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timeFragment.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
 
-
-        // Set the spinner requirements
         Spinner toFromSpinner = (Spinner) findViewById(R.id.toFrom_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> toFromAdapter = ArrayAdapter.createFromResource(this,
                 R.array.toFrom_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         toFromAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         toFromSpinner.setAdapter(toFromAdapter);
-        toFromSpinner.setOnItemSelectedListener(this);
+        toFromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
+                // The text in the first position is assumed to be "To Airport."
+                isToAirport = position == 0;
+            }
 
-        CollegeSpinner collegeSpinner = (CollegeSpinner) findViewById(R.id.college_spinner);
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                isToAirport = false;
+            }
+        });
+
+        final CollegeSpinner collegeSpinner = (CollegeSpinner) findViewById(R.id.college_spinner);
         collegeSpinner.initializeSpinner(this);
-        collegeSpinner.setOnItemSelectedListener(this);
+        collegeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
+                college = (College) collegeSpinner.getAdapter().getItem(position);
+            }
 
-        AirportSpinner airportSpinner = (AirportSpinner) findViewById(R.id.airport_spinner);
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                college = null;
+            }
+        });
+
+        final AirportSpinner airportSpinner = (AirportSpinner) findViewById(R.id.airport_spinner);
         airportSpinner.initializeSpinner(this);
-        airportSpinner.setOnItemSelectedListener(this);
+        airportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
+                airport = (Airport) airportSpinner.getAdapter().getItem(position);
+            }
 
-        TransportationPreferenceSpinner preferenceSpinner = (TransportationPreferenceSpinner) findViewById(R.id.trans_pref_spinner);
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                airport = null;
+            }
+        });
+
+        final TransportationPreferenceSpinner preferenceSpinner = (TransportationPreferenceSpinner)
+                findViewById(R.id.trans_pref_spinner);
         preferenceSpinner.initializeSpinner(this);
-        preferenceSpinner.setOnItemSelectedListener(this);
+        preferenceSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
+                transportationPreference = (TransportationPreference)
+                        preferenceSpinner.getAdapter().getItem(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                transportationPreference = null;
+            }
+        });
+
+        if (isGroupExisting) {
+            // TODO: Pre-populate the fields with attributes corresponding to the group ID
+            // passed in.
+        }
     }
 
 
@@ -111,75 +170,45 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
                 // If group is created, set all the variables.
                 final Group newGroup = new Group();
 
+                // Assemble the time of departure based on the spinner's values.
+                newGroup.setTimeOfDeparture(new Date(
+                        dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
+                        timeFragment.getHour(), timeFragment.getMinute(), 0));
+
                 newGroup.setAirport(airport);
                 newGroup.setCollege(college);
-//                newGroup.setDate(date);
-//                newGroup.setTime(time);
-                newGroup.setTransportationPreference(transPref);
-                newGroup.setAirport(toAirport);
-
+                newGroup.setTransportationPreference(transportationPreference);
+                newGroup.setIsToAirport(isToAirport);
+                newGroup.setIsGroupOpen(true);
                 newGroup.saveInBackground();
-                String parseId = newGroup.getObjectId();
-//                newGroup.setGroupID(parseId);
 
-                // Finds the user parse object to create relation with
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-                query.whereEqualTo("userID", "1");//_userId);
-                query.findInBackground(new FindCallback<ParseObject>() {
-                    public void done(List<ParseObject> objects, ParseException e) {
+                // Make the association between Group and User.
+                ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
+                userQuery.getInBackground("303892173135559", new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
                         if (e == null) {
-//                            ParseRelation<ParseObject> userRelation = newGroup.getRelation("users");
-//                            userRelation.add(user);
+                            ParseRelation<ParseObject> newGroupRelation = newGroup.getRelation("users");
+                            newGroupRelation.add(object);
+                            newGroup.saveInBackground();
+
+                            Toast.makeText(getApplicationContext(),
+                                    getResources().getString(R.string.toast_successfully_joined_group),
+                                    Toast.LENGTH_SHORT).show();
                         } else {
-                            // Error
+                            // Error.
+                            Toast.makeText(getApplicationContext(),
+                                    getResources().getString(R.string.toast_unsuccessfully_joined_group),
+                                    Toast.LENGTH_SHORT).show();
                         }
+
                     }
                 });
-
-                newGroup.saveInBackground();
 
                 Intent clickCreateGroup = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickCreateGroup);
                 break;
-            case R.id.selectDate_button:
-                this.dateFragment.show(getSupportFragmentManager(), "datePicker");
-                break;
-            case R.id.selectTime_button:
-                this.timeFragment.show(getSupportFragmentManager(), "timePicker");
-                break;
         }
-    }
-
-
-    // Registers the item selected in the spinner
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        pref = parent.getItemAtPosition(pos).toString();
-        switch(view.getId()) {
-            case R.id.airport_spinner:
-                airport = pref;
-                break;
-            case R.id.college_spinner:
-                college = pref;
-                break;
-            case R.id.toFrom_spinner:
-                if(pref == "To the Airport")
-                {
-                    toAirport = true;
-                } else {
-                    toAirport = false;
-                }
-                break;
-            case R.id.trans_pref_spinner:
-                transPref = pref;
-                break;
-        }
-    }
-
-    public void onNothingSelected(AdapterView<?> parent) {
-        transPref = "TBA";
-        airport = "TBA";
-        college = "TBA";
-        toAirport = null;
     }
 
     public void onTimePicked(int hour, int minute, String twelveHrTimeStamp) {

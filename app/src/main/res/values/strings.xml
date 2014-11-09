@@ -15,14 +15,11 @@
     <string name="title_activity_view_group">View a Group</string>
     <string name="groupMembers">Current Group Members</string>
     <string name="groupInfo">Current Group Information</string>
-    <string name="toAirport">Going to Airport</string>
-    <string name="college">College: N/A</string>
-    <string name="airport">Airport: N/A</string>
-    <string name="backToSearch">Back to Search Results</string>
 
-    <string name="pickUpLocation">Pick-up Location: None selected</string>
-    <string name="dropOffLocation">Drop-off Location: None selected</string>
-    <string name="modeOfTransit">Mode of Transportation: None selected</string>
+    <!-- Group information, with placeholders for the actual information. -->
+    <string name="going_to_airport">Going to %1$s</string>
+    <string name="leaving_from_airport">Leaving from %1$s</string>
+    <string name="mode_of_transportation">Mode of Transportation: %1$s</string>
 
     <string name="joinGroup">Join Group</string>
     <string name="editGroup">Edit Group</string>
@@ -60,28 +57,25 @@
     </string-array>
 
     <string name="title_activity_edit_group">Edit Group</string>
-    <string name="pickUpHint">Group Pick-up Address</string>
-    <string name="dropOffHint">Group Drop-off Address</string>
-    <string name="editGroup_button">Save Edits</string>
-    <string name="cancelEdits">Cancel Changes</string>
     <string name="transportation_spinner">Choose Mode of Transportation</string>
-    <string name="selectDate">Select Departure Date</string>
-    <string name="selectTime">Select Departure Time</string>
+    <string name="selectDate">Departure Date</string>
+    <string name="selectTime">Departure Time</string>
     <string name="title_activity_search">Search</string>
-    <string name="backToHomepage">Back to Homepage</string>
-    <!--<string name="toHint">Pick-Up Location</string>-->
-    <!--<string name="fromHint">Drop-Off Location</string>-->
     <string name="airport_spinner">Choose an Airport</string>
     <string name="colleges_spinner">Choose a College/University</string>
     <string name="toFrom_spinner">Select your direction of travel</string>
 
     <string-array name="toFrom_array">
-        <item>To the Airport</item>
-        <item>From the Airport</item>
+        <item>To</item>
+        <item>From</item>
     </string-array>
 
     <string name="title_activity_group_wall">GroupWallActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="usernameHint">Username</string>
+
+    <!-- Toasts -->
+    <string name="toast_successfully_joined_group">You\'ve successfully created the group.</string>
+    <string name="toast_unsuccessfully_joined_group">There was a problem creating the group.</string>
 
 </resources>

@@ -6,6 +6,7 @@ import android.test.TouchUtils;
 import android.widget.Button;
 
 import com.airpool.EditGroupActivity;
+import com.airpool.Model.Group;
 import com.airpool.R;
 import com.airpool.ViewGroupActivity;
 
@@ -33,6 +34,11 @@ public class ViewGroupActivityFunctionalTest extends ActivityInstrumentationTest
         // Register the activity that the button click will open.
         Instrumentation.ActivityMonitor activityMonitor =
                 getInstrumentation().addMonitor(EditGroupActivity.class.getName(), null, false);
+
+        // Inject a group with the necessary attributes.
+        Group group = new Group();
+        group.setObjectId("R8qXcxSNag");
+        getActivity().setGroup(group);
 
         final Button editGroupButton = (Button) getActivity().findViewById(R.id.edit_group_button);
         assertNotNull(editGroupButton);
