@@ -114,7 +114,7 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
                 newGroup.setAirport(airport);
                 newGroup.setCollege(college);
 //                newGroup.setDate(date);
-//                newGroup.setTime(time);
+                newGroup.setTimeOfDeparture(time);
                 newGroup.setTransportationPreference(transPref);
                 newGroup.setAirport(toAirport);
 
