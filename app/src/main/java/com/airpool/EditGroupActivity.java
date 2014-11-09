@@ -170,14 +170,6 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
                 // If group is created, set all the variables.
                 final Group newGroup = new Group();
 
-<<<<<<< HEAD
-//                newGroup.setAirport(airport);
-//                newGroup.setCollege(college);
-////                newGroup.setDate(date);
-//                newGroup.setTimeOfDeparture(time);
-//                newGroup.setTransportationPreference(transPref);
-//                newGroup.setAirport(toAirport);
-=======
                 // Assemble the time of departure based on the spinner's values.
                 newGroup.setTimeOfDeparture(new Date(
                         dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
@@ -188,7 +180,6 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
                 newGroup.setTransportationPreference(transportationPreference);
                 newGroup.setIsToAirport(isToAirport);
                 newGroup.setIsGroupOpen(true);
->>>>>>> a141913d58551221f38708b436669a023f437206
 
                 newGroup.saveInBackground();
 

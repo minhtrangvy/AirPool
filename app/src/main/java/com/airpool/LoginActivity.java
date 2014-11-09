@@ -16,6 +16,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+import com.parse.Parse;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
@@ -40,14 +41,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         uiHelper = new UiLifecycleHelper(this, loginCallback);
         uiHelper.onCreate(savedInstanceState);
-<<<<<<< HEAD
 
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
 
 //        GlobalUser globalUser = ( (GlobalUser) getApplicationContext() );
 //        String _userId = globalUser.getUserID();
-=======
->>>>>>> a141913d58551221f38708b436669a023f437206
     }
 
     @Override
