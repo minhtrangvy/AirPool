@@ -180,6 +180,7 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
                 newGroup.setTransportationPreference(transportationPreference);
                 newGroup.setIsToAirport(isToAirport);
                 newGroup.setIsGroupOpen(true);
+
                 newGroup.saveInBackground();
 
                 // Make the association between Group and User.

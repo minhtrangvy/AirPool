@@ -74,6 +74,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         _userId = user.getId();
                         Log.i(TAG, "Hello " + user.getName());
                         Log.i(TAG, "Unique ID " + user.getId());
+
                         _thisUser = new User(_userId);
                         _thisUser.setUserID(_userId);
                         _thisUser.setLoggedIn(_userId, true);
