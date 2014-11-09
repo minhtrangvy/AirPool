@@ -16,7 +16,11 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+import com.parse.GetCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
@@ -81,11 +85,21 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                         Log.i(TAG, "Hello " + user.getName());
                         Log.i(TAG, "Unique ID " + user.getId());
 
+                        GlobalUser currentUser = ((GlobalUser)getApplicationContext());
+                        _userId = currentUser.getUserID();
 
-
-//                        _thisUser = new User(_userId);
-//                        _thisUser.setUserID(_userId);
-//                        _thisUser.setLoggedIn(_userId, true);
+                        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+                        query.whereEqualTo("userId", _userId);
+                        query.getFirstInBackground( new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject parseObject, ParseException e) {
+                                // if the user does exist in our database, set their loggedIn to false
+                                if (parseObject != null) {
+                                    parseObject.put("loggedIn", true);
+                                    parseObject.put("facebookId", _userId);
+                                }
+                            }
+                        });
                     }
                 }
             }).executeAsync();
@@ -101,7 +115,19 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
         } else if (session.isClosed()) {
             Log.i(TAG, "User has logged out...");
-            _thisUser.setLoggedIn(_userId, false);
+
+            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+            query.whereEqualTo("userId", _userId);
+            query.getFirstInBackground( new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject parseObject, ParseException e) {
+                    // if the user does exist in our database, set their loggedIn to false
+                    if (parseObject != null) {
+                        parseObject.put("loggedIn", false);
+                    }
+                }
+            });
+
             setContentView(R.layout.activity_login);
         }
     }
