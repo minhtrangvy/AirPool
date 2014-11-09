@@ -8,10 +8,14 @@ import android.view.MenuItem;
 
 import com.airpool.Fragment.DatePickerFragment;
 import com.airpool.Fragment.TimePickerFragment;
+import com.airpool.Model.Group;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
 import com.airpool.View.TransportationPreferenceSpinner;
+import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -19,6 +23,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 
 import android.widget.Spinner;
+
+import java.util.List;
 
 public class EditGroupActivity extends FragmentActivity implements View.OnClickListener,
         AdapterView.OnItemSelectedListener, DatePickerFragment.OnDatePickedListener,
@@ -102,35 +108,35 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.create_group_button:
-//                // If group is created, set all the variables.
-//                final Group newGroup = new Group();
-//
-//                newGroup.setAirport(airport);
-//                newGroup.setCollege(college);
+                // If group is created, set all the variables.
+                final Group newGroup = new Group();
+
+                newGroup.setAirport(airport);
+                newGroup.setCollege(college);
 //                newGroup.setDate(date);
 //                newGroup.setTime(time);
-//                newGroup.setTransPref(transPref);
-//                newGroup.setToAirport(toAirport);
-//
-//                newGroup.saveInBackground();
-//                String parseId = newGroup.getObjectId();
+                newGroup.setTransportationPreference(transPref);
+                newGroup.setAirport(toAirport);
+
+                newGroup.saveInBackground();
+                String parseId = newGroup.getObjectId();
 //                newGroup.setGroupID(parseId);
-//
-//                // Finds the user parse object to create relation with
-//                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-//                query.whereEqualTo("userID", "1");//_userId);
-//                query.findInBackground(new FindCallback<ParseObject>() {
-//                    public void done(List<ParseObject> objects, ParseException e) {
-//                        if (e == null) {
-////                            ParseRelation<ParseObject> userRelation = newGroup.getRelation("users");
-////                            userRelation.add(user);
-//                        } else {
-//                            // Error
-//                        }
-//                    }
-//                });
-//
-//                newGroup.saveInBackground();
+
+                // Finds the user parse object to create relation with
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+                query.whereEqualTo("userID", "1");//_userId);
+                query.findInBackground(new FindCallback<ParseObject>() {
+                    public void done(List<ParseObject> objects, ParseException e) {
+                        if (e == null) {
+//                            ParseRelation<ParseObject> userRelation = newGroup.getRelation("users");
+//                            userRelation.add(user);
+                        } else {
+                            // Error
+                        }
+                    }
+                });
+
+                newGroup.saveInBackground();
 
                 Intent clickCreateGroup = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
                 startActivity(clickCreateGroup);
