@@ -3,8 +3,6 @@ package com.airpool.Model;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
-import java.util.Date;
-
 
 @ParseClassName("WallPost")
 public class WallPost extends ParseObject {

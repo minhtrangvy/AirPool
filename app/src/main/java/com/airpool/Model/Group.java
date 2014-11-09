@@ -64,4 +64,7 @@ public class Group extends ParseObject {
         put("isGroupOpen", isGroupOpen);
     }
 
+    public String toString() {
+        return getAirport() + " " + getCollege();
+    }
 }

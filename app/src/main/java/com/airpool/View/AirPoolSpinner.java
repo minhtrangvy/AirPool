@@ -2,17 +2,12 @@ package com.airpool.View;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
-import android.widget.TextView;
-
-import com.airpool.Model.Airport;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 /**
  * Created by Maury on 11/8/14.

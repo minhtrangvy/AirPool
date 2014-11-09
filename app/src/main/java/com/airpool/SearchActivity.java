@@ -2,7 +2,6 @@ package com.airpool;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.Menu;
@@ -17,8 +16,6 @@ import com.airpool.Fragment.DatePickerFragment;
 import com.airpool.Fragment.TimePickerFragment;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
-
-import java.util.Calendar;
 
 
 public class SearchActivity extends FragmentActivity implements View.OnClickListener,
