@@ -14,6 +14,7 @@ import com.airpool.View.CollegeSpinner;
 import com.airpool.View.TransportationPreferenceSpinner;
 import com.parse.FindCallback;
 import com.parse.Parse;
+import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
@@ -111,12 +112,12 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
                 // If group is created, set all the variables.
                 final Group newGroup = new Group();
 
-                newGroup.setAirport(airport);
-                newGroup.setCollege(college);
-//                newGroup.setDate(date);
-                newGroup.setTimeOfDeparture(time);
-                newGroup.setTransportationPreference(transPref);
-                newGroup.setAirport(toAirport);
+//                newGroup.setAirport(airport);
+//                newGroup.setCollege(college);
+////                newGroup.setDate(date);
+//                newGroup.setTimeOfDeparture(time);
+//                newGroup.setTransportationPreference(transPref);
+//                newGroup.setAirport(toAirport);
 
                 newGroup.saveInBackground();
                 String parseId = newGroup.getObjectId();

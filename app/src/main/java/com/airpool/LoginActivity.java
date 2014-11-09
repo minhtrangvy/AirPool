@@ -58,6 +58,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         uiHelper.onCreate(savedInstanceState);
 
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
+
+//        GlobalUser globalUser = ( (GlobalUser) getApplicationContext() );
+//        String _userId = globalUser.getUserID();
     }
 
     @Override
@@ -89,13 +92,15 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onCompleted(GraphUser user, Response response) {
                     if (user != null) {
-                        _userId = user.getId();
+//                        _userId = user.getId();
                         Log.i(TAG, "Hello " + user.getName());
                         Log.i(TAG, "Unique ID " + user.getId());
 
-                        _thisUser = new User(_userId);
-                        _thisUser.setUserID(_userId);
-                        _thisUser.setLoggedIn(_userId, true);
+
+
+//                        _thisUser = new User(_userId);
+//                        _thisUser.setUserID(_userId);
+//                        _thisUser.setLoggedIn(_userId, true);
                     }
                 }
             }).executeAsync();
