@@ -113,10 +113,14 @@ public class User extends ParseObject {
     public String getFirstName() { return getString("firstName"); }
     public void setFirstName(String firstName) { put("firstName", firstName); }
 
-    public String getLastName() { return getString("LastName"); }
+    public String getLastName() { return getString("lastName"); }
     public void setLastName(String lastName) { put("lastName", lastName); }
 
     public String getPicUrl() { return getString("picUrl"); }
     public void setPicUrl(String picUrl) { put("picUrl", picUrl); }
 
+
+    public String toString() {
+        return getFirstName() + " " + getLastName();
+    }
 }

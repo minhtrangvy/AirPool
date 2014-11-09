@@ -46,19 +46,21 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        mHour = hourOfDay;
-        mMinute = minute;
+        int displayedHour = hourOfDay;
 
         String twelveHrTimeStamp = "am";
         // Set the Selected Date in Select date Button
-        if (mHour > 12) {
-            mHour = mHour % 12;
+        if (hourOfDay > 12) {
+            displayedHour = hourOfDay % 12;
             twelveHrTimeStamp = "pm";
         }
-        else if (mHour ==0) {
-            mHour = 12;
+        else if (hourOfDay == 0) {
+            displayedHour = 12;
         }
-        callback.onTimePicked(mHour, mMinute, twelveHrTimeStamp);
+        callback.onTimePicked(displayedHour, minute, twelveHrTimeStamp);
+
+        mHour = hourOfDay;
+        mMinute = minute;
     }
 
     public void initializeTime() {

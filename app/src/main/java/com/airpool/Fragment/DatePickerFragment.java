@@ -44,11 +44,12 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        mYear = year;
-        mMonth = month + 1;
-        mDay = day;
+        // Add 1 to month since months are weirdly offset.
+        callback.onDatePicked(year, month + 1, day);
 
-        callback.onDatePicked(mYear, mMonth, mDay);
+        mYear = year - 1900;
+        mMonth = month;
+        mDay = day;
     }
 
     protected void initializeDay() {

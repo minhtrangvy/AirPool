@@ -3,6 +3,7 @@ package com.airpool;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -38,7 +39,7 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
     College college = null;
     Airport airport = null;
     Long departureTime = null;
-    boolean isToAirport = false;
+    boolean isToAirport = true;
 
     Button createGroupButton, selectDateButton, selectTimeButton;
 
@@ -185,7 +186,7 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
 
                 // Make the association between Group and User.
                 ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-                userQuery.getInBackground("303892173135559", new GetCallback<ParseObject>() {
+                userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
                     @Override
                     public void done(ParseObject object, ParseException e) {
                         if (e == null) {
