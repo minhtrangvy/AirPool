@@ -14,13 +14,31 @@ import android.widget.Spinner;
 
 import com.airpool.Fragment.DatePickerFragment;
 import com.airpool.Fragment.TimePickerFragment;
+import com.airpool.Model.Airport;
+import com.airpool.Model.College;
+import com.airpool.Model.Group;
+import com.airpool.Model.TransportationPreference;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
+import com.parse.Parse;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 
 public class SearchActivity extends FragmentActivity implements View.OnClickListener,
-        AdapterView.OnItemSelectedListener, DatePickerFragment.OnDatePickedListener,
-        TimePickerFragment.OnTimePickedListener{
+        DatePickerFragment.OnDatePickedListener,
+        TimePickerFragment.OnTimePickedListener {
+    TransportationPreference transportationPreference;
+    College college = null;
+    Airport airport = null;
+    Long departureTime = null;
+    boolean isToAirport = true;
+
     Button searchButton, selectDateButton, selectTimeButton;
 
     DatePickerFragment dateFragment;
@@ -40,31 +58,64 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         searchButton.setOnClickListener(this);
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
-        selectDateButton.setOnClickListener(this);
+        selectDateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dateFragment.show(getSupportFragmentManager(), "datePicker");
+            }
+        });
 
         selectTimeButton = (Button) findViewById(R.id.selectTime_button);
-        selectTimeButton.setOnClickListener(this);
+        selectTimeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                timeFragment.show(getSupportFragmentManager(), "timePicker");
+            }
+        });
 
-        // Set the spinner requirements
         Spinner toFromSpinner = (Spinner) findViewById(R.id.toFrom_spinner);
-        // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> toFromAdapter = ArrayAdapter.createFromResource(this,
                 R.array.toFrom_array, android.R.layout.simple_spinner_item);
-        // Specify the layout to use when the list of choices appears
         toFromAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        // Apply the adapter to the spinner
         toFromSpinner.setAdapter(toFromAdapter);
-        toFromSpinner.setOnItemSelectedListener(this);
+        toFromSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
+                // The text in the first position is assumed to be "To Airport."
+                isToAirport = position == 0;
+            }
 
-        CollegeSpinner collegeSpinner = (CollegeSpinner) findViewById(R.id.college_spinner);
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                isToAirport = false;
+            }
+        });
+
+        final CollegeSpinner collegeSpinner = (CollegeSpinner) findViewById(R.id.college_spinner);
         collegeSpinner.initializeSpinner(this);
-        collegeSpinner.setOnItemSelectedListener(this);
+        collegeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
+                college = (College) collegeSpinner.getAdapter().getItem(position);
+            }
 
-        AirportSpinner airportSpinner = (AirportSpinner) findViewById(R.id.airport_spinner);
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                college = null;
+            }
+        });
+
+        final AirportSpinner airportSpinner = (AirportSpinner) findViewById(R.id.airport_spinner);
         airportSpinner.initializeSpinner(this);
-        airportSpinner.setOnItemSelectedListener(this);
-    }
+        airportSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
+                airport = (Airport) airportSpinner.getAdapter().getItem(position);
+            }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> arg0) {
+                airport = null;
+            }
+        });
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -87,25 +138,39 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.search_results_button:
-                Intent clickSearch = new Intent(SearchActivity.this, SearchResultsActivity.class);
-                startActivity(clickSearch);
-                break;
-            case R.id.selectDate_button:
-                this.dateFragment.show(getSupportFragmentManager(), "datePicker");
-                break;
-            case R.id.selectTime_button:
-                this.timeFragment.show(getSupportFragmentManager(), "timePicker");
-                break;
-        }
-    }
+        // Perform the search based on the criteria that the user input.
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
 
-    // Registers the item selected in the spinner
-    public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        String item = parent.getItemAtPosition(pos).toString();
-        Log.i("checkItem", item);
-        // TODO: Store the item selected in Parse
+        // TODO: Get transportation preference from User object.
+
+        query.whereEqualTo("airport", airport.name());
+        query.whereEqualTo("isToAirport", isToAirport);
+
+        // Do some math to return dates within a 12-hour window.
+        Date requestedDepartureDate = new Date(
+                dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
+                timeFragment.getHour(), timeFragment.getMinute(), 0);
+        Long twelveHoursBefore = requestedDepartureDate.getTime() - (43200 * 1000);
+        Long twelveHoursAfter = requestedDepartureDate.getTime() + (43200 * 1000);
+
+        query.whereLessThan("timeOfDeparture", twelveHoursAfter);
+        query.whereGreaterThan("timeOfDeparture", twelveHoursBefore);
+
+        ArrayList<String> matchingGroupIds = new ArrayList<String>();
+        try {
+            List<ParseObject> groups = query.find();
+
+            for (ParseObject group : groups) {
+                matchingGroupIds.add(group.getObjectId());
+            }
+        } catch (ParseException exception) {
+            // No group IDs were matching.
+        }
+
+        // Send the list of groupIds that match the search over to the search results.
+        Intent clickSearch = new Intent(SearchActivity.this, SearchResultsActivity.class);
+        clickSearch.putStringArrayListExtra("matchingGroupIds", matchingGroupIds);
+        startActivity(clickSearch);
     }
 
     public void onNothingSelected(AdapterView<?> parent) {

@@ -4,17 +4,25 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airpool.Model.Group;
+import com.airpool.Model.User;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class ViewGroupActivity extends Activity implements View.OnClickListener {
@@ -23,6 +31,10 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
     TextView airportText;
     TextView collegeText;
     TextView transportationPreferenceText;
+
+    ListView groupMembersList;
+    ArrayAdapter<User> groupMembersAdapter;
+    ArrayList<User> groupMembers;
 
     Button wallButton, joinButton, editButton;
     boolean isUserMember;
@@ -45,8 +57,11 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         editButton = (Button) findViewById(R.id.edit_group_button);
         editButton.setOnClickListener(this);
 
+        groupMembersList = (ListView) findViewById(R.id.group_members_list);
+
         // Get the group object ID that was passed in, get the group object, and populate
         // tne necessary views.
+        groupMembers = new ArrayList<User>();
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
             Group group = (Group) query.get(getIntent().getStringExtra("groupId"));
@@ -62,10 +77,31 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
 
             airportText.setText(String.format(airportTextContents, group.getAirport().getAirportName()));
             collegeText.setText(group.getCollege().getFullName());
-            transportationPreferenceText.setText(String.format(resources.getString(R.string.mode_of_transportation),
+            transportationPreferenceText.setText(
+                    String.format(resources.getString(R.string.mode_of_transportation),
                     group.getTransportationPreference().getPreferenceName()));
+
+            // Populate the list of users.
+            ParseRelation relation = group.getRelation("users");
+
+            query = relation.getQuery();
+            List<ParseObject> users = query.find();
+
+            // Do not know of any other way to cast list of objects.
+            for(ParseObject user : users) {
+                groupMembers.add((User) user);
+            }
         } catch (ParseException exception) {
             // Error.
+        }
+
+        if (!groupMembers.isEmpty()) {
+            // Populate the list view.
+            groupMembersAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1,
+                    groupMembers);
+            groupMembersList.setAdapter(groupMembersAdapter);
+        } else {
+            // Indicate to the user that there are no members of this group.
         }
     }
 

@@ -1,7 +1,9 @@
 package com.airpool;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +20,7 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,34 +42,9 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
         createGroup = (Button) findViewById(R.id.create_group_button);
         createGroup.setOnClickListener(this);
 
-        // Perform the query.
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
-
-        searchResultGroups = new ArrayList<Group>();
-        try {
-            List<ParseObject> groups = query.find();
-
-            // Do not know of any other way to cast list of objects.
-            for(ParseObject group : groups) {
-                searchResultGroups.add((Group) group);
-            }
-        } catch (ParseException exception) {
-            // Error.
-        }
-
-        // Populate the list view.
-        searchResultListAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, searchResultGroups);
-        searchResultList.setAdapter(searchResultListAdapter);
-
-        // View a group when you click on a list item.
-        searchResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                Intent viewGroup = new Intent(SearchResultsActivity.this, ViewGroupActivity.class);
-                viewGroup.putExtra("groupId", searchResultGroups.get(position).getObjectId());
-                startActivity(viewGroup);
-            }
-        });
+        // Perform the query on a background thread.
+        FetchSearchResultsTask task = new FetchSearchResultsTask(this);
+        task.execute();
     }
 
 
@@ -97,6 +75,67 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
                 clickCreate.putExtra("isGroupExisting", false);
                 startActivity(clickCreate);
                 break;
+        }
+    }
+
+    private class FetchSearchResultsTask extends AsyncTask<ArrayList<String>, Void, ArrayList<Group>> {
+        private Context context;
+
+        public FetchSearchResultsTask(Context context) {
+            this.context = context;
+        }
+
+        protected ArrayList<Group> doInBackground(ArrayList<String>... requestedGroupIds) {
+            ArrayList<Group> groups = new ArrayList<Group>();
+
+            List<ParseObject> searchResultParseGroups = new ArrayList<ParseObject>();
+            ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
+
+            try {
+                ArrayList<String> matchingGroupIds = getIntent().
+                        getStringArrayListExtra("matchingGroupIds");
+
+                for (String groupId : matchingGroupIds) {
+                    searchResultParseGroups.add(query.get(groupId));
+
+                }
+
+                // Do not know of any other way to cast list of objects.
+                for(ParseObject group : searchResultParseGroups) {
+                    groups.add((Group) group);
+                }
+            } catch (ParseException exception) {
+                // Error.
+            }
+
+            return groups;
+        }
+
+        protected void onProgressUpdate() {
+            // Do nothing.
+        }
+
+        protected void onPostExecute(ArrayList<Group> result) {
+            searchResultGroups = result;
+
+            if (!searchResultGroups.isEmpty()) {
+                // Populate the list view.
+                searchResultListAdapter = new ArrayAdapter<Group>(this.context,
+                        android.R.layout.simple_list_item_1, searchResultGroups);
+                searchResultList.setAdapter(searchResultListAdapter);
+
+                // View a group when you click on a list item.
+                searchResultList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                        Intent viewGroup = new Intent(SearchResultsActivity.this, ViewGroupActivity.class);
+                        viewGroup.putExtra("groupId", searchResultGroups.get(position).getObjectId());
+                        startActivity(viewGroup);
+                    }
+                });
+            } else {
+                // Indicate to the user that there were no search results.
+            }
         }
     }
 }
