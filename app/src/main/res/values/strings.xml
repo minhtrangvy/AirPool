@@ -10,8 +10,8 @@
 
     <string name="title_activity_login">Login</string>
 
-    <string name="to">to</string>
-    <string name="from">from</string>
+    <string name="to">To</string>
+    <string name="from">From</string>
 
     <string name="title_activity_view_group">View Group</string>
     <string name="groupMembers">Members</string>

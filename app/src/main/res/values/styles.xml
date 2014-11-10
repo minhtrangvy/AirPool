@@ -1,8 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:textSize">16dp</item>
+    </style>
+
+<!--    <style name="AppBaseTheme" parent="android:Theme.Light">
+    </style>-->
+
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+    </style>
+
+    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+        <item name="android:textColor">#fdb62a</item>
+        <item name="android:background">@android:color/black</item>
     </style>
 
 </resources>
