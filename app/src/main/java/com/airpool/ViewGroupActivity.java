@@ -28,6 +28,7 @@ import java.util.List;
 public class ViewGroupActivity extends Activity implements View.OnClickListener {
     Group group = null;
 
+    TextView departureTimeText;
     TextView airportText;
     TextView collegeText;
     TextView transportationPreferenceText;
@@ -44,6 +45,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_group);
 
+        departureTimeText = (TextView) findViewById(R.id.departure_time_text);
         airportText = (TextView) findViewById(R.id.airport_text);
         collegeText = (TextView) findViewById(R.id.college_text);
         transportationPreferenceText = (TextView) findViewById(R.id.mode_of_transportation_text);
@@ -78,6 +80,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
                 airportTextContents = resources.getString(R.string.leaving_from_airport);
             }
 
+            departureTimeText.setText(group.getTimeOfDepartureString());
             airportText.setText(String.format(airportTextContents, group.getAirport().getAirportName()));
             collegeText.setText(group.getCollege().getFullName());
             transportationPreferenceText.setText(
