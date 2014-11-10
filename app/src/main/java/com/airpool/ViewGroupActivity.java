@@ -178,7 +178,12 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
                         if (e == null) {
                             ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
                             newGroupRelation.remove(object);
-                            group.saveInBackground();
+
+                            if (groupMembers.size() - 1 == 0){
+                                group.setIsActive(false);
+                            } else {
+                                group.saveInBackground();
+                            }
 
                             Toast.makeText(getApplicationContext(),
                                     getResources().getString(R.string.toast_successfully_left_group),

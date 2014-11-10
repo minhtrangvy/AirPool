@@ -62,6 +62,7 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
                 // Then, get the associated groups.
                 ParseQuery<ParseObject> groupQuery = ParseQuery.getQuery("Group");
                 groupQuery.whereEqualTo("users", user);
+                groupQuery.whereEqualTo("isActive", true);
 
                 List<ParseObject> groups = groupQuery.find();
 

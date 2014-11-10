@@ -22,9 +22,10 @@
     <string name="leaving_from_airport">Leaving from %1$s</string>
     <string name="mode_of_transportation">By %1$s</string>
 
-    <string name="joinGroup">Join Group</string>
-    <string name="editGroup">Edit Group</string>
-    <string name="leaveGroup">Leave Group</string>
+    <string name="joinGroup">Join</string>
+    <string name="createGroup">Create</string>
+    <string name="editGroup">Edit</string>
+    <string name="leaveGroup">Leave</string>
     <string name="groupWall">Group Wall</string>
 
     <!-- Search Results -->

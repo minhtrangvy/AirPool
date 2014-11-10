@@ -59,22 +59,23 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
         Intent myIntent = getIntent();
         isGroupExisting = myIntent.getBooleanExtra("isGroupExisting", false);
 
-        if (isGroupExisting) {
-            setTitle(R.string.title_activity_edit_group);
-        } else {
-            setTitle(R.string.title_activity_create_group);
-        }
-
         dateFragment = new DatePickerFragment();
         timeFragment = new TimePickerFragment();
 
         toFromCollege = (TextView) findViewById(R.id.to_from_college_text);
         toFromCollege.setText(getResources().getString(R.string.from));
 
-        // Access the Button defined in login XML
-        // and listen for it here
         createGroupButton = (Button) findViewById(R.id.create_group_button);
         createGroupButton.setOnClickListener(this);
+
+        if (isGroupExisting) {
+            setTitle(R.string.title_activity_edit_group);
+            createGroupButton.setText(R.string.editGroup);
+
+        } else {
+            setTitle(R.string.title_activity_create_group);
+            createGroupButton.setText(R.string.createGroup);
+        }
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(new View.OnClickListener() {
