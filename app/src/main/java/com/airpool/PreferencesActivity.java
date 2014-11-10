@@ -10,13 +10,20 @@ import android.widget.Button;
 import android.widget.CheckBox;
 
 import com.airpool.Model.User;
+import com.parse.GetCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
+import java.util.ArrayList;
 
 
 public class PreferencesActivity extends Activity implements View.OnClickListener {
 
     Button homepageButton;
     boolean taxi, superShuttle, publicTransit, drive, noPref;
-    User _thisUser;
+    private User user;
+    String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +35,31 @@ public class PreferencesActivity extends Activity implements View.OnClickListene
         publicTransit = false;
         drive = false;
         noPref = false;
+
+        GlobalUser currentUser = ((GlobalUser)getApplicationContext());
+        userId = currentUser.getUserID();
+
+        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+        query.whereEqualTo("userId", userId);
+        query.getFirstInBackground( new GetCallback<ParseObject>() {
+            @Override
+            public void done(ParseObject parseObject, ParseException e) {
+                // if the user does exist in our database
+                if (parseObject != null) {
+                    taxi = false;
+                    superShuttle = false;
+                    publicTransit = false;
+                    drive = false;
+                    noPref = false;
+
+                    boolean[] preferences = {taxi, superShuttle, publicTransit, drive, noPref};
+                    parseObject.put("loggedIn", true);
+                    parseObject.put("facebookId", userId);
+                    parseObject.put("transportationPreference", preferences);
+                    user.setTransPref(preferences);
+                }
+            }
+        });
 
         homepageButton = (Button) findViewById(R.id.homepage_button);
         homepageButton.setOnClickListener(this);
