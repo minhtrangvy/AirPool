@@ -4,18 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.airpool.Adapter.GroupUsersAdapter;
 import com.airpool.Model.Group;
 import com.airpool.Model.User;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -33,10 +33,10 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
     TextView transportationPreferenceText;
 
     ListView groupMembersList;
-    ArrayAdapter<User> groupMembersAdapter;
+    GroupUsersAdapter groupMembersAdapter;
     ArrayList<User> groupMembers;
 
-    Button wallButton, joinButton, editButton;
+    Button wallButton, joinButton, editButton, leaveButton;
     boolean isUserMember;
 
     @Override
@@ -51,11 +51,14 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         wallButton = (Button) findViewById(R.id.groupWall_button);
         wallButton.setOnClickListener(this);
 
-        joinButton = (Button) findViewById(R.id.joinGroup_button);
+        joinButton = (Button) findViewById(R.id.join_group_button);
         joinButton.setOnClickListener(this);
 
         editButton = (Button) findViewById(R.id.edit_group_button);
         editButton.setOnClickListener(this);
+
+        leaveButton = (Button) findViewById(R.id.leave_group_button);
+        leaveButton.setOnClickListener(this);
 
         groupMembersList = (ListView) findViewById(R.id.group_members_list);
 
@@ -64,7 +67,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         groupMembers = new ArrayList<User>();
         try {
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
-            Group group = (Group) query.get(getIntent().getStringExtra("groupId"));
+            group = (Group) query.get(getIntent().getStringExtra("groupId"));
 
             String airportTextContents;
             Resources resources = getResources();
@@ -89,19 +92,29 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
 
             // Do not know of any other way to cast list of objects.
             for(ParseObject user : users) {
-                groupMembers.add((User) user);
+                User userToAdd = (User) user;
+                groupMembers.add(userToAdd);
+                if (userToAdd.getObjectId().equals("68xwdmZ1IE")) {
+                    isUserMember = true;
+                }
             }
         } catch (ParseException exception) {
             // Error.
         }
 
-        if (!groupMembers.isEmpty()) {
-            // Populate the list view.
-            groupMembersAdapter = new ArrayAdapter<User>(this, android.R.layout.simple_list_item_1,
-                    groupMembers);
-            groupMembersList.setAdapter(groupMembersAdapter);
+
+        // Populate the list view.
+        groupMembersAdapter = new GroupUsersAdapter(this, android.R.layout.simple_list_item_1,
+                groupMembers);
+        groupMembersList.setAdapter(groupMembersAdapter);
+
+        if (isUserMember) {
+            // Show the edit group and group wall buttons.
+            wallButton.setVisibility(View.VISIBLE);
+            editButton.setVisibility(View.VISIBLE);
+            leaveButton.setVisibility(View.VISIBLE);
         } else {
-            // Indicate to the user that there are no members of this group.
+            joinButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -132,24 +145,57 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
                 Intent goToWall = new Intent(ViewGroupActivity.this, GroupWallActivity.class);
                 startActivity(goToWall);
                 break;
-            case R.id.joinGroup_button:
-                // TODO: Store that user has joined group
-                if (true) {
-                    editButton.setVisibility(View.VISIBLE);
-                    joinButton.setText("Leave Group");
+            case R.id.join_group_button:
+                ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
+                userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null) {
+                            ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
+                            newGroupRelation.add(object);
+                            group.saveInBackground();
 
-                    Toast.makeText(getApplicationContext(),
-                            "Successfully Joined Group!",
-                            Toast.LENGTH_SHORT).show();
-                } else {
-                    editButton.setVisibility(View.GONE);
-                    joinButton.setText("Join Group");
+                            Toast.makeText(getApplicationContext(),
+                                    getResources().getString(R.string.toast_successfully_created_group),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Error.
+                            Toast.makeText(getApplicationContext(),
+                                    getResources().getString(R.string.toast_unsuccessfully_joined_group),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        // Recreate the activity.
+                        recreate();
+                    }
+                });
 
-                    Toast.makeText(getApplicationContext(),
-                            "Successfully Left Group!",
-                            Toast.LENGTH_SHORT).show();
-                }
                 break;
+            case R.id.leave_group_button:
+                userQuery = ParseQuery.getQuery("User");
+                userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
+                    @Override
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null) {
+                            ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
+                            newGroupRelation.remove(object);
+                            group.saveInBackground();
+
+                            Toast.makeText(getApplicationContext(),
+                                    getResources().getString(R.string.toast_successfully_left_group),
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Error.
+                            Toast.makeText(getApplicationContext(),
+                                    getResources().getString(R.string.toast_unsuccessfully_left_group),
+                                    Toast.LENGTH_SHORT).show();
+                        }
+                        Intent goToHomepage = new Intent(ViewGroupActivity.this, HomepageActivity.class);
+                        startActivity(goToHomepage);
+                    }
+                });
+
+                break;
+
             case R.id.edit_group_button:
                 Intent clickEdit = new Intent(ViewGroupActivity.this, EditGroupActivity.class);
                 clickEdit.putExtra("isGroupExisting", true);

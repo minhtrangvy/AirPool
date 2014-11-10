@@ -59,6 +59,10 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
         mDay = calendar.get(Calendar.DAY_OF_MONTH);
     }
 
+    public boolean isValidInput() {
+        return !(mYear == 0 || mMonth == 0 || mDay == 0);
+    }
+
     public int getYear() {
         return this.mYear;
     }

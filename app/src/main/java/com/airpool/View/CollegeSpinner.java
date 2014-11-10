@@ -53,5 +53,9 @@ public class CollegeSpinner extends AirPoolSpinner {
             return view;
         }
 
+        @Override
+        public int getPosition(College college) {
+            return this.list.indexOf(college);
+        }
     }
 }

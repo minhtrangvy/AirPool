@@ -10,24 +10,36 @@
 
     <string name="title_activity_login">Login</string>
 
-    <string name="title_activity_search_results">SearchResultsActivity</string>
+    <string name="to">to</string>
+    <string name="from">from</string>
 
-    <string name="title_activity_view_group">View a Group</string>
-    <string name="groupMembers">Current Group Members</string>
-    <string name="groupInfo">Current Group Information</string>
+    <string name="title_activity_view_group">View Group</string>
+    <string name="groupMembers">Members</string>
+    <string name="groupInfo">Information</string>
 
-    <!-- Group information, with placeholders for the actual information. -->
+    <!-- Group information when group is viewed, with placeholders for the actual information. -->
     <string name="going_to_airport">Going to %1$s</string>
     <string name="leaving_from_airport">Leaving from %1$s</string>
-    <string name="mode_of_transportation">Mode of Transportation: %1$s</string>
+    <string name="mode_of_transportation">By %1$s</string>
 
     <string name="joinGroup">Join Group</string>
     <string name="editGroup">Edit Group</string>
+    <string name="leaveGroup">Leave Group</string>
     <string name="groupWall">Group Wall</string>
 
-    <string name="title_activity_search_results_list">Search Results: List</string>
-    <string name="groupResults">Group Results</string>
-    <string name="createAGroup">Create a Group</string>
+    <!-- Search Results -->
+    <string name="title_activity_search_results">Search Results</string>
+
+    <string name="rides_to">Group Rides to %1$s</string>
+    <string name="rides_from">Group Rides from %1$s</string>
+
+    <string name="group_results">Group Results</string>
+    <string name="no_search_results">There are no rides currently scheduled that match your criteria.</string>
+    <plurals name="group_number">
+        <item quantity="one">One group member.</item>
+        <item quantity="other">%d group members.</item>
+    </plurals>
+    <string name="create_group">Create Group</string>
 
     <string name="title_activity_preferences">Preferences</string>
     <string name="instructions">Instructions</string>
@@ -43,7 +55,7 @@
 
     <string name="savePrefs">Save Preferences</string>
 
-    <string name="title_activity_create_group">Create a New Group</string>
+    <string name="title_activity_create_group">Create New Group</string>
     <string name="createGroupInstruc">In order to create a new group, please fill out the following information:</string>
     <string name="createGroup_button">Create Group</string>
     <string name="goBackResults">Back to Search Results</string>
@@ -70,12 +82,17 @@
         <item>From</item>
     </string-array>
 
-    <string name="title_activity_group_wall">GroupWallActivity</string>
+    <string name="title_activity_group_wall">Group Wall</string>
     <string name="hello_world">Hello world!</string>
     <string name="usernameHint">Username</string>
 
     <!-- Toasts -->
-    <string name="toast_successfully_joined_group">You\'ve successfully created the group.</string>
-    <string name="toast_unsuccessfully_joined_group">There was a problem creating the group.</string>
+    <string name="toast_successfully_created_group">You\'ve successfully created the group.</string>
+    <string name="toast_unsuccessfully_created_group">We had a problem creating the group.</string>
+    <string name="toast_successfully_joined_group">You\'ve successfully joined the group.</string>
+    <string name="toast_unsuccessfully_joined_group">We had a problem adding you to the group.</string>
+    <string name="toast_successfully_left_group">You\'ve successfully left the group.</string>
+    <string name="toast_unsuccessfully_left_group">We had a problem removing you from the group.</string>
+    <string name="toast_blank_spinner">Select a departure date and time.</string>
 
 </resources>

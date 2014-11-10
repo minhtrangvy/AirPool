@@ -69,6 +69,10 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
         mMinute = calendar.get(Calendar.MINUTE);
     }
 
+    public boolean isValidInput() {
+        return !(mHour == 0 || mMinute == 0);
+    }
+
     public int getHour() {
         return this.mHour;
     }

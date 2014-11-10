@@ -11,6 +11,8 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airpool.Fragment.DatePickerFragment;
 import com.airpool.Fragment.TimePickerFragment;
@@ -40,6 +42,7 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
     boolean isToAirport = true;
 
     Button searchButton, selectDateButton, selectTimeButton;
+    TextView toFromCollege;
 
     DatePickerFragment dateFragment;
     TimePickerFragment timeFragment;
@@ -52,8 +55,9 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         dateFragment = new DatePickerFragment();
         timeFragment = new TimePickerFragment();
 
-        // Access the Button defined in search XML
-        // and listen for it here
+        toFromCollege = (TextView) findViewById(R.id.to_from_college_text);
+        toFromCollege.setText(getResources().getString(R.string.from));
+
         searchButton = (Button) findViewById(R.id.search_results_button);
         searchButton.setOnClickListener(this);
 
@@ -82,11 +86,18 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
             public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
                 // The text in the first position is assumed to be "To Airport."
                 isToAirport = position == 0;
+
+                if (isToAirport) {
+                    toFromCollege.setText(getResources().getString(R.string.from));
+                } else {
+                    toFromCollege.setText(getResources().getString(R.string.to));
+                }
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> arg0) {
-                isToAirport = false;
+            public void onNothingSelected(AdapterView<?> adapterView) {
+                isToAirport = true;
+                toFromCollege.setText(getResources().getString(R.string.from));
             }
         });
 
@@ -138,38 +149,24 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
 
     @Override
     public void onClick(View view) {
-        // Perform the search based on the criteria that the user input.
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
-
-        // TODO: Get transportation preference from User object.
-
-        query.whereEqualTo("airport", airport.name());
-        query.whereEqualTo("isToAirport", isToAirport);
-
-        // Do some math to return dates within a 12-hour window.
-        Date requestedDepartureDate = new Date(
-                dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
-                timeFragment.getHour(), timeFragment.getMinute(), 0);
-        Long twelveHoursBefore = requestedDepartureDate.getTime() - (43200 * 1000);
-        Long twelveHoursAfter = requestedDepartureDate.getTime() + (43200 * 1000);
-
-        query.whereLessThan("timeOfDeparture", twelveHoursAfter);
-        query.whereGreaterThan("timeOfDeparture", twelveHoursBefore);
-
-        ArrayList<String> matchingGroupIds = new ArrayList<String>();
-        try {
-            List<ParseObject> groups = query.find();
-
-            for (ParseObject group : groups) {
-                matchingGroupIds.add(group.getObjectId());
-            }
-        } catch (ParseException exception) {
-            // No group IDs were matching.
+        if (!dateFragment.isValidInput() || !timeFragment.isValidInput()) {
+            Toast.makeText(getApplicationContext(),
+                    getResources().getString(R.string.toast_blank_spinner),
+                    Toast.LENGTH_SHORT).show();
+            return;
         }
 
         // Send the list of groupIds that match the search over to the search results.
         Intent clickSearch = new Intent(SearchActivity.this, SearchResultsActivity.class);
-        clickSearch.putStringArrayListExtra("matchingGroupIds", matchingGroupIds);
+
+        // Send over the search criteria.
+        clickSearch.putExtra("airport", airport.name());
+        clickSearch.putExtra("isToAirport", isToAirport);
+        clickSearch.putExtra("college", college.name());
+        clickSearch.putExtra("departureDate", new Date(
+                dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
+                timeFragment.getHour(), timeFragment.getMinute(), 0).getTime());
+
         startActivity(clickSearch);
     }
 

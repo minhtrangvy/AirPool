@@ -8,6 +8,8 @@ import java.util.Date;
 
 @ParseClassName("Group")
 public class Group extends ParseObject {
+    int numberOfUsers;
+
     public Group() {
         // A default constructor is required.
     }
@@ -15,6 +17,26 @@ public class Group extends ParseObject {
     public Date getTimeOfDeparture() {
         Long date = getLong("timeOfDeparture");
         return new Date(date);
+    }
+
+    public String getTimeOfDepartureString() {
+        Date timeOfDeparture = getTimeOfDeparture();
+
+        String twelveHrTimeStamp = "am";
+        int hourOfDay = timeOfDeparture.getHours();
+        // Set the Selected Date in Select date Button
+        if (hourOfDay > 12) {
+            hourOfDay = hourOfDay % 12;
+            twelveHrTimeStamp = "pm";
+        }
+        else if (hourOfDay == 0) {
+            hourOfDay = 12;
+        }
+
+        return (timeOfDeparture.getMonth() + 1) + "/" + timeOfDeparture.getDate() + "/" +
+                (timeOfDeparture.getYear() + 1900) + " at " + hourOfDay + ":" +
+                ((timeOfDeparture.getMinutes() < 10) ? "0" : "") +
+                timeOfDeparture.getMinutes() + twelveHrTimeStamp;
     }
 
     public void setTimeOfDeparture(Date timeOfDeparture) {
@@ -62,6 +84,22 @@ public class Group extends ParseObject {
 
     public void setIsGroupOpen(boolean isGroupOpen) {
         put("isGroupOpen", isGroupOpen);
+    }
+
+    public boolean getIsActive() {
+        return getBoolean("isActive");
+    }
+
+    public void setIsActive(boolean isActive) {
+        put("isActive", isActive);
+    }
+
+    public int getNumberOfUsers() {
+        return numberOfUsers;
+    }
+
+    public void setNumberOfUsers(int numberOfUsers) {
+        this.numberOfUsers = numberOfUsers;
     }
 
     public String toString() {

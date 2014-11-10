@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
+import com.airpool.Adapter.UserGroupsAdapter;
 import com.airpool.Model.Group;
 import com.airpool.Model.User;
 import com.parse.ParseException;
@@ -74,7 +75,7 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
 
             if (!userGroups.isEmpty()) {
                 // Populate the list view.
-                userGroupListAdapter = new ArrayAdapter<Group>(this, android.R.layout.simple_list_item_1, userGroups);
+                userGroupListAdapter = new UserGroupsAdapter(this, R.layout.item_user_groups, userGroups);
                 userGroupList.setAdapter(userGroupListAdapter);
 
                 // View a group when you click on a list item.

@@ -55,6 +55,13 @@ public class User extends ParseObject {
     public String getPicUrl() { return getString("picUrl"); }
     public void setPicUrl(String picUrl) { put("picUrl", picUrl); }
 
+    public Number getFacebookId() {
+        return getNumber("facebookId");
+    }
+
+    public void setFacebookId(int facebookId) {
+        put("facebookId", facebookId);
+    }
 
     public String toString() {
         return getFirstName() + " " + getLastName();
