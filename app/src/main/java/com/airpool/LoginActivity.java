@@ -25,7 +25,7 @@ import com.parse.ParseQuery;
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
     private User _thisUser;
-    private String _userId;
+    public String _userId;
 
     Button searchButton, preferencesButton;
 //    EditText editUsername, editPassword;
@@ -72,6 +72,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+
+        final GlobalUser currentUser = ((GlobalUser)getApplicationContext());
+
         if (session.isOpened()) {
             Log.i(TAG, "User has logged in...");
             // make request to the /me API
@@ -79,24 +82,30 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 
                 // callback after Graph API response with user object
                 @Override
-                public void onCompleted(GraphUser user, Response response) {
+                public void onCompleted(final GraphUser user, Response response) {
                     if (user != null) {
-//                        _userId = user.getId();
+                        final String currentID = user.getId();
                         Log.i(TAG, "Hello " + user.getName());
-                        Log.i(TAG, "Unique ID " + user.getId());
-
-                        GlobalUser currentUser = ((GlobalUser)getApplicationContext());
-                        _userId = currentUser.getUserID();
+                        Log.i(TAG, "Unique ID " + currentID);
 
                         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
-                        query.whereEqualTo("userId", _userId);
+                        query.whereEqualTo("facebookID", currentID);
                         query.getFirstInBackground( new GetCallback<ParseObject>() {
                             @Override
                             public void done(ParseObject parseObject, ParseException e) {
-                                // if the user does exist in our database, set their loggedIn to false
+                                // if the user does exist in our database, set their loggedIn to true
                                 if (parseObject != null) {
-                                    parseObject.put("loggedIn", true);
-                                    parseObject.put("facebookId", _userId);
+                                    parseObject.put("isLoggedIn", true);
+                                    currentUser.setUserID(parseObject.getObjectId());
+                                    Log.i(TAG, "We found you! Parse Object ID" + parseObject.getObjectId().toString());
+                                // if the user does not exist in our database, create them
+                                } else {
+
+                                    Log.i(TAG, "We did not find you! And fb id is " + currentID);
+                                    ParseObject newUser = new ParseObject("User");
+                                    newUser.put("facebookID", user.getId());
+                                    newUser.put("isLoggedIn", true);
+                                    newUser.saveInBackground();
                                 }
                             }
                         });
@@ -104,8 +113,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 }
             }).executeAsync();
 
-            setContentView(R.layout.activity_homepage);
+            this._userId = currentUser.getUserID();
+            Log.i(TAG, "User ID is " + this._userId);
 
+            setContentView(R.layout.activity_homepage);
 
             searchButton = (Button) findViewById(R.id.search_button);
             searchButton.setOnClickListener(this);

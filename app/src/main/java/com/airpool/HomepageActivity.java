@@ -24,7 +24,7 @@ import java.util.List;
 
 public class HomepageActivity extends Activity implements View.OnClickListener {
     Button searchButton, preferencesButton, logoutButton;
-    boolean isLoggedIn = true;
+    boolean isLoggedIn = false;
     User _thisUser;
 
     ListView userGroupList;

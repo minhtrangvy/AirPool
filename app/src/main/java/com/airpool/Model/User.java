@@ -67,20 +67,20 @@ public class User extends ParseObject {
     // we only get this user object when this person is already a user
 
 
-    public void checkUserExists(String userId) {
-        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
-        query.whereEqualTo("userId", userId);
-        query.getFirstInBackground( new GetCallback<ParseObject>() {
-
-            @Override
-            public void done(ParseObject parseObject, ParseException e) {
-                // if the user does not exist in our database, make a new user
-                if (parseObject == null) {
-                    //
-                }
-            }
-        });
-    }
+//    public void checkUserExists(String userId) {
+//        ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+//        query.whereEqualTo("userId", userId);
+//        query.getFirstInBackground( new GetCallback<ParseObject>() {
+//
+//            @Override
+//            public void done(ParseObject parseObject, ParseException e) {
+//                // if the user does not exist in our database, make a new user
+//                if (parseObject == null) {
+//                    //
+//                }
+//            }
+//        });
+//    }
 
     public boolean getLoggedIn(String userID) { return getBoolean("loggedIn"); }
     public void setLoggedIn(String userID, boolean loggedIn) { put("loggedIn", loggedIn); }
