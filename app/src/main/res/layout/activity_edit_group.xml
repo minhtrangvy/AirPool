@@ -5,38 +5,9 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:text="@string/createGroupInstruc"/>
-
-
-    <!-- Spinner Element for direction preference -->
-    <Spinner
-        android:id="@+id/toFrom_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/toFrom_spinner"
-        />
-
-    <!-- Spinner Element for airport preference -->
-    <com.airpool.View.AirportSpinner
-        android:id="@+id/airport_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/airport_spinner"
-        />
-
-    <!-- Spinner Element for college preference -->
-    <com.airpool.View.CollegeSpinner
-        android:id="@+id/college_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/colleges_spinner"
-        />
+    <include layout="@layout/to_from_airport_college"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <!-- Spinner Element for transportation preference -->
     <com.airpool.View.TransportationPreferenceSpinner
@@ -51,12 +22,18 @@
         android:id="@+id/selectDate_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
         android:text="@string/selectDate" />
 
     <Button
         android:id="@+id/selectTime_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
         android:text="@string/selectTime" />
 
 
@@ -66,6 +43,8 @@
         android:id="@+id/create_group_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
         android:text="@string/createGroup_button" />
 
 </LinearLayout>

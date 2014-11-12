@@ -3,7 +3,6 @@ package com.airpool;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -11,6 +10,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.airpool.Fragment.DatePickerFragment;
@@ -19,6 +19,7 @@ import com.airpool.Model.Airport;
 import com.airpool.Model.College;
 import com.airpool.Model.Group;
 import com.airpool.Model.TransportationPreference;
+import com.airpool.View.AirPoolSpinner;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
 import com.airpool.View.TransportationPreferenceSpinner;
@@ -28,18 +29,21 @@ import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 import com.parse.ParseRelation;
+import com.parse.SaveCallback;
 
 import java.util.Date;
 
 public class EditGroupActivity extends FragmentActivity implements View.OnClickListener,
         DatePickerFragment.OnDatePickedListener, TimePickerFragment.OnTimePickedListener {
     boolean isGroupExisting = false;
+    Group groupBeingEdited;
 
     TransportationPreference transportationPreference;
     College college = null;
     Airport airport = null;
     Long departureTime = null;
     boolean isToAirport = true;
+    TextView toFromCollege;
 
     Button createGroupButton, selectDateButton, selectTimeButton;
 
@@ -52,16 +56,26 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_group);
 
-        Intent myIntent = getIntent(); // gets the previously created intent
+        Intent myIntent = getIntent();
         isGroupExisting = myIntent.getBooleanExtra("isGroupExisting", false);
 
         dateFragment = new DatePickerFragment();
         timeFragment = new TimePickerFragment();
 
-        // Access the Button defined in login XML
-        // and listen for it here
+        toFromCollege = (TextView) findViewById(R.id.to_from_college_text);
+        toFromCollege.setText(getResources().getString(R.string.from));
+
         createGroupButton = (Button) findViewById(R.id.create_group_button);
         createGroupButton.setOnClickListener(this);
+
+        if (isGroupExisting) {
+            setTitle(R.string.title_activity_edit_group);
+            createGroupButton.setText(R.string.editGroup);
+
+        } else {
+            setTitle(R.string.title_activity_create_group);
+            createGroupButton.setText(R.string.createGroup);
+        }
 
         selectDateButton = (Button) findViewById(R.id.selectDate_button);
         selectDateButton.setOnClickListener(new View.OnClickListener() {
@@ -79,6 +93,18 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
             }
         });
 
+        this.groupBeingEdited = null;
+        if (isGroupExisting) {
+            try {
+                // Get the group that's passed in.
+                ParseQuery<ParseObject> groupQuery = ParseQuery.getQuery("Group");
+                groupBeingEdited = (Group) groupQuery.get(getIntent().getStringExtra("groupObjectId"));
+            } catch (ParseException exception) {
+                // Error.
+            }
+        }
+
+
         Spinner toFromSpinner = (Spinner) findViewById(R.id.toFrom_spinner);
         // Create an ArrayAdapter using the string array and a default spinner layout
         ArrayAdapter<CharSequence> toFromAdapter = ArrayAdapter.createFromResource(this,
@@ -89,6 +115,12 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
             public void onItemSelected(AdapterView<?> parent, View view, int position, long i) {
                 // The text in the first position is assumed to be "To Airport."
                 isToAirport = position == 0;
+
+                if (isToAirport) {
+                    toFromCollege.setText(getResources().getString(R.string.from));
+                } else {
+                    toFromCollege.setText(getResources().getString(R.string.to));
+                }
             }
 
             @Override
@@ -139,8 +171,17 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
         });
 
         if (isGroupExisting) {
-            // TODO: Pre-populate the fields with attributes corresponding to the group ID
-            // passed in.
+            AirPoolSpinner.AirPoolAdapter adapter =
+                    (AirPoolSpinner.AirPoolAdapter) airportSpinner.getAdapter();
+            airportSpinner.setSelection(adapter.getPosition(groupBeingEdited.getAirport()));
+
+            adapter = (AirPoolSpinner.AirPoolAdapter) collegeSpinner.getAdapter();
+            collegeSpinner.setSelection(adapter.getPosition(groupBeingEdited.getCollege()));
+
+            adapter = (AirPoolSpinner.AirPoolAdapter) preferenceSpinner.getAdapter();
+            preferenceSpinner.setSelection(adapter.getPosition(groupBeingEdited.getTransportationPreference()));
+
+
         }
     }
 
@@ -165,52 +206,77 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
     }
 
     @Override
-    public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.create_group_button:
-                // If group is created, set all the variables.
-                final Group newGroup = new Group();
-
-                // Assemble the time of departure based on the spinner's values.
-                newGroup.setTimeOfDeparture(new Date(
-                        dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
-                        timeFragment.getHour(), timeFragment.getMinute(), 0));
-
-                newGroup.setAirport(airport);
-                newGroup.setCollege(college);
-                newGroup.setTransportationPreference(transportationPreference);
-                newGroup.setIsToAirport(isToAirport);
-                newGroup.setIsGroupOpen(true);
-
-                newGroup.saveInBackground();
-
-                // Make the association between Group and User.
-                ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-                userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject object, ParseException e) {
-                        if (e == null) {
-                            ParseRelation<ParseObject> newGroupRelation = newGroup.getRelation("users");
-                            newGroupRelation.add(object);
-                            newGroup.saveInBackground();
-
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.toast_successfully_joined_group),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Error.
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.toast_unsuccessfully_joined_group),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-
-                    }
-                });
-
-                Intent clickCreateGroup = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
-                startActivity(clickCreateGroup);
-                break;
+public void onClick(View view) {
+        // Check for valid input.
+        if (!dateFragment.isValidInput() || !timeFragment.isValidInput()) {
+            Toast.makeText(getApplicationContext(),
+                    getResources().getString(R.string.toast_blank_spinner),
+                    Toast.LENGTH_SHORT).show();
+            return;
         }
+
+        // If group is created, set all the variables.
+        if (!isGroupExisting) {
+            this.groupBeingEdited = new Group();
+        }
+
+        // Assemble the time of departure based on the spinner's values.
+        groupBeingEdited.setTimeOfDeparture(new Date(
+                dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
+                timeFragment.getHour(), timeFragment.getMinute(), 0));
+
+        groupBeingEdited.setAirport(airport);
+        groupBeingEdited.setCollege(college);
+        groupBeingEdited.setTransportationPreference(transportationPreference);
+        groupBeingEdited.setIsToAirport(isToAirport);
+        groupBeingEdited.setIsGroupOpen(true);
+
+        groupBeingEdited.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e == null) {
+                    indicateEditSuccess();
+                } else {
+                    // Error.
+                    indicateEditFailure();
+                }
+            }
+        });
+
+        // Make the association between Group and User if necessary.
+        if (!isGroupExisting) {
+            ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
+            userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
+                @Override
+                public void done(ParseObject object, ParseException e) {
+                    if (e == null) {
+                        ParseRelation<ParseObject> newGroupRelation = groupBeingEdited.getRelation("users");
+                        newGroupRelation.add(object);
+                        groupBeingEdited.saveInBackground();
+                        indicateEditSuccess();
+                    } else {
+                        // Error.
+                        indicateEditFailure();
+                    }
+
+                }
+            });
+        }
+
+        Intent clickCreateGroup = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
+        startActivity(clickCreateGroup);
+    }
+
+    public void indicateEditSuccess() {
+        Toast.makeText(getApplicationContext(),
+                getResources().getString(R.string.toast_successfully_created_group),
+                Toast.LENGTH_SHORT).show();
+    }
+
+    public void indicateEditFailure() {
+        Toast.makeText(getApplicationContext(),
+                getResources().getString(R.string.toast_unsuccessfully_created_group),
+                Toast.LENGTH_SHORT).show();
     }
 
     public void onTimePicked(int hour, int minute, String twelveHrTimeStamp) {

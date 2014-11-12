@@ -56,6 +56,9 @@
         android:id="@+id/homepage_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
+        android:layout_marginTop="10dp"
         android:text="@string/savePrefs" />
 
 </LinearLayout>

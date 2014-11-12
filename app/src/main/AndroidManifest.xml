@@ -33,7 +33,7 @@
         </activity>
         <activity
             android:name=".SearchResultsActivity"
-            android:label="@string/title_activity_search_results_list" >
+            android:label="@string/title_activity_search_results" >
         </activity>
         <activity
             android:name="com.airpool.PreferencesActivity"

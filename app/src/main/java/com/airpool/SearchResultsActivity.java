@@ -12,21 +12,24 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.airpool.Adapter.SearchResultGroupAdapter;
+import com.airpool.Model.College;
 import com.airpool.Model.Group;
-import com.parse.FindCallback;
-import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+import com.parse.ParseRelation;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class SearchResultsActivity extends Activity implements View.OnClickListener {
-
+    ProgressBar progressBar;
+    TextView searchResultHeading;
     Button createGroup;
     ListView searchResultList;
     ArrayAdapter<Group> searchResultListAdapter;
@@ -37,10 +40,31 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
 
+        searchResultHeading = (TextView) findViewById(R.id.search_result_heading);
+
+        String searchResultHeader;
+        Intent intent = getIntent();
+
+        // Get the college and display in the header.
+        College college = Enum.valueOf(College.class, intent.getStringExtra("college"));
+        if (intent.getBooleanExtra("isToAirport", true)) {
+            searchResultHeader = String.format(getResources().getString(R.string.rides_from),
+                    college.getFullName());
+        } else {
+            searchResultHeader = String.format(getResources().getString(R.string.rides_to),
+                    college.getFullName());
+        }
+        searchResultHeading.setText(searchResultHeader);
+
         searchResultList = (ListView) findViewById(R.id.search_result_list);
 
         createGroup = (Button) findViewById(R.id.create_group_button);
         createGroup.setOnClickListener(this);
+
+        // Setup the activity circle.
+        progressBar = (ProgressBar) findViewById(R.id.search_result_progress);
+        progressBar.setIndeterminate(true);
+        progressBar.setVisibility(View.VISIBLE);
 
         // Perform the query on a background thread.
         FetchSearchResultsTask task = new FetchSearchResultsTask(this);
@@ -88,20 +112,35 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
         protected ArrayList<Group> doInBackground(ArrayList<String>... requestedGroupIds) {
             ArrayList<Group> groups = new ArrayList<Group>();
 
-            List<ParseObject> searchResultParseGroups = new ArrayList<ParseObject>();
+            List<ParseObject> searchResultGroups = new ArrayList<ParseObject>();
             ParseQuery<ParseObject> query = ParseQuery.getQuery("Group");
 
             try {
-                ArrayList<String> matchingGroupIds = getIntent().
-                        getStringArrayListExtra("matchingGroupIds");
+                Intent passedInIntent = getIntent();
 
-                for (String groupId : matchingGroupIds) {
-                    searchResultParseGroups.add(query.get(groupId));
+                // TODO: Get transportation preference from User object.
 
-                }
+                query.whereEqualTo("airport", passedInIntent.getStringExtra("airport"));
+                query.whereEqualTo("isToAirport", passedInIntent.getBooleanExtra("isToAirport", false));
+                query.whereEqualTo("isActive", true);
+                query.whereEqualTo("college", passedInIntent.getStringExtra("college"));
+
+                // Do some math to return dates within a 12-hour window.
+                Long twelveHoursBefore = passedInIntent.getLongExtra("departureDate", 0) - (43200 * 1000);
+                Long twelveHoursAfter = passedInIntent.getLongExtra("departureDate", 0) + (43200 * 1000);
+
+                query.whereLessThan("timeOfDeparture", twelveHoursAfter);
+                query.whereGreaterThan("timeOfDeparture", twelveHoursBefore);
+
+                searchResultGroups = query.find();
 
                 // Do not know of any other way to cast list of objects.
-                for(ParseObject group : searchResultParseGroups) {
+                ParseQuery countQuery;
+                for(ParseObject group : searchResultGroups) {
+                    Group groupToAdd = (Group) group;
+                    ParseRelation relation = group.getRelation("users");
+                    countQuery = relation.getQuery();
+                    ((Group) group).setNumberOfUsers(countQuery.count());
                     groups.add((Group) group);
                 }
             } catch (ParseException exception) {
@@ -117,11 +156,13 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
 
         protected void onPostExecute(ArrayList<Group> result) {
             searchResultGroups = result;
+            progressBar.setVisibility(View.INVISIBLE);
+            createGroup.setVisibility(View.VISIBLE);
 
             if (!searchResultGroups.isEmpty()) {
                 // Populate the list view.
-                searchResultListAdapter = new ArrayAdapter<Group>(this.context,
-                        android.R.layout.simple_list_item_1, searchResultGroups);
+                searchResultListAdapter = new SearchResultGroupAdapter(this.context,
+                        R.layout.item_search_result, searchResultGroups);
                 searchResultList.setAdapter(searchResultListAdapter);
 
                 // View a group when you click on a list item.
@@ -135,6 +176,7 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
                 });
             } else {
                 // Indicate to the user that there were no search results.
+                searchResultList.setEmptyView((TextView) findViewById(R.id.no_search_results));
             }
         }
     }

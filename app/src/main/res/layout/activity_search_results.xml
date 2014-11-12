@@ -7,23 +7,47 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/search_result_heading"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:text="@string/groupResults" />
+        android:textSize="28sp" />
 
-    <ListView
-        android:id="@+id/search_result_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="20dp" />
+        android:layout_height="400dp"
+        android:layout_marginTop="20dp">
 
-    <!-- Set OnClickListener to trigger map result page when pressed -->
+        <!-- Empty List -->
+        <TextView
+            android:id="@+id/no_search_results"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/no_search_results"
+            android:visibility="gone"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <!-- Loading spinner -->
+        <ProgressBar
+            android:id="@+id/search_result_progress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            style="@android:style/Widget.Holo.ProgressBar.Large" />
+
+        <ListView
+            android:id="@+id/search_result_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
     <Button
         android:id="@+id/create_group_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/createAGroup" />
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
+        android:text="@string/create_group"
+        android:visibility="gone" />
 
 </LinearLayout>

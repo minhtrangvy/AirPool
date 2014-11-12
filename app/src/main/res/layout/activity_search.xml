@@ -5,41 +5,27 @@
     android:paddingRight="16dp"
     android:orientation="vertical">
 
-    <!-- Spinner Element for direction preference -->
-    <Spinner
-        android:id="@+id/toFrom_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/toFrom_spinner"
-        />
-
-    <!-- Spinner Element for airport preference -->
-    <com.airpool.View.AirportSpinner
-        android:id="@+id/airport_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/airport_spinner"
-        />
-
-    <!-- Spinner Element for college preference -->
-    <com.airpool.View.CollegeSpinner
-        android:id="@+id/college_spinner"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:prompt="@string/colleges_spinner"
-        />
+    <include layout="@layout/to_from_airport_college"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <!--Date and Time selection for leaving location-->
     <Button
         android:id="@+id/selectDate_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
+        android:layout_marginBottom="5dp"
         android:text="@string/selectDate" />
 
     <Button
         android:id="@+id/selectTime_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
+        android:layout_marginBottom="15dp"
         android:text="@string/selectTime" />
 
     <!-- Set OnClickListener to trigger search when pressed -->
@@ -47,6 +33,8 @@
         android:id="@+id/search_results_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
         android:text="@string/search" />
 
 

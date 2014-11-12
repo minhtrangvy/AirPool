@@ -32,6 +32,7 @@ public class AirportSpinner extends AirPoolSpinner {
         this.setAdapter(this.adapter);
     }
 
+
     public class AirportAdapter extends AirPoolAdapter<Airport> {
         public AirportAdapter(Context context, int layoutResourceId, ArrayList<Airport> list) {
             super(context, layoutResourceId, list);
@@ -49,6 +50,5 @@ public class AirportSpinner extends AirPoolSpinner {
 
             return view;
         }
-
     }
 }

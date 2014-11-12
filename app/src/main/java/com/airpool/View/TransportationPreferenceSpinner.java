@@ -26,8 +26,11 @@ public class TransportationPreferenceSpinner extends AirPoolSpinner {
 
     @Override
     public void initializeSpinner(Context context) {
-        this.adapter = new TransportationPreferenceAdapter(context, android.R.layout.simple_spinner_item,
-                new ArrayList<TransportationPreference>(Arrays.asList(TransportationPreference.values())));
+        ArrayList<TransportationPreference> preferencesList = new ArrayList<TransportationPreference>(Arrays.asList(TransportationPreference.values()));
+
+        preferencesList.remove(TransportationPreference.NOPREF);
+
+        this.adapter = new TransportationPreferenceAdapter(context, android.R.layout.simple_spinner_item, preferencesList);
         this.adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.setAdapter(this.adapter);
     }
@@ -50,5 +53,10 @@ public class TransportationPreferenceSpinner extends AirPoolSpinner {
             return view;
         }
 
+
+        @Override
+        public int getPosition(TransportationPreference transportationPreference) {
+            return this.list.indexOf(transportationPreference);
+        }
     }
 }
