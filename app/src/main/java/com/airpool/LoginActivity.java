@@ -2,6 +2,7 @@ package com.airpool;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,11 +25,9 @@ import com.parse.ParseQuery;
 
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
+    public static final String PREFS_NAME = "Prefs";
     private User _thisUser;
     public String _userId;
-
-    Button searchButton, preferencesButton;
-//    EditText editUsername, editPassword;
 
     private Session.StatusCallback loginCallback = new Session.StatusCallback() {
         @Override
@@ -47,9 +46,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
         uiHelper.onCreate(savedInstanceState);
 
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ", "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
-
-//        GlobalUser globalUser = ( (GlobalUser) getApplicationContext() );
-//        String _userId = globalUser.getUserID();
     }
 
     @Override
@@ -72,9 +68,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-
-        final GlobalUser currentUser = ((GlobalUser)getApplicationContext());
-
         if (session.isOpened()) {
             Log.i(TAG, "User has logged in...");
             // make request to the /me API
@@ -84,62 +77,75 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 @Override
                 public void onCompleted(final GraphUser user, Response response) {
                     if (user != null) {
-                        final String currentID = user.getId();
+                        final String facebookId = user.getId();
                         Log.i(TAG, "Hello " + user.getName());
-                        Log.i(TAG, "Unique ID " + currentID);
+                        Log.i(TAG, "Unique ID " + facebookId);
 
                         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
-                        query.whereEqualTo("facebookID", currentID);
+                        query.whereEqualTo("facebookID", facebookId);
                         query.getFirstInBackground( new GetCallback<ParseObject>() {
                             @Override
                             public void done(ParseObject parseObject, ParseException e) {
                                 // if the user does exist in our database, set their loggedIn to true
                                 if (parseObject != null) {
-                                    parseObject.put("isLoggedIn", true);
-                                    currentUser.setUserID(parseObject.getObjectId());
                                     Log.i(TAG, "We found you! Parse Object ID" + parseObject.getObjectId().toString());
+
+                                    SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                                    SharedPreferences.Editor editSettings = settings.edit();
+                                    editSettings.putString("userObjectId", parseObject.getObjectId());
+                                    editSettings.commit();
+
+                                    ((GlobalUser) getApplicationContext()).setCurrentUser((User) parseObject);
                                 // if the user does not exist in our database, create them
                                 } else {
-
-                                    Log.i(TAG, "We did not find you! And fb id is " + currentID);
-                                    ParseObject newUser = new ParseObject("User");
+                                    Log.i(TAG, "We did not find you! And fb id is " + facebookId);
+                                    User newUser = new User();
                                     newUser.put("facebookID", user.getId());
-                                    newUser.put("isLoggedIn", true);
                                     newUser.saveInBackground();
+
+                                    SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                                    SharedPreferences.Editor editSettings = settings.edit();
+                                    editSettings.putString("userObjectId", newUser.getObjectId());
+                                    editSettings.commit();
+
+                                    ((GlobalUser) getApplicationContext()).setCurrentUser((User) newUser);
                                 }
+
+                                finish();
                             }
                         });
                     }
                 }
             }).executeAsync();
-
-            this._userId = currentUser.getUserID();
-            Log.i(TAG, "User ID is " + this._userId);
-
-            setContentView(R.layout.activity_homepage);
-
-            searchButton = (Button) findViewById(R.id.search_button);
-            searchButton.setOnClickListener(this);
-
-            preferencesButton = (Button) findViewById(R.id.preferences_button);
-            preferencesButton.setOnClickListener(this);
+//
+//            this._userId = currentUser.getUserID();
+//            Log.i(TAG, "User ID is " + this._userId);
+//
+//            setContentView(R.layout.activity_homepage);
+//
+//            searchButton = (Button) findViewById(R.id.search_button);
+//            searchButton.setOnClickListener(this);
+//
+//            preferencesButton = (Button) findViewById(R.id.preferences_button);
+//            preferencesButton.setOnClickListener(this);
 
         } else if (session.isClosed()) {
-            Log.i(TAG, "User has logged out...");
 
-            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
-            query.whereEqualTo("userId", _userId);
-            query.getFirstInBackground( new GetCallback<ParseObject>() {
-                @Override
-                public void done(ParseObject parseObject, ParseException e) {
-                    // if the user does exist in our database, set their loggedIn to false
-                    if (parseObject != null) {
-                        parseObject.put("loggedIn", false);
-                    }
-                }
-            });
-
-            setContentView(R.layout.activity_login);
+//            Log.i(TAG, "User has logged out...");
+//
+//            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+//            query.whereEqualTo("userId", _userId);
+//            query.getFirstInBackground( new GetCallback<ParseObject>() {
+//                @Override
+//                public void done(ParseObject parseObject, ParseException e) {
+//                    // if the user does exist in our database, set their loggedIn to false
+//                    if (parseObject != null) {
+//                        parseObject.put("loggedIn", false);
+//                    }
+//                }
+//            });
+//
+//            setContentView(R.layout.activity_login);
         }
     }
 
