@@ -3,6 +3,8 @@ package com.airpool.Model;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -14,33 +16,21 @@ public class Group extends ParseObject {
         // A default constructor is required.
     }
 
-    public Date getTimeOfDeparture() {
+    public Calendar getTimeOfDeparture() {
         Long date = getLong("timeOfDeparture");
-        return new Date(date);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        return calendar;
     }
 
     public String getTimeOfDepartureString() {
-        Date timeOfDeparture = getTimeOfDeparture();
-
-        String twelveHrTimeStamp = "am";
-        int hourOfDay = timeOfDeparture.getHours();
-        // Set the Selected Date in Select date Button
-        if (hourOfDay > 12) {
-            hourOfDay = hourOfDay % 12;
-            twelveHrTimeStamp = "pm";
-        }
-        else if (hourOfDay == 0) {
-            hourOfDay = 12;
-        }
-
-        return (timeOfDeparture.getMonth() + 1) + "/" + timeOfDeparture.getDate() + "/" +
-                (timeOfDeparture.getYear() + 1900) + " at " + hourOfDay + ":" +
-                ((timeOfDeparture.getMinutes() < 10) ? "0" : "") +
-                timeOfDeparture.getMinutes() + twelveHrTimeStamp;
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy 'at' h:mm a");
+        Calendar timeOfDeparture = getTimeOfDeparture();
+        return format.format(timeOfDeparture.getTime());
     }
 
-    public void setTimeOfDeparture(Date timeOfDeparture) {
-        put("timeOfDeparture", timeOfDeparture.getTime());
+    public void setTimeOfDeparture(Calendar timeOfDeparture) {
+        put("timeOfDeparture", timeOfDeparture.getTimeInMillis());
     }
 
     public TransportationPreference getTransportationPreference() {

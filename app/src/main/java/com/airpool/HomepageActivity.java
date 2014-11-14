@@ -27,7 +27,7 @@ import java.util.List;
 public class HomepageActivity extends Activity implements View.OnClickListener {
     public static final String PREFS_NAME = "Prefs";
     Button searchButton, preferencesButton, logoutButton;
-    boolean isLoggedIn = false;
+    boolean isLoggedIn = true;
     User _thisUser;
 
     ListView userGroupList;

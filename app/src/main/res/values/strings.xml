@@ -90,6 +90,8 @@
     <!-- Toasts -->
     <string name="toast_successfully_created_group">You\'ve successfully created the group.</string>
     <string name="toast_unsuccessfully_created_group">We had a problem creating the group.</string>
+    <string name="toast_successfully_edited_group">You\'ve successfully edited the group.</string>
+    <string name="toast_unsuccessfully_edited_group">We had a problem editing the group.</string>
     <string name="toast_successfully_joined_group">You\'ve successfully joined the group.</string>
     <string name="toast_unsuccessfully_joined_group">We had a problem adding you to the group.</string>
     <string name="toast_successfully_left_group">You\'ve successfully left the group.</string>

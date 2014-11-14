@@ -117,7 +117,7 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                     }
                 }
             }).executeAsync();
-//
+
 //            this._userId = currentUser.getUserID();
 //            Log.i(TAG, "User ID is " + this._userId);
 //

@@ -3,6 +3,7 @@ package com.airpool;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,7 +32,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.SaveCallback;
 
-import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class EditGroupActivity extends FragmentActivity implements View.OnClickListener,
         DatePickerFragment.OnDatePickedListener, TimePickerFragment.OnTimePickedListener {
@@ -181,6 +183,15 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
             adapter = (AirPoolSpinner.AirPoolAdapter) preferenceSpinner.getAdapter();
             preferenceSpinner.setSelection(adapter.getPosition(groupBeingEdited.getTransportationPreference()));
 
+            dateFragment.initializeDay(groupBeingEdited.getTimeOfDeparture().get(Calendar.YEAR),
+                    groupBeingEdited.getTimeOfDeparture().get(Calendar.MONTH),
+                    groupBeingEdited.getTimeOfDeparture().get(Calendar.DAY_OF_MONTH));
+
+            timeFragment.initializeTime(groupBeingEdited.getTimeOfDeparture().get(Calendar.HOUR_OF_DAY),
+                    groupBeingEdited.getTimeOfDeparture().get(Calendar.MINUTE));
+
+            onDatePicked(groupBeingEdited.getTimeOfDeparture());
+            onTimePicked(groupBeingEdited.getTimeOfDeparture());
 
         }
     }
@@ -199,10 +210,7 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -221,70 +229,90 @@ public void onClick(View view) {
         }
 
         // Assemble the time of departure based on the spinner's values.
-        groupBeingEdited.setTimeOfDeparture(new Date(
-                dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
-                timeFragment.getHour(), timeFragment.getMinute(), 0));
+        Calendar calendar = dateFragment.getCalendar();
+        calendar.set(Calendar.HOUR_OF_DAY, timeFragment.getHour());
+        calendar.set(Calendar.MINUTE, timeFragment.getMinute());
+
+        groupBeingEdited.setTimeOfDeparture(calendar);
 
         groupBeingEdited.setAirport(airport);
         groupBeingEdited.setCollege(college);
         groupBeingEdited.setTransportationPreference(transportationPreference);
         groupBeingEdited.setIsToAirport(isToAirport);
         groupBeingEdited.setIsGroupOpen(true);
+        groupBeingEdited.setIsActive(true);
 
         groupBeingEdited.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-                    indicateEditSuccess();
+                    // Make the association between Group and User if necessary.
+                    if (!isGroupExisting) {
+                        ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
+                        userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
+                            @Override
+                            public void done(ParseObject object, ParseException e) {
+                                if (e == null) {
+                                    ParseRelation<ParseObject> newGroupRelation = groupBeingEdited.getRelation("users");
+                                    newGroupRelation.add(object);
+                                    groupBeingEdited.saveInBackground();
+                                    indicateEditSuccess();
+                                    startGroupActivity();
+                                } else {
+                                    // Error.
+                                    indicateEditFailure();
+                                    finish();
+                                }
+
+                            }
+                        });
+                    } else {
+                        indicateEditSuccess();
+                        startGroupActivity();
+                    }
                 } else {
                     // Error.
                     indicateEditFailure();
+                    finish();
                 }
+
+
             }
         });
+    }
 
-        // Make the association between Group and User if necessary.
-        if (!isGroupExisting) {
-            ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-            userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
-                @Override
-                public void done(ParseObject object, ParseException e) {
-                    if (e == null) {
-                        ParseRelation<ParseObject> newGroupRelation = groupBeingEdited.getRelation("users");
-                        newGroupRelation.add(object);
-                        groupBeingEdited.saveInBackground();
-                        indicateEditSuccess();
-                    } else {
-                        // Error.
-                        indicateEditFailure();
-                    }
-
-                }
-            });
+    public void indicateEditSuccess() {
+        String message;
+        if (isGroupExisting) {
+            message = getResources().getString(R.string.toast_successfully_edited_group);
+        } else {
+            message = getResources().getString(R.string.toast_successfully_created_group);
         }
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
 
+    public void indicateEditFailure() {
+        String message;
+        if (isGroupExisting) {
+            message = getResources().getString(R.string.toast_unsuccessfully_edited_group);
+        } else {
+            message = getResources().getString(R.string.toast_unsuccessfully_created_group);
+        }
+        Toast.makeText(getApplicationContext(), message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void startGroupActivity() {
         Intent clickCreateGroup = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
         startActivity(clickCreateGroup);
     }
 
-    public void indicateEditSuccess() {
-        Toast.makeText(getApplicationContext(),
-                getResources().getString(R.string.toast_successfully_created_group),
-                Toast.LENGTH_SHORT).show();
+    public void onTimePicked(Calendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("h:mm a");
+        selectTimeButton.setText("Departure Time: " + format.format(calendar.getTime()));
     }
 
-    public void indicateEditFailure() {
-        Toast.makeText(getApplicationContext(),
-                getResources().getString(R.string.toast_unsuccessfully_created_group),
-                Toast.LENGTH_SHORT).show();
-    }
-
-    public void onTimePicked(int hour, int minute, String twelveHrTimeStamp) {
-        selectTimeButton.setText("Departure Time: " + hour + ":" + ((minute < 10) ? "0" : "") +
-                minute + " " + twelveHrTimeStamp);
-    }
-
-    public void onDatePicked(int year, int month, int day) {
-        selectDateButton.setText("Departure Date: " + month + "/" + day + "/" + year);
+    public void onDatePicked(Calendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        selectDateButton.setText("Departure Date: " + format.format(calendar.getTime()));
     }
 }

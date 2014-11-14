@@ -184,9 +184,8 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
 
                             if (groupMembers.size() - 1 == 0){
                                 group.setIsActive(false);
-                            } else {
-                                group.saveInBackground();
                             }
+                            group.saveInBackground();
 
                             Toast.makeText(getApplicationContext(),
                                     getResources().getString(R.string.toast_successfully_left_group),
