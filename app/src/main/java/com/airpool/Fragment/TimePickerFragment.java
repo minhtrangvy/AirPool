@@ -20,23 +20,20 @@ import java.util.List;
  * Created by Maury on 11/8/14.
  */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    private int mHour, mMinute;
     Calendar calendar = Calendar.getInstance();
-
     OnTimePickedListener callback;
 
     public interface OnTimePickedListener {
-        public void onTimePicked(int hour, int minute, String twelveHrTimeStamp);
+        public void onTimePicked(Calendar calendar);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             callback = (OnTimePickedListener) activity;
+            callback.onTimePicked(this.getCalendar());
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnTimePickedListener");
@@ -45,49 +42,40 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        initializeTime();
-
-        return new CustomTimePickerDialog(getActivity(), this, mHour, mMinute,
+        return new CustomTimePickerDialog(getActivity(), this, getHour(), getMinute(),
                 DateFormat.is24HourFormat(getActivity()));
     }
 
     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-        int displayedHour = hourOfDay;
+    // Create a new calendar object with the date passed in.
+        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+        calendar.set(Calendar.MINUTE, minute);
 
-        String twelveHrTimeStamp = "am";
-        // Set the Selected Date in Select date Button
-        if (hourOfDay > 12) {
-            displayedHour = hourOfDay % 12;
-            twelveHrTimeStamp = "pm";
-        }
-        else if (hourOfDay == 0) {
-            displayedHour = 12;
-        }
-        callback.onTimePicked(displayedHour, minute, twelveHrTimeStamp);
-
-        mHour = hourOfDay;
-        mMinute = minute;
+        callback.onTimePicked(calendar);
     }
 
-    public void initializeTime() {
-        // Reset the hour and minute values for today.
-        mHour = calendar.get(Calendar.HOUR);
-        mMinute = calendar.get(Calendar.MINUTE);
+    public void initializeTime(int hour, int minute) {
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, (minute / 15));
     }
 
     public boolean isValidInput() {
-        return !(mHour == 0 || mMinute == 0);
+        return true;
+    }
+
+    public Calendar getCalendar() {
+        return this.calendar;
     }
 
     public int getHour() {
-        return this.mHour;
+        return calendar.get(Calendar.HOUR_OF_DAY);
     }
 
     public int getMinute() {
-        return this.mMinute;
+        return calendar.get(Calendar.MINUTE);
     }
 
-    public static class CustomTimePickerDialog extends TimePickerDialog{
+    public static class CustomTimePickerDialog extends TimePickerDialog {
 
         private final static int TIME_PICKER_INTERVAL = 15;
         private TimePicker timePicker;

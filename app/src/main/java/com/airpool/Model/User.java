@@ -119,12 +119,12 @@ public class User extends ParseObject {
     public String getPicUrl() { return getString("picUrl"); }
     public void setPicUrl(String picUrl) { put("picUrl", picUrl); }
 
-    public Number getFacebookId() {
-        return getNumber("facebookId");
+    public String getFacebookId() {
+        return getString("facebookID");
     }
 
-    public void setFacebookId(int facebookId) {
-        put("facebookId", facebookId);
+    public void setFacebookId(String facebookId) {
+        put("facebookID", facebookId);
     }
 
     public String toString() {

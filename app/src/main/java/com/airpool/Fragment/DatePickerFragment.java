@@ -5,31 +5,31 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.widget.DatePicker;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
  * Created by Maury on 11/8/14.
  */
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
-    private int mYear, mMonth, mDay;
-    Calendar calendar = Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance();
 
     OnDatePickedListener callback;
 
     public interface OnDatePickedListener {
-        public void onDatePicked(int year, int month, int day);
+        public void onDatePicked(Calendar calendar);
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-        // This makes sure that the container activity has implemented
-        // the callback interface. If not, it throws an exception
         try {
             callback = (OnDatePickedListener) activity;
+            callback.onDatePicked(this.getCalendar());
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnDatePickedListener");
@@ -38,40 +38,37 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        initializeDay();
-
-        return new DatePickerDialog(getActivity(), this, mYear, mMonth, mDay);
+        return new DatePickerDialog(getActivity(), this, getYear(), getMonth(), getDay());
     }
 
     public void onDateSet(DatePicker view, int year, int month, int day) {
-        // Add 1 to month since months are weirdly offset.
-        callback.onDatePicked(year, month + 1, day);
+        // Create a new calendar object with the date passed in.
+        calendar.set(year, month, day);
 
-        mYear = year - 1900;
-        mMonth = month;
-        mDay = day;
+        callback.onDatePicked(calendar);
     }
 
-    protected void initializeDay() {
-        // Reset the year, month, and day to the values for today.
-        mYear = calendar.get(Calendar.YEAR);
-        mMonth = calendar.get(Calendar.MONTH);
-        mDay = calendar.get(Calendar.DAY_OF_MONTH);
+    public void initializeDay(int year, int month, int day) {
+        calendar.set(year, month, day);
     }
 
     public boolean isValidInput() {
-        return !(mYear == 0 || mMonth == 0 || mDay == 0);
+        return true;
+    }
+
+    public Calendar getCalendar() {
+        return this.calendar;
     }
 
     public int getYear() {
-        return this.mYear;
+        return this.calendar.get(Calendar.YEAR);
     }
 
     public int getMonth() {
-        return this.mMonth;
+        return this.calendar.get(Calendar.MONTH);
     }
 
     public int getDay() {
-        return this.mDay;
+        return this.calendar.get(Calendar.DAY_OF_MONTH);
     }
 }

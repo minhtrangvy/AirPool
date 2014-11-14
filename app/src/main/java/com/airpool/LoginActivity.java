@@ -116,14 +116,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
             this._userId = currentUser.getUserID();
             Log.i(TAG, "User ID is " + this._userId);
 
-            setContentView(R.layout.activity_homepage);
-
-            searchButton = (Button) findViewById(R.id.search_button);
-            searchButton.setOnClickListener(this);
-
-            preferencesButton = (Button) findViewById(R.id.preferences_button);
-            preferencesButton.setOnClickListener(this);
-
         } else if (session.isClosed()) {
             Log.i(TAG, "User has logged out...");
 

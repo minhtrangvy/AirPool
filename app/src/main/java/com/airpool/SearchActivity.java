@@ -3,7 +3,6 @@ package com.airpool;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,27 +17,18 @@ import com.airpool.Fragment.DatePickerFragment;
 import com.airpool.Fragment.TimePickerFragment;
 import com.airpool.Model.Airport;
 import com.airpool.Model.College;
-import com.airpool.Model.Group;
-import com.airpool.Model.TransportationPreference;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
-import com.parse.Parse;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 public class SearchActivity extends FragmentActivity implements View.OnClickListener,
         DatePickerFragment.OnDatePickedListener,
         TimePickerFragment.OnTimePickedListener {
-    TransportationPreference transportationPreference;
     College college = null;
     Airport airport = null;
-    Long departureTime = null;
     boolean isToAirport = true;
 
     Button searchButton, selectDateButton, selectTimeButton;
@@ -141,10 +131,8 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+
+        return id == R.id.action_settings || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -163,9 +151,13 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         clickSearch.putExtra("airport", airport.name());
         clickSearch.putExtra("isToAirport", isToAirport);
         clickSearch.putExtra("college", college.name());
-        clickSearch.putExtra("departureDate", new Date(
-                dateFragment.getYear(), dateFragment.getMonth(), dateFragment.getDay(),
-                timeFragment.getHour(), timeFragment.getMinute(), 0).getTime());
+
+        // Assemble the time of departure based on the spinner's values.
+        Calendar calendar = dateFragment.getCalendar();
+        calendar.set(Calendar.HOUR_OF_DAY, timeFragment.getHour());
+        calendar.set(Calendar.MINUTE, timeFragment.getMinute());
+
+        clickSearch.putExtra("timeOfDeparture", calendar.getTimeInMillis());
 
         startActivity(clickSearch);
     }
@@ -174,12 +166,13 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         // TODO: Store the no preference item
     }
 
-    public void onTimePicked(int hour, int minute, String twelveHrTimeStamp) {
-        selectTimeButton.setText("Departure Time: " + hour + ":" + ((minute < 10) ? "0" : "") +
-                minute + " " + twelveHrTimeStamp);
+    public void onTimePicked(Calendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("h:mm a");
+        selectTimeButton.setText("Departure Time: " + format.format(calendar.getTime()));
     }
 
-    public void onDatePicked(int year, int month, int day) {
-        selectDateButton.setText("Departure Date: " + month + "/" + day + "/" + year);
+    public void onDatePicked(Calendar calendar) {
+        SimpleDateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+        selectDateButton.setText("Departure Date: " + format.format(calendar.getTime()));
     }
 }
