@@ -34,8 +34,7 @@ import java.util.List;
 
 public class HomepageActivity extends Activity implements View.OnClickListener {
     public static final String PREFS_NAME = "Prefs";
-    Button searchButton, logOutButton;
-    User _thisUser;
+    Button searchButton; //, logOutButton;
 
     ListView userGroupList;
     ArrayAdapter<Group> userGroupListAdapter;
@@ -88,7 +87,7 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
                 GlobalUser context = (GlobalUser) getApplicationContext();
                 context.setCurrentUser((User) user);
 
-                // Then, get the associated groups.
+                // Then, get the associated groups
                 ParseQuery<ParseObject> groupQuery = ParseQuery.getQuery("Group");
                 groupQuery.whereEqualTo("users", user);
                 groupQuery.whereEqualTo("isActive", true);

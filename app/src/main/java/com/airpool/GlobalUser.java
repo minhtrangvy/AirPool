@@ -40,19 +40,19 @@ public class GlobalUser extends Application {
         return this.currentUser;
     }
 
-    public void findUserID(String facebookId) {
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-        query.whereEqualTo("facebookId", facebookId);
-        query.getFirstInBackground( new GetCallback<ParseObject>() {
-            @Override
-            public void done(ParseObject parseObject, ParseException e) {
-                // if the user does exist in our database
-                if (parseObject != null) {
-                    setUserID(parseObject.getObjectId());
-                }
-            }
-        });
-    }
+//    public void findUserID(String facebookId) {
+//        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+//        query.whereEqualTo("facebookId", facebookId);
+//        query.getFirstInBackground( new GetCallback<ParseObject>() {
+//            @Override
+//            public void done(ParseObject parseObject, ParseException e) {
+//                // if the user does exist in our database
+//                if (parseObject != null) {
+//                    setUserID(parseObject.getObjectId());
+//                }
+//            }
+//        });
+//    }
 
     public String getUserID() {
         return this._userId;
@@ -61,7 +61,4 @@ public class GlobalUser extends Application {
     public void setUserID(String userId) {
         this._userId = userId;
     }
-
-//    public void getUserPref()
-
 }

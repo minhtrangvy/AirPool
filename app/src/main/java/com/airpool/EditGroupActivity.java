@@ -20,6 +20,7 @@ import com.airpool.Model.Airport;
 import com.airpool.Model.College;
 import com.airpool.Model.Group;
 import com.airpool.Model.TransportationPreference;
+import com.airpool.Model.User;
 import com.airpool.View.AirPoolSpinner;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
@@ -246,30 +247,46 @@ public void onClick(View view) {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
+
+                    GlobalUser context = (GlobalUser) getApplicationContext();
+                    User currentUser = context.getCurrentUser();
+
                     // Make the association between Group and User if necessary.
                     if (!isGroupExisting) {
-                        ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-                        userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
-                            @Override
-                            public void done(ParseObject object, ParseException e) {
-                                if (e == null) {
-                                    ParseRelation<ParseObject> newGroupRelation = groupBeingEdited.getRelation("users");
-                                    newGroupRelation.add(object);
-                                    groupBeingEdited.saveInBackground();
-                                    indicateEditSuccess();
-                                    startGroupActivity();
-                                } else {
-                                    // Error.
-                                    indicateEditFailure();
-                                    finish();
-                                }
 
-                            }
-                        });
+                        ParseRelation<ParseObject> newGroupRelation = groupBeingEdited.getRelation("users");
+                        newGroupRelation.add(currentUser);
+                        groupBeingEdited.saveInBackground();
+                        indicateEditSuccess();
+                        startGroupActivity();
                     } else {
                         indicateEditSuccess();
                         startGroupActivity();
                     }
+//
+//                    if (!isGroupExisting) {
+//                        ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
+//                        userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
+//                            @Override
+//                            public void done(ParseObject object, ParseException e) {
+//                                if (e == null) {
+//                                    ParseRelation<ParseObject> newGroupRelation = groupBeingEdited.getRelation("users");
+//                                    newGroupRelation.add(object);
+//                                    groupBeingEdited.saveInBackground();
+//                                    indicateEditSuccess();
+//                                    startGroupActivity();
+//                                } else {
+//                                    // Error.
+//                                    indicateEditFailure();
+//                                    finish();
+//                                }
+//
+//                            }
+//                        });
+//                    } else {
+//                        indicateEditSuccess();
+//                        startGroupActivity();
+//                    }
                 } else {
                     // Error.
                     indicateEditFailure();

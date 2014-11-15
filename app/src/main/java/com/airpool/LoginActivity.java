@@ -94,7 +94,12 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                     editSettings.putString("userObjectId", parseObject.getObjectId());
                                     editSettings.commit();
 
-                                    ((GlobalUser) getApplicationContext()).setCurrentUser((User) parseObject);
+                                    GlobalUser context = (GlobalUser) getApplicationContext();
+                                    context.setCurrentUser((User) parseObject);
+                                    context.setUserID(parseObject.getObjectId());
+
+//                                    ((GlobalUser) getApplicationContext()).setCurrentUser((User) parseObject);
+//                                    ((GlobalUser) getApplicationContext()).setCurrentUser((User) parseObject);
                                 // if the user does not exist in our database, create them
                                 } else {
                                     Log.i(TAG, "We did not find you! And fb id is " + facebookId);
@@ -107,7 +112,11 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                     editSettings.putString("userObjectId", newUser.getObjectId());
                                     editSettings.commit();
 
-                                    ((GlobalUser) getApplicationContext()).setCurrentUser((User) newUser);
+                                    GlobalUser context = (GlobalUser) getApplicationContext();
+                                    context.setCurrentUser((User) newUser);
+                                    context.setUserID(parseObject.getObjectId());
+
+//                                    ((GlobalUser) getApplicationContext()).setCurrentUser((User) newUser);
                                 }
 
 //                                finish();
