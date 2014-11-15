@@ -118,12 +118,14 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
             try {
                 Intent passedInIntent = getIntent();
 
-                // TODO: Get transportation preference from User object.
-
                 query.whereEqualTo("airport", passedInIntent.getStringExtra("airport"));
                 query.whereEqualTo("isToAirport", passedInIntent.getBooleanExtra("isToAirport", false));
                 query.whereEqualTo("isActive", true);
+                query.whereEqualTo("isGroupOpen", true);
                 query.whereEqualTo("college", passedInIntent.getStringExtra("college"));
+
+                ArrayList<String> preferences = passedInIntent.getStringArrayListExtra("preferences");
+                query.whereContainedIn("transportationPreference", preferences);
 
                 // Do some math to return dates within a 12-hour window.
                 Long twelveHoursBefore = passedInIntent.getLongExtra("departureDate", 0) - (43200 * 1000);

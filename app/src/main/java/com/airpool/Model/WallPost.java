@@ -3,6 +3,7 @@ package com.airpool.Model;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.util.Calendar;
 
 @ParseClassName("WallPost")
 public class WallPost extends ParseObject {
@@ -18,11 +19,22 @@ public class WallPost extends ParseObject {
         put("message", message);
     }
 
-    public String getSenderObjectId() {
-        return getString("senderObjectId");
+    public User getSender() {
+        return (User) getParseObject("sender");
     }
 
-    public void setSenderObjectId(String senderObjectId) {
-        put("senderObjectId", senderObjectId);
+    public void setSender(User user) {
+        put("sender", user);
+    }
+
+    public Calendar getTimeSent() {
+        Long date = getLong("timeSent");
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(date);
+        return calendar;
+    }
+
+    public void setTimeSent(Calendar timeSent) {
+        put("timeSent", timeSent.getTimeInMillis());
     }
 }

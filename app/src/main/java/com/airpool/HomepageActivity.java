@@ -48,9 +48,6 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
             searchButton = (Button) findViewById(R.id.search_button);
             searchButton.setOnClickListener(this);
 
-            preferencesButton = (Button) findViewById(R.id.preferences_button);
-            preferencesButton.setOnClickListener(this);
-
             // Get the groups associated with this user.
             userGroups = new ArrayList<Group>();
             try {
@@ -116,16 +113,8 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.search_button:
-                Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
-                startActivity(clickSearch);
-                break;
-            case R.id.preferences_button:
-                Intent clickPreference = new Intent(HomepageActivity.this, PreferencesActivity.class);
-                startActivity(clickPreference);
-                break;
-        }
+        Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
+        startActivity(clickSearch);
     }
 
     public boolean getIsLoggedIn() {

@@ -22,4 +22,8 @@ public enum TransportationPreference {
     public String getPreferenceName() {
         return this.preference;
     }
+
+    public String toString() {
+        return getPreferenceName();
+    }
 }

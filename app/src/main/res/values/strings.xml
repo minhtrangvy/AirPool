@@ -5,7 +5,6 @@
     <string name="action_settings">Settings</string>
     <string name="search">Search for Group</string>
     <string name="groups">My Groups</string>
-    <string name="preferences">My Preferences</string>
     <string name="logout">Logout</string>
 
     <string name="title_activity_login">Login</string>
@@ -43,6 +42,8 @@
     <string name="create_group">Create Group</string>
 
     <string name="title_activity_preferences">Preferences</string>
+    <string name="select_transportation">Select Transportation</string>
+    <string name="select_transportation_preferences">Select Preferred Transportation</string>
     <string name="instructions">Instructions</string>
     <string name="selectPrefs">Check all the different modes of transportation you prefer. If you have
     no preference, simply click the "No preference" box. Clicking the "No Preference" box will
