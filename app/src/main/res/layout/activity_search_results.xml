@@ -4,18 +4,23 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="10">
 
     <TextView
         android:id="@+id/search_result_heading"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="28sp" />
+        android:layout_height="0dp"
+        android:textSize="28sp"
+        android:layout_weight="1"
+        android:scrollHorizontally="true"
+        android:ellipsize="end"
+        android:maxLines="1" />
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp">
+        android:layout_height="0dp"
+        android:layout_weight="7.5">
 
         <!-- Empty List -->
         <TextView
@@ -37,17 +42,19 @@
         <ListView
             android:id="@+id/search_result_list"
             android:layout_width="match_parent"
-            android:layout_height="0dp" />
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 
     <Button
         android:id="@+id/create_group_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
         android:background="@android:color/black"
         android:textColor="#fdb62a"
         android:text="@string/create_group"
-        android:visibility="gone" />
+        android:visibility="visible"
+        android:layout_weight="1"/>
 
 </LinearLayout>

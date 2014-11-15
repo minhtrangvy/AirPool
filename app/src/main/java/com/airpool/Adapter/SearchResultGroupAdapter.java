@@ -1,6 +1,7 @@
 package com.airpool.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -66,6 +67,24 @@ public class SearchResultGroupAdapter extends ArrayAdapter<Group> {
                     item.getAirport().getAirportName());
         }
         viewHolder.airport.setText(airportText);
+
+        switch(item.getTransportationPreference()) {
+            case TAXI:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_taxi);
+                break;
+            case SS:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_supershuttle);
+                break;
+            case PUBTRANS:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_public_transit);
+                break;
+            case DRIVE:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_car);
+                break;
+            case NOPREF:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_null_value);
+                break;
+        }
 
         return convertView;
     }

@@ -4,38 +4,59 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="10">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:textSize="30sp"
-        android:text="@string/groups" />
+        android:text="@string/groups"
+        android:layout_weight="1"/>
 
-    <!-- List whose dataset is defined in code with an adapter -->
-    <ListView
-        android:id="@+id/user_groups"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:layout_weight="7">
+
+        <!-- Empty List -->
+        <TextView
+            android:id="@+id/no_search_results"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/no_user_groups"
+            android:visibility="gone"
+            android:gravity="center_vertical|center_horizontal" />
+
+        <!-- List whose dataset is defined in code with an adapter -->
+        <ListView
+            android:id="@+id/user_groups"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="20dp" />
+
+    </FrameLayout>
 
     <!-- Set OnClickListener to trigger search page when pressed -->
     <Button
         android:id="@+id/search_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:background="@android:color/black"
         android:textColor="#fdb62a"
         android:layout_marginBottom="10dp"
-        android:text="@string/search" />
+        android:text="@string/search"
+        android:layout_weight="0.75"/>
 
     <com.facebook.widget.LoginButton
         android:id="@+id/facebook_login_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_gravity="center_horizontal"
-        android:hint="@string/usernameHint" />
+        android:hint="@string/usernameHint"
+        android:layout_alignParentBottom="true"
+        android:layout_weight="0.75"/>
 
 
 </LinearLayout>

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +11,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.airpool.Adapter.UserGroupsAdapter;
 import com.airpool.Model.Group;
@@ -26,7 +26,7 @@ import java.util.List;
 
 public class HomepageActivity extends Activity implements View.OnClickListener {
     public static final String PREFS_NAME = "Prefs";
-    Button searchButton, preferencesButton, logoutButton;
+    Button searchButton;
     boolean isLoggedIn = true;
     User _thisUser;
 
@@ -92,7 +92,9 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
                     }
                 });
             } else {
+
                 // Indicate to the user that there are no groups that they've joined.
+                userGroupList.setEmptyView((TextView) findViewById(R.id.no_search_results));
             }
 
         }

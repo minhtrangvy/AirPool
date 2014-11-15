@@ -6,8 +6,6 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
-import android.widget.ListView;
 
 import com.airpool.Model.TransportationPreference;
 import com.airpool.R;
@@ -24,7 +22,7 @@ public class PreferencePickerFragment extends DialogFragment {
     List<String> preferences;
     boolean[] preferencesBoolean;
 
-    private int noPreference = 0;
+    public int noPreferenceWhich = 0;
 
     public interface OnPreferencePickedListener {
         public void onPreferencePicked(int which, boolean isChecked);
@@ -37,7 +35,7 @@ public class PreferencePickerFragment extends DialogFragment {
         int i = 0;
         for (TransportationPreference preference : TransportationPreference.values()) {
             if (preference == TransportationPreference.NOPREF) {
-                noPreference = i;
+                noPreferenceWhich = i;
                 preferencesBoolean[i] = true;
             } else {
                 preferencesBoolean[i] = false;
@@ -77,15 +75,22 @@ public class PreferencePickerFragment extends DialogFragment {
                 new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
-                        if (which == noPreference) {
-                            for (int i = 0; i < which; i++) {
-                                preferencesBoolean[i] = false;
-                                ((AlertDialog) dialog).getListView().setItemChecked(i, false);
+                        if (which == noPreferenceWhich && isChecked) {
+                            int i = 0;
+                            while (i < preferencesBoolean.length) {
+                                if (i != noPreferenceWhich) {
+                                    preferencesBoolean[i] = false;
+                                    ((AlertDialog) dialog).getListView().setItemChecked(i, false);
+                                } else {
+                                    preferencesBoolean[noPreferenceWhich] = true;
+                                    ((AlertDialog) dialog).getListView().setItemChecked(noPreferenceWhich, true);
+                                }
+
+                                i++;
                             }
-                            selectedPreferences.clear();
                         } else {
-                            preferencesBoolean[noPreference] = false;
-                            ((AlertDialog) dialog).getListView().setItemChecked(noPreference, false);
+                            preferencesBoolean[noPreferenceWhich] = false;
+                            ((AlertDialog) dialog).getListView().setItemChecked(noPreferenceWhich, false);
                         }
 
                         callback.onPreferencePicked(which, isChecked);
@@ -111,5 +116,9 @@ public class PreferencePickerFragment extends DialogFragment {
 
     public void updateSelectedTransportationPreferences(ArrayList<TransportationPreference> selectedPreferences) {
         this.selectedPreferences = selectedPreferences;
+    }
+
+    public int getNoPreferenceWhich() {
+        return noPreferenceWhich;
     }
 }

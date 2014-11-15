@@ -180,6 +180,7 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         Calendar calendar = dateFragment.getCalendar();
         calendar.set(Calendar.HOUR_OF_DAY, timeFragment.getHour());
         calendar.set(Calendar.MINUTE, timeFragment.getMinute());
+        Log.v("hai", calendar.toString());
 
         clickSearch.putExtra("timeOfDeparture", calendar.getTimeInMillis());
 
@@ -204,10 +205,14 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
 
     public void onPreferencePicked(int which, boolean isChecked) {
         TransportationPreference preference = transportationPreferences.get(which);
-        if (isChecked) {
-            selectedPreferences.add(preference);
+        if (which == preferenceFragment.getNoPreferenceWhich()) {
+            selectedPreferences.clear();
         } else {
-            selectedPreferences.remove(preference);
+            if (isChecked) {
+                selectedPreferences.add(preference);
+            } else {
+                selectedPreferences.remove(preference);
+            }
         }
     }
 }

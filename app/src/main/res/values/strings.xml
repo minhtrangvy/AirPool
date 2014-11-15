@@ -9,6 +9,8 @@
 
     <string name="title_activity_login">Login</string>
 
+    <string name="no_user_groups">You’re not a part of any groups yet!</string>
+
     <string name="to">To</string>
     <string name="from">From</string>
 
@@ -29,10 +31,8 @@
 
     <!-- Search Results -->
     <string name="title_activity_search_results">Search Results</string>
-
     <string name="rides_to">Group Rides to %1$s</string>
     <string name="rides_from">Group Rides from %1$s</string>
-
     <string name="group_results">Group Results</string>
     <string name="no_search_results">There are no rides currently scheduled that match your criteria.</string>
     <plurals name="group_number">
@@ -44,31 +44,11 @@
     <string name="title_activity_preferences">Preferences</string>
     <string name="select_transportation">Select Transportation</string>
     <string name="select_transportation_preferences">Select Preferred Transportation</string>
-    <string name="instructions">Instructions</string>
-    <string name="selectPrefs">Check all the different modes of transportation you prefer. If you have
-    no preference, simply click the "No preference" box. Clicking the "No Preference" box will
-    override any other preferences.</string>
-
-    <string name="taxi">Take a taxi</string>
-    <string name="superShuttle">Book a SuperShuttle</string>
-    <string name="publicTransit">Take public transportation</string>
-    <string name="drive">Have a group member or a friend drive</string>
-    <string name="noPref">No preference</string>
-
-    <string name="savePrefs">Save Preferences</string>
 
     <string name="title_activity_create_group">Create New Group</string>
     <string name="createGroupInstruc">In order to create a new group, please fill out the following information:</string>
     <string name="createGroup_button">Create Group</string>
     <string name="goBackResults">Back to Search Results</string>
-
-    <string-array name="transPrefs_array">
-        <item>Take a taxi</item>
-        <item>Book a SuperShuttle</item>
-        <item>Take public transportation</item>
-        <item>Have a group member or a friend drive</item>
-        <item>No preference</item>
-    </string-array>
 
     <string name="title_activity_edit_group">Edit Group</string>
     <string name="transportation_spinner">Choose Mode of Transportation</string>
