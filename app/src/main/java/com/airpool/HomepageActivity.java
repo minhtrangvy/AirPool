@@ -42,6 +42,7 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
         String objectId = settings.getString("userObjectId", null);
 
         if(objectId == null) {
+            Log.i("HomepageActivity", "got nothin in local yo");
             Intent mustLogIn = new Intent(HomepageActivity.this, LoginActivity.class);
             startActivity(mustLogIn);
         } else {

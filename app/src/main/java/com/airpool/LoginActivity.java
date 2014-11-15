@@ -130,23 +130,6 @@ public class LoginActivity extends Activity implements View.OnClickListener {
 //            preferencesButton = (Button) findViewById(R.id.preferences_button);
 //            preferencesButton.setOnClickListener(this);
 
-        } else if (session.isClosed()) {
-
-//            Log.i(TAG, "User has logged out...");
-//
-//            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
-//            query.whereEqualTo("userId", _userId);
-//            query.getFirstInBackground( new GetCallback<ParseObject>() {
-//                @Override
-//                public void done(ParseObject parseObject, ParseException e) {
-//                    // if the user does exist in our database, set their loggedIn to false
-//                    if (parseObject != null) {
-//                        parseObject.put("loggedIn", false);
-//                    }
-//                }
-//            });
-//
-//            setContentView(R.layout.activity_login);
         }
     }
 

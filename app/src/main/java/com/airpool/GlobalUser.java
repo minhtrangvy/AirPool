@@ -1,6 +1,7 @@
 package com.airpool;
 
 import android.app.Application;
+import android.util.Log;
 
 import com.airpool.Model.Group;
 import com.airpool.Model.User;
@@ -31,9 +32,10 @@ public class GlobalUser extends Application {
     }
 
     public void setCurrentUser(User user) {
-        this.currentUser = user;
-    }
 
+        this.currentUser = user;
+        Log.i("GlobalUser", "got the user!" + user.getObjectId().toString());
+    }
     public User getCurrentUser() {
         return this.currentUser;
     }
