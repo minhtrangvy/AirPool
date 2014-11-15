@@ -2,7 +2,10 @@ package com.airpool;
 
 import android.app.Application;
 
+import com.airpool.Model.Group;
+import com.airpool.Model.User;
 import com.parse.GetCallback;
+import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -16,39 +19,24 @@ public class GlobalUser extends Application {
 //    private String ;
 //    private String _facebookId;
     private String _userId;
+    User currentUser;
 
-//    public String getName() {
-//        return this._name;
-//    }
-//
-//    public void setName(String thisName) {
-//        this._name = thisName;
-//
-//    }
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        ParseObject.registerSubclass(Group.class);
+        ParseObject.registerSubclass(User.class);
+        Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ",
+                "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
+    }
 
-//    public String getUserID(String facebookID) {
-//        ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-//        final String[] userID = new String[1];
-//        query.getInBackground(facebookID, new GetCallback<ParseObject>() {
-//            @Override
-//            public void done(ParseObject parseObject, ParseException e) {
-//                if (e == null ) {
-//                    userID[0] = parseObject.getString("objectId");
-//                } else {
-//                    userID[0] = "";
-//                }
-//            }
-//        });
-//        return userID[0];
-//    }
+    public void setCurrentUser(User user) {
+        this.currentUser = user;
+    }
 
-//    public String getFacebookId() {
-//        return this._facebookId;
-//    }
-//
-//    public void setFacebookId(String facebookID) {
-//        this._facebookId = facebookID;
-//    }
+    public User getCurrentUser() {
+        return this.currentUser;
+    }
 
     public void findUserID(String facebookId) {
         ParseQuery<ParseObject> query = ParseQuery.getQuery("User");

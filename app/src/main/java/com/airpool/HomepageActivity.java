@@ -2,6 +2,7 @@ package com.airpool;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,6 +25,7 @@ import java.util.List;
 
 
 public class HomepageActivity extends Activity implements View.OnClickListener {
+    public static final String PREFS_NAME = "Prefs";
     Button searchButton, preferencesButton, logoutButton;
     boolean isLoggedIn = true;
     User _thisUser;
@@ -36,8 +38,10 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // can we call parse loggedIn boolean?
-        if(!getIsLoggedIn()) {
+        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        String objectId = settings.getString("userObjectId", null);
+
+        if(objectId == null) {
             Intent mustLogIn = new Intent(HomepageActivity.this, LoginActivity.class);
             startActivity(mustLogIn);
         } else {
@@ -54,7 +58,9 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
                 // First, get the user. This is a hard-coded call right now, but replace this with
                 // an actual
                 ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-                ParseObject user = userQuery.get("68xwdmZ1IE");
+                ParseObject user = userQuery.get(objectId);
+                GlobalUser context = (GlobalUser) getApplicationContext();
+                context.setCurrentUser((User) user);
 
                 // Then, get the associated groups.
                 ParseQuery<ParseObject> groupQuery = ParseQuery.getQuery("Group");
@@ -115,13 +121,5 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
     public void onClick(View v) {
         Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
         startActivity(clickSearch);
-    }
-
-    public boolean getIsLoggedIn() {
-        return this.isLoggedIn;
-    }
-
-    public void setIsLoggedIn(boolean value) {
-        this.isLoggedIn = value;
     }
 }
