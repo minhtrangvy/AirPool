@@ -3,7 +3,12 @@ package com.airpool;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.os.Bundle;
+import android.util.Base64;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,18 +21,20 @@ import android.widget.TextView;
 import com.airpool.Adapter.UserGroupsAdapter;
 import com.airpool.Model.Group;
 import com.airpool.Model.User;
+import com.facebook.Session;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class HomepageActivity extends Activity implements View.OnClickListener {
     public static final String PREFS_NAME = "Prefs";
-    Button searchButton;
-    boolean isLoggedIn = true;
+    Button searchButton, logOutButton;
     User _thisUser;
 
     ListView userGroupList;
@@ -38,8 +45,24 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+//        try {
+//            PackageInfo info = getPackageManager().getPackageInfo(
+//                    "com.airpool",
+//                    PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest md = MessageDigest.getInstance("SHA");
+//                md.update(signature.toByteArray());
+//                Log.d("Your Tag", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//            }
+//        } catch (PackageManager.NameNotFoundException e) {
+//            Log.i("Your Tag failed ", "failed");
+//        } catch (NoSuchAlgorithmException e) {
+//            Log.i("Your Tag failed 1", "failed");
+//        }
+
         SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
         String objectId = settings.getString("userObjectId", null);
+        Log.i("HomepageActivity", "objectID is " + objectId);
 
         if(objectId == null) {
             Log.i("HomepageActivity", "got nothin in local yo");
@@ -52,6 +75,8 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
 
             searchButton = (Button) findViewById(R.id.search_button);
             searchButton.setOnClickListener(this);
+
+//            logOutButton = (Button) findViewById(R.id.facebook_login_button);
 
             // Get the groups associated with this user.
             userGroups = new ArrayList<Group>();
@@ -122,7 +147,27 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
-        startActivity(clickSearch);
+//        Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
+//        startActivity(clickSearch);
+        Log.i("HomepageActivity", "in onClick");
+        int viewID = v.getId();
+
+        if (viewID == R.id.search_button) {
+            Log.i("HomepageActivity", "clicked search button");
+            Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
+            startActivity(clickSearch);
+        } else if (viewID == R.id.facebook_login_button) {
+            Session session = Session.getActiveSession();
+            if (session.isClosed()) {
+                Log.i("HomepageActivity", "i think you are trying to log out");
+                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+                SharedPreferences.Editor editSettings = settings.edit();
+                editSettings.putString("userObjectId", null);
+                editSettings.commit();
+
+                Intent logInAgain = new Intent(HomepageActivity.this, LoginActivity.class);
+                startActivity(logInAgain);
+            }
+        }
     }
 }

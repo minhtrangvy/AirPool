@@ -27,8 +27,6 @@ import com.parse.ParseQuery;
 public class LoginActivity extends Activity implements View.OnClickListener {
     private static final String TAG = "LoginActivity";
     public static final String PREFS_NAME = "Prefs";
-    private User _thisUser;
-    public String _userId;
 
     private Session.StatusCallback loginCallback = new Session.StatusCallback() {
         @Override
@@ -112,7 +110,9 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                                     ((GlobalUser) getApplicationContext()).setCurrentUser((User) newUser);
                                 }
 
-                                finish();
+//                                finish();
+                                Intent sendToHomepage = new Intent(LoginActivity.this,HomepageActivity.class);
+                                startActivity(sendToHomepage);
                             }
                         });
                     }
