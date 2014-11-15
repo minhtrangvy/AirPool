@@ -25,8 +25,17 @@
         android:layout_height="wrap_content"
         android:background="@android:color/black"
         android:textColor="#fdb62a"
-        android:layout_marginBottom="15dp"
+        android:layout_marginBottom="5dp"
         android:text="@string/selectTime" />
+
+    <Button
+        android:id="@+id/selectPreferences_button"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/black"
+        android:textColor="#fdb62a"
+        android:layout_marginBottom="15dp"
+        android:text="@string/select_transportation" />
 
     <!-- Set OnClickListener to trigger search when pressed -->
     <Button

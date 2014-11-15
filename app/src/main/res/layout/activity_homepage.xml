@@ -30,15 +30,6 @@
         android:layout_marginBottom="10dp"
         android:text="@string/search" />
 
-    <Button
-        android:id="@+id/preferences_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:textColor="#fdb62a"
-        android:layout_marginBottom="30dp"
-        android:text="@string/preferences" />
-
     <com.facebook.widget.LoginButton
         android:id="@+id/facebook_login_button"
         android:layout_width="wrap_content"

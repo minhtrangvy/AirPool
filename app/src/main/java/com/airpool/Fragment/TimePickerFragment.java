@@ -56,7 +56,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
     public void initializeTime(int hour, int minute) {
         calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, (minute / 15));
+        calendar.set(Calendar.MINUTE, (minute / CustomTimePickerDialog.TIME_PICKER_INTERVAL));
     }
 
     public boolean isValidInput() {
@@ -76,8 +76,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     public static class CustomTimePickerDialog extends TimePickerDialog {
-
-        private final static int TIME_PICKER_INTERVAL = 15;
+        public final static int TIME_PICKER_INTERVAL = 15;
         private TimePicker timePicker;
         private final OnTimeSetListener callback;
 

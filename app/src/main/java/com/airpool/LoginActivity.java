@@ -169,10 +169,10 @@ public class LoginActivity extends Activity implements View.OnClickListener {
                 Intent clickSearch = new Intent(LoginActivity.this, SearchActivity.class);
                 startActivity(clickSearch);
                 break;
-            case R.id.preferences_button:
-                Intent clickPreference = new Intent(LoginActivity.this, PreferencesActivity.class);
-                startActivity(clickPreference);
-                break;
+//            case R.id.preferences_button:
+//                Intent clickPreference = new Intent(LoginActivity.this, PreferencesActivity.class);
+//                startActivity(clickPreference);
+//                break;
         }
     }
 }
