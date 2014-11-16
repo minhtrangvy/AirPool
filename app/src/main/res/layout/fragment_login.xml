@@ -1,9 +1,8 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical">
+    tools:context="com.airpool.Fragment.LoginFragment">
 
     <com.facebook.widget.LoginButton
         android:id="@+id/authButton"
@@ -13,4 +12,4 @@
         android:layout_marginTop="30dp"
         android:hint="@string/usernameHint" />
 
-</LinearLayout>
+</FrameLayout>

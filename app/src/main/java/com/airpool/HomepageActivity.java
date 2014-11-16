@@ -1,128 +1,67 @@
 package com.airpool;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.Signature;
 import android.os.Bundle;
-import android.util.Base64;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
-import com.airpool.Adapter.UserGroupsAdapter;
-import com.airpool.Model.Group;
+import com.airpool.Fragment.HomepageFragment;
 import com.airpool.Model.User;
+import com.facebook.Request;
+import com.facebook.Response;
 import com.facebook.Session;
+import com.facebook.SessionState;
+import com.facebook.UiLifecycleHelper;
+import com.facebook.model.GraphUser;
+import com.parse.GetCallback;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.List;
+import com.parse.SaveCallback;
 
 
-public class HomepageActivity extends Activity implements View.OnClickListener {
-    public static final String PREFS_NAME = "Prefs";
-    Button searchButton; //, logOutButton;
+public class HomepageActivity extends FragmentActivity {
+    private static final String TAG = "HomepageActivity";
+    private static final int LOGIN = 0;
+    private static final int HOMEPAGE = 1;
+    private static final int FRAGMENT_COUNT = HOMEPAGE + 1;
 
-    ListView userGroupList;
-    ArrayAdapter<Group> userGroupListAdapter;
-    ArrayList<Group> userGroups;
+    private boolean isResumed = false;
+
+    private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
+
+    private UiLifecycleHelper uiHelper;
+    public Session.StatusCallback callback =
+            new Session.StatusCallback() {
+                @Override
+                public void call(Session session,
+                                 SessionState state, Exception exception) {
+                    onSessionStateChange(session, state, exception);
+                }
+            };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_homepage);
 
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    "com.airpool",
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest md = MessageDigest.getInstance("SHA");
-//                md.update(signature.toByteArray());
-//                Log.d("Your Tag", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//            }
-//        } catch (PackageManager.NameNotFoundException e) {
-//            Log.i("Your Tag failed ", "failed");
-//        } catch (NoSuchAlgorithmException e) {
-//            Log.i("Your Tag failed 1", "failed");
-//        }
+        FragmentManager fm = getSupportFragmentManager();
+        fragments[LOGIN] = fm.findFragmentById(R.id.login_fragment);
+        fragments[HOMEPAGE] = fm.findFragmentById(R.id.homepage_fragment);
 
-        SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        String objectId = settings.getString("userObjectId", null);
-        Log.i("HomepageActivity", "objectID is " + objectId);
-
-        if(objectId == null) {
-            Log.i("HomepageActivity", "got nothin in local yo");
-            Intent mustLogIn = new Intent(HomepageActivity.this, LoginActivity.class);
-            startActivity(mustLogIn);
-        } else {
-            setContentView(R.layout.activity_homepage);
-
-            userGroupList = (ListView) findViewById(R.id.user_groups);
-
-            searchButton = (Button) findViewById(R.id.search_button);
-            searchButton.setOnClickListener(this);
-
-//            logOutButton = (Button) findViewById(R.id.facebook_login_button);
-
-            // Get the groups associated with this user.
-            userGroups = new ArrayList<Group>();
-            try {
-                // First, get the user. This is a hard-coded call right now, but replace this with
-                // an actual
-                ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-                ParseObject user = userQuery.get(objectId);
-                GlobalUser context = (GlobalUser) getApplicationContext();
-                context.setCurrentUser((User) user);
-
-                // Then, get the associated groups
-                ParseQuery<ParseObject> groupQuery = ParseQuery.getQuery("Group");
-                groupQuery.whereEqualTo("users", user);
-                groupQuery.whereEqualTo("isActive", true);
-
-                List<ParseObject> groups = groupQuery.find();
-
-                // Do not know of any other way to cast list of objects.
-                for(ParseObject group : groups) {
-                    userGroups.add((Group) group);
-                }
-            } catch (ParseException exception) {
-                // Error.
-            }
-
-            if (!userGroups.isEmpty()) {
-                // Populate the list view.
-                userGroupListAdapter = new UserGroupsAdapter(this, R.layout.item_user_groups, userGroups);
-                userGroupList.setAdapter(userGroupListAdapter);
-
-                // View a group when you click on a list item.
-                userGroupList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                    @Override
-                    public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                        Intent viewGroup = new Intent(HomepageActivity.this, ViewGroupActivity.class);
-                        viewGroup.putExtra("groupId", userGroups.get(position).getObjectId());
-                        startActivity(viewGroup);
-                    }
-                });
-            } else {
-
-                // Indicate to the user that there are no groups that they've joined.
-                userGroupList.setEmptyView((TextView) findViewById(R.id.no_search_results));
-            }
-
+        FragmentTransaction transaction = fm.beginTransaction();
+        for(int i = 0; i < fragments.length; i++) {
+            transaction.hide(fragments[i]);
         }
+        transaction.commit();
+
+        uiHelper = new UiLifecycleHelper(this, callback);
+        uiHelper.onCreate(savedInstanceState);
     }
 
     @Override
@@ -145,28 +84,119 @@ public class HomepageActivity extends Activity implements View.OnClickListener {
     }
 
     @Override
-    public void onClick(View v) {
-//        Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
-//        startActivity(clickSearch);
-        Log.i("HomepageActivity", "in onClick");
-        int viewID = v.getId();
+    protected void onResumeFragments() {
+        super.onResumeFragments();
 
-        if (viewID == R.id.search_button) {
-            Log.i("HomepageActivity", "clicked search button");
-            Intent clickSearch = new Intent(HomepageActivity.this, SearchActivity.class);
-            startActivity(clickSearch);
-        } else if (viewID == R.id.facebook_login_button) {
-            Session session = Session.getActiveSession();
-            if (session.isClosed()) {
-                Log.i("HomepageActivity", "i think you are trying to log out");
-                SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-                SharedPreferences.Editor editSettings = settings.edit();
-                editSettings.putString("userObjectId", null);
-                editSettings.commit();
+        Session session = Session.getActiveSession();
+        if (session != null && session.isOpened()) {
+            showFragment(HOMEPAGE, false);
+        } else {
+            showFragment(LOGIN, false);
+        }
+    }
 
-                Intent logInAgain = new Intent(HomepageActivity.this, LoginActivity.class);
-                startActivity(logInAgain);
+    @Override
+    public void onResume() {
+        super.onResume();
+        isResumed = true;
+        Session session = Session.getActiveSession();
+        if (session != null &&
+                (session.isOpened() || session.isClosed()) ) {
+            onSessionStateChange(session, session.getState(), null);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        isResumed = false;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        uiHelper.onActivityResult(requestCode, resultCode, data);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        uiHelper.onDestroy();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        uiHelper.onSaveInstanceState(outState);
+    }
+
+    private void onSessionStateChange(Session session, SessionState state, Exception exception) {
+        if (isResumed) {
+            FragmentManager manager = getSupportFragmentManager();
+
+            int backStackSize = manager.getBackStackEntryCount();
+
+            for (int i = 0; i < backStackSize; i++) {
+                manager.popBackStack();
+            }
+            if (state.isOpened()) {
+                // Get the Facebook User ID.
+                Request.newMeRequest(session, new Request.GraphUserCallback() {
+                    @Override
+                    public void onCompleted(final GraphUser user, Response response) {
+                        if (user != null) {
+                            final String facebookId = user.getId();
+
+                            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+                            query.whereEqualTo("facebookID", facebookId);
+                            query.getFirstInBackground(new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject parseObject, ParseException e) {
+                                    // Create the user if they don't exist.
+                                    if (parseObject == null) {
+                                        User newUser = new User();
+                                        newUser.put("facebookID", user.getId());
+                                        newUser.put("firstName", user.getFirstName());
+                                        newUser.put("lastName", user.getLastName());
+                                        newUser.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                if (e == null) {
+                                                    Log.e(TAG, "Error saving new user.");
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        }
+                    }
+                }).executeAsync();
+            } else if (state.isClosed()) {
+                ((GlobalUser) getApplicationContext()).setCurrentUser(null);
+                showFragment(LOGIN, false);
             }
         }
     }
+
+    private void showFragment(int fragmentIndex, boolean addToBackStack) {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        for (int i = 0; i < fragments.length; i++) {
+            if (i == fragmentIndex) {
+                transaction.show(fragments[i]);
+                if (i == HOMEPAGE) {
+                    HomepageFragment fragment = (HomepageFragment) fragments[i];
+                    fragment.populateGroups();
+                }
+            } else {
+                transaction.hide(fragments[i]);
+            }
+        }
+        if (addToBackStack) {
+            transaction.addToBackStack(null);
+        }
+       transaction.commit();
+    }
+
 }
