@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -93,11 +94,15 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
             query = relation.getQuery();
             List<ParseObject> users = query.find();
 
+            GlobalUser context = (GlobalUser) getApplicationContext();
+            User currentUser = context.getCurrentUser();
+            Log.i("currentUserID =  ", currentUser.getObjectId());
+
             // Do not know of any other way to cast list of objects.
             for(ParseObject user : users) {
                 User userToAdd = (User) user;
                 groupMembers.add(userToAdd);
-                if (userToAdd.getObjectId().equals("68xwdmZ1IE")) {
+                if (userToAdd.getObjectId().equals(currentUser.getObjectId())) {
                     isUserMember = true;
                 }
             }
@@ -158,7 +163,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
                 group.saveInBackground();
 
                 Toast.makeText(getApplicationContext(),
-                        getResources().getString(R.string.toast_successfully_created_group),
+                        getResources().getString(R.string.toast_successfully_joined_group),
                         Toast.LENGTH_SHORT).show();
 
 
@@ -189,7 +194,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
             case R.id.leave_group_button:
                 ParseRelation<ParseObject> newRelation = group.getRelation("users");
                 newRelation.remove(currentUser);
-                if (groupMembers.size() - 1 == 0){
+                if (groupMembers.size() - 1 == 0) {
                     group.setIsActive(false);
                 }
                 group.saveInBackground();
