@@ -143,63 +143,90 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        GlobalUser context = (GlobalUser) getApplicationContext();
+        User currentUser = context.getCurrentUser();
+
         switch (view.getId()) {
             case R.id.groupWall_button:
                 Intent goToWall = new Intent(ViewGroupActivity.this, GroupWallActivity.class);
                 startActivity(goToWall);
                 break;
             case R.id.join_group_button:
-                ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-                userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject object, ParseException e) {
-                        if (e == null) {
-                            ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
-                            newGroupRelation.add(object);
-                            group.saveInBackground();
 
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.toast_successfully_created_group),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Error.
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.toast_unsuccessfully_joined_group),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        // Recreate the activity.
-                        recreate();
-                    }
-                });
+                ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
+                newGroupRelation.add(currentUser); //TODO NEED TO CAST THIS TO PARSEOBJECT?
+                group.saveInBackground();
+
+                Toast.makeText(getApplicationContext(),
+                        getResources().getString(R.string.toast_successfully_created_group),
+                        Toast.LENGTH_SHORT).show();
+
+
+//                ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
+//                userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
+//                    @Override
+//                    public void done(ParseObject object, ParseException e) {
+//                        if (e == null) {
+//                            ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
+//                            newGroupRelation.add(object);
+//                            group.saveInBackground();
+//
+//                            Toast.makeText(getApplicationContext(),
+//                                    getResources().getString(R.string.toast_successfully_created_group),
+//                                    Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            // Error.
+//                            Toast.makeText(getApplicationContext(),
+//                                    getResources().getString(R.string.toast_unsuccessfully_joined_group),
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                        // Recreate the activity.
+//                        recreate();
+//                    }
+//                });
 
                 break;
             case R.id.leave_group_button:
-                userQuery = ParseQuery.getQuery("User");
-                userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
-                    @Override
-                    public void done(ParseObject object, ParseException e) {
-                        if (e == null) {
-                            ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
-                            newGroupRelation.remove(object);
+P               ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
+                newGroupRelation.remove(currentUser);
+                if (groupMembers.size() - 1 == 0){
+                    group.setIsActive(false);
+                }
+                group.saveInBackground();
 
-                            if (groupMembers.size() - 1 == 0){
-                                group.setIsActive(false);
-                            }
-                            group.saveInBackground();
+                Toast.makeText(getApplicationContext(),
+                        getResources().getString(R.string.toast_successfully_left_group),
+                        Toast.LENGTH_SHORT).show();
 
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.toast_successfully_left_group),
-                                    Toast.LENGTH_SHORT).show();
-                        } else {
-                            // Error.
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.toast_unsuccessfully_left_group),
-                                    Toast.LENGTH_SHORT).show();
-                        }
-                        Intent goToHomepage = new Intent(ViewGroupActivity.this, HomepageActivity.class);
-                        startActivity(goToHomepage);
-                    }
-                });
+                Intent goToHomepage = new Intent(ViewGroupActivity.this, HomepageActivity.class);
+                startActivity(goToHomepage);
+
+//                userQuery = ParseQuery.getQuery("User");
+//                userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
+//                    @Override
+//                    public void done(ParseObject object, ParseException e) {
+//                        if (e == null) {
+//                            ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
+//                            newGroupRelation.remove(object);
+//
+//                            if (groupMembers.size() - 1 == 0){
+//                                group.setIsActive(false);
+//                            }
+//                            group.saveInBackground();
+//
+//                            Toast.makeText(getApplicationContext(),
+//                                    getResources().getString(R.string.toast_successfully_left_group),
+//                                    Toast.LENGTH_SHORT).show();
+//                        } else {
+//                            // Error.
+//                            Toast.makeText(getApplicationContext(),
+//                                    getResources().getString(R.string.toast_unsuccessfully_left_group),
+//                                    Toast.LENGTH_SHORT).show();
+//                        }
+//                        Intent goToHomepage = new Intent(ViewGroupActivity.this, HomepageActivity.class);
+//                        startActivity(goToHomepage);
+//                    }
+//                });
 
                 break;
 
