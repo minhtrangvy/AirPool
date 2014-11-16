@@ -51,9 +51,7 @@ public class HomepageActivity extends FragmentActivity {
         setContentView(R.layout.activity_homepage);
 
         FragmentManager fm = getSupportFragmentManager();
-        Log.v(TAG, fm.toString());
         fragments[LOGIN] = fm.findFragmentById(R.id.login_fragment);
-        Log.v(TAG, fragments[LOGIN].toString());
         fragments[HOMEPAGE] = fm.findFragmentById(R.id.homepage_fragment);
 
         FragmentTransaction transaction = fm.beginTransaction();
@@ -91,10 +89,8 @@ public class HomepageActivity extends FragmentActivity {
 
         Session session = Session.getActiveSession();
         if (session != null && session.isOpened()) {
-            Log.v(TAG, "Instead this ran.");
             showFragment(HOMEPAGE, false);
         } else {
-            Log.v(TAG, "Instead that ran.");
             showFragment(LOGIN, false);
         }
     }
@@ -103,7 +99,6 @@ public class HomepageActivity extends FragmentActivity {
     public void onResume() {
         super.onResume();
         isResumed = true;
-        Log.v(TAG, "Resume ran.");
         Session session = Session.getActiveSession();
         if (session != null &&
                 (session.isOpened() || session.isClosed()) ) {
@@ -136,7 +131,6 @@ public class HomepageActivity extends FragmentActivity {
     }
 
     private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-        Log.v(TAG, "MERP SESSIONSTATE CHANGED");
         if (isResumed) {
             FragmentManager manager = getSupportFragmentManager();
 
@@ -162,6 +156,8 @@ public class HomepageActivity extends FragmentActivity {
                                     if (parseObject == null) {
                                         User newUser = new User();
                                         newUser.put("facebookID", user.getId());
+                                        newUser.put("firstName", user.getFirstName());
+                                        newUser.put("lastName", user.getLastName());
                                         newUser.saveInBackground(new SaveCallback() {
                                             @Override
                                             public void done(ParseException e) {
@@ -177,8 +173,6 @@ public class HomepageActivity extends FragmentActivity {
                     }
                 }).executeAsync();
             } else if (state.isClosed()) {
-                Log.v(TAG, "State is closed.");
-                System.out.println("State is closed..");
                 ((GlobalUser) getApplicationContext()).setCurrentUser(null);
                 showFragment(LOGIN, false);
             }

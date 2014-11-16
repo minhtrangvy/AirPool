@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -131,7 +130,6 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
                 // Do some math to return dates within a 12-hour window.
                 Long twelveHoursBefore = passedInIntent.getLongExtra("timeOfDeparture", 0) - (43200 * 1000);
                 Long twelveHoursAfter = passedInIntent.getLongExtra("timeOfDeparture", 0) + (43200 * 1000);
-                Log.v("TAG", twelveHoursBefore + " and " + twelveHoursAfter);
 
                 query.whereLessThan("timeOfDeparture", twelveHoursAfter);
                 query.whereGreaterThan("timeOfDeparture", twelveHoursBefore);
@@ -146,7 +144,6 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
                     countQuery = relation.getQuery();
                     ((Group) group).setNumberOfUsers(countQuery.count());
                     groups.add((Group) group);
-                    Log.v("MERPdeyderp", "MERPPPPPP");
                 }
             } catch (ParseException exception) {
                 // Error.
