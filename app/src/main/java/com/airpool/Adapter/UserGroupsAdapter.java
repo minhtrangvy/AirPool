@@ -40,6 +40,9 @@ public class UserGroupsAdapter extends ArrayAdapter<Group> {
 
             viewHolder.dateAndTime = (TextView) convertView.findViewById(R.id.group_date_and_time);
             viewHolder.airport = (TextView) convertView.findViewById(R.id.group_airport);
+            viewHolder.transportationPreference = (ImageView)
+                    convertView.findViewById(R.id.group_transportation_preference);
+
             convertView.setTag(viewHolder);
         }
 
@@ -59,23 +62,23 @@ public class UserGroupsAdapter extends ArrayAdapter<Group> {
         }
         viewHolder.airport.setText(airportText);
 
-//        switch(item.getTransportationPreference()) {
-//            case TAXI:
-//                viewHolder.transportationPreference.setImageResource(R.drawable.ic_taxi);
-//                break;
-//            case SS:
-//                viewHolder.transportationPreference.setImageResource(R.drawable.ic_supershuttle);
-//                break;
-//            case PUBTRANS:
-//                viewHolder.transportationPreference.setImageResource(R.drawable.ic_public_transit);
-//                break;
-//            case DRIVE:
-//                viewHolder.transportationPreference.setImageResource(R.drawable.ic_car);
-//                break;
-//            case NOPREF:
-//                viewHolder.transportationPreference.setImageResource(R.drawable.ic_null_value);
-//                break;
-//        }
+        switch(item.getTransportationPreference()) {
+            case TAXI:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_taxi);
+                break;
+            case SS:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_supershuttle);
+                break;
+            case PUBTRANS:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_public_transit);
+                break;
+            case DRIVE:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_car);
+                break;
+            case NOPREF:
+                viewHolder.transportationPreference.setImageResource(R.drawable.ic_null_value);
+                break;
+        }
 
         return convertView;
     }
