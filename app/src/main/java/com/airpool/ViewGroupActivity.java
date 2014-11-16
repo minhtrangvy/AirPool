@@ -187,8 +187,8 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
 
                 break;
             case R.id.leave_group_button:
-P               ParseRelation<ParseObject> newGroupRelation = group.getRelation("users");
-                newGroupRelation.remove(currentUser);
+                ParseRelation<ParseObject> newRelation = group.getRelation("users");
+                newRelation.remove(currentUser);
                 if (groupMembers.size() - 1 == 0){
                     group.setIsActive(false);
                 }
