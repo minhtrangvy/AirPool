@@ -4,28 +4,32 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="10dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:weightSum="10">
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/departure_time_text" />
+        android:layout_height="0dp"
+        android:id="@+id/departure_time_text"
+        android:layout_weight="0.5"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/airport_text" />
+        android:layout_height="0dp"
+        android:id="@+id/airport_text"
+        android:layout_weight="0.5"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/college_text"/>
+        android:layout_height="0dp"
+        android:id="@+id/college_text"
+        android:layout_weight="0.5"/>
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/mode_of_transportation_text"/>
-
+        android:layout_height="0dp"
+        android:id="@+id/mode_of_transportation_text"
+        android:layout_weight="0.5"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -38,49 +42,55 @@
     <ListView
         android:id="@+id/group_members_list"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="1"
+        android:layout_height="0dp"
+        android:layout_weight="4"
         android:layout_marginTop="20dp" />
 
     <!-- Set OnClickListener to trigger when pressed -->
-    <Button
-        android:id="@+id/groupWall_button"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:textColor="#fdb62a"
-        android:layout_marginBottom="10dp"
-        android:text="@string/groupWall"
-        android:visibility="gone" />
+        android:layout_height="0dp"
+        android:layout_weight="4"
+        android:orientation="vertical">
 
-    <Button
-        android:id="@+id/edit_group_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:textColor="#fdb62a"
-        android:layout_marginBottom="10dp"
-        android:text="@string/editGroup"
-        android:visibility="gone"/>
+        <Button
+            android:id="@+id/groupWall_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/groupWall"
+            android:visibility="gone" />
 
-    <Button
-        android:id="@+id/leave_group_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:textColor="#fdb62a"
-        android:layout_marginBottom="10dp"
-        android:text="@string/leaveGroup"
-        android:visibility="gone"/>
+        <Button
+            android:id="@+id/edit_group_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/editGroup"
+            android:visibility="gone"/>
 
-    <Button
-        android:id="@+id/join_group_button"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:textColor="#fdb62a"
-        android:layout_marginBottom="10dp"
-        android:text="@string/joinGroup"
-        android:visibility="gone"/>
+        <Button
+            android:id="@+id/leave_group_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/leaveGroup"
+            android:visibility="gone"/>
 
+        <Button
+            android:id="@+id/join_group_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/joinGroup"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/open_close_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:visibility="gone"/>
+
+        </LinearLayout>
 </LinearLayout>

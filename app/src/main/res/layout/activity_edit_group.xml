@@ -23,8 +23,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@android:color/black"
-        android:textColor="#fdb62a"
         android:text="@string/selectDate" />
 
     <Button
@@ -32,8 +30,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
-        android:background="@android:color/black"
-        android:textColor="#fdb62a"
         android:text="@string/selectTime" />
 
 
@@ -43,8 +39,6 @@
         android:id="@+id/create_group_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/black"
-        android:textColor="#fdb62a"
         android:text="@string/createGroup_button" />
 
 </LinearLayout>

@@ -3,9 +3,6 @@ package com.airpool;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,7 +22,6 @@ import com.airpool.View.AirPoolSpinner;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
 import com.airpool.View.TransportationPreferenceSpinner;
-import com.parse.GetCallback;
 import com.parse.Parse;
 import com.parse.ParseException;
 import com.parse.ParseObject;
@@ -197,25 +193,8 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
         }
     }
 
-
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.create_group, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        return id == R.id.action_settings || super.onOptionsItemSelected(item);
-    }
-
-    @Override
-public void onClick(View view) {
+    public void onClick(View view) {
         // Check for valid input.
         if (!dateFragment.isValidInput() || !timeFragment.isValidInput()) {
             Toast.makeText(getApplicationContext(),
@@ -247,7 +226,6 @@ public void onClick(View view) {
             @Override
             public void done(ParseException e) {
                 if (e == null) {
-
                     GlobalUser context = (GlobalUser) getApplicationContext();
                     User currentUser = context.getCurrentUser();
 
@@ -256,7 +234,18 @@ public void onClick(View view) {
 
                         ParseRelation<ParseObject> newGroupRelation = groupBeingEdited.getRelation("users");
                         newGroupRelation.add(currentUser);
-                        groupBeingEdited.saveInBackground();
+                        groupBeingEdited.saveInBackground(new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                if (e == null) {
+                                    indicateEditSuccess();
+                                    startGroupActivity();
+                                    finish();
+                                } else {
+                                    indicateEditFailure();
+                                }
+                            }
+                        });
                         indicateEditSuccess();
                         startGroupActivity();
                         finish();
@@ -264,30 +253,6 @@ public void onClick(View view) {
                         indicateEditSuccess();
                         startGroupActivity();
                     }
-//
-//                    if (!isGroupExisting) {
-//                        ParseQuery<ParseObject> userQuery = ParseQuery.getQuery("User");
-//                        userQuery.getInBackground("68xwdmZ1IE", new GetCallback<ParseObject>() {
-//                            @Override
-//                            public void done(ParseObject object, ParseException e) {
-//                                if (e == null) {
-//                                    ParseRelation<ParseObject> newGroupRelation = groupBeingEdited.getRelation("users");
-//                                    newGroupRelation.add(object);
-//                                    groupBeingEdited.saveInBackground();
-//                                    indicateEditSuccess();
-//                                    startGroupActivity();
-//                                } else {
-//                                    // Error.
-//                                    indicateEditFailure();
-//                                    finish();
-//                                }
-//
-//                            }
-//                        });
-//                    } else {
-//                        indicateEditSuccess();
-//                        startGroupActivity();
-//                    }
                 } else {
                     // Error.
                     indicateEditFailure();
@@ -320,6 +285,7 @@ public void onClick(View view) {
 
     public void startGroupActivity() {
         Intent clickCreateGroup = new Intent(EditGroupActivity.this, ViewGroupActivity.class);
+        clickCreateGroup.putExtra("groupId", groupBeingEdited.getObjectId());
         startActivity(clickCreateGroup);
     }
 

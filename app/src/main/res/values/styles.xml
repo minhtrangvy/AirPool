@@ -3,6 +3,7 @@
     <!-- Base application theme. -->
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:textSize">16dp</item>
+        <item name="android:buttonStyle">@style/buttonStyle</item>
     </style>
 
 <!--    <style name="AppBaseTheme" parent="android:Theme.Light">
@@ -15,6 +16,11 @@
     <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
         <item name="android:textColor">#fdb62a</item>
         <item name="android:background">@android:color/black</item>
+    </style>
+
+    <style name="buttonStyle" parent="android:style/Widget.Button">
+        <item name="android:textColor">#fdb62a</item>
+        <item name="android:background">#333333</item>
     </style>
 
 </resources>
