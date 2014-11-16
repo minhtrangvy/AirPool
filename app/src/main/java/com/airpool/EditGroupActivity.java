@@ -259,6 +259,7 @@ public void onClick(View view) {
                         groupBeingEdited.saveInBackground();
                         indicateEditSuccess();
                         startGroupActivity();
+                        finish();
                     } else {
                         indicateEditSuccess();
                         startGroupActivity();
@@ -290,7 +291,6 @@ public void onClick(View view) {
                 } else {
                     // Error.
                     indicateEditFailure();
-                    finish();
                 }
 
 
