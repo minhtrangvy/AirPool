@@ -1,6 +1,8 @@
 package com.airpool;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.os.Bundle;
@@ -170,32 +172,51 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
 
                 break;
             case R.id.leave_group_button:
-                ParseRelation<ParseObject> newRelation = group.getRelation("users");
+                final User userToRemove = currentUser;
+                AlertDialog.Builder leaveGroupBuilder = new AlertDialog.Builder(this);
 
-                newRelation.remove(currentUser);
-                if (groupMembers.size() - 1 == 0) {
-                    group.setIsActive(false);
-                }
-                group.saveInBackground(new SaveCallback() {
-                   @Override
-                   public void done(ParseException e) {
-                       if (e == null) {
-                           Toast.makeText(getApplicationContext(),
-                                getResources().getString(R.string.toast_successfully_left_group),
-                                Toast.LENGTH_SHORT).show();
-                           Intent goToHomepage = new Intent(ViewGroupActivity.this, HomepageActivity.class);
-                           startActivity(goToHomepage);
-                       } else {
-                            // Error.
-                            Toast.makeText(getApplicationContext(),
-                                    getResources().getString(R.string.toast_unsuccessfully_left_group),
-                                    Toast.LENGTH_SHORT).show();
-                            recreate();
-                       }
+                leaveGroupBuilder
+                        .setMessage("Are you sure you want to leave the group?")
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                ParseRelation<ParseObject> newRelation = group.getRelation("users");
+
+                                newRelation.remove(userToRemove);
+                                if (groupMembers.size() - 1 == 0) {
+                                    group.setIsActive(false);
+                                }
+                                group.saveInBackground(new SaveCallback() {
+                                    @Override
+                                    public void done(ParseException e) {
+                                        if (e == null) {
+                                            Toast.makeText(getApplicationContext(),
+                                                    getResources().getString(R.string.toast_successfully_left_group),
+                                                    Toast.LENGTH_SHORT).show();
+                                            Intent goToHomepage = new Intent(ViewGroupActivity.this, HomepageActivity.class);
+                                            startActivity(goToHomepage);
+                                        } else {
+                                            // Error.
+                                            Toast.makeText(getApplicationContext(),
+                                                    getResources().getString(R.string.toast_unsuccessfully_left_group),
+                                                    Toast.LENGTH_SHORT).show();
+                                            recreate();
+                                        }
 
 
-                   }
-               });
+                                    }
+                                });
+                            }
+                        })
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        });
+
+                AlertDialog leaveDialog = leaveGroupBuilder.create();
+                leaveDialog.show();
 
                 break;
 
