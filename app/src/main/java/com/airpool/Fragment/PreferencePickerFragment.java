@@ -108,7 +108,7 @@ public class PreferencePickerFragment extends DialogFragment {
                 ArrayList<TransportationPreference> passedPreferences = new ArrayList<TransportationPreference>();
                 int j = 0;
                 while (j < savedPreferences.length) {
-                    if (savedPreferences[j]) {
+                    if (savedPreferences[j] && j != noPreferenceWhich) {
                         passedPreferences.add(preferences.get(j));
                     }
                     j++;
