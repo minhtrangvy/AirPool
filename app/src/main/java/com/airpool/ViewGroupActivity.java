@@ -202,8 +202,6 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
                                                     Toast.LENGTH_SHORT).show();
                                             recreate();
                                         }
-
-
                                     }
                                 });
                             }

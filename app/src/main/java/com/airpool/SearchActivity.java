@@ -80,7 +80,6 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         selectPreferencesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                preferenceFragment.updateSelectedTransportationPreferences((ArrayList<TransportationPreference>) selectedPreferences);
                 preferenceFragment.show(getSupportFragmentManager(), "preferencesPicker");
             }
         });
@@ -184,16 +183,7 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         selectDateButton.setText("Departure Date: " + format.format(calendar.getTime()));
     }
 
-    public void onPreferencePicked(int which, boolean isChecked) {
-        TransportationPreference preference = transportationPreferences.get(which);
-        if (which == preferenceFragment.getNoPreferenceWhich()) {
-            selectedPreferences.clear();
-        } else {
-            if (isChecked) {
-                selectedPreferences.add(preference);
-            } else {
-                selectedPreferences.remove(preference);
-            }
-        }
+    public void onPreferencePicked(ArrayList<TransportationPreference> preference) {
+        selectedPreferences = preference;
     }
 }

@@ -20,7 +20,8 @@ import java.util.List;
  * Created by Maury on 11/8/14.
  */
 public class TimePickerFragment extends DialogFragment implements TimePickerDialog.OnTimeSetListener {
-    Calendar calendar = Calendar.getInstance();
+    private Calendar calendar = Calendar.getInstance();
+    private boolean isSelected = false;
     OnTimePickedListener callback;
 
     public interface OnTimePickedListener {
@@ -33,7 +34,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
 
         try {
             callback = (OnTimePickedListener) activity;
-            callback.onTimePicked(this.getCalendar());
+            isSelected = false;
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnTimePickedListener");
@@ -50,7 +51,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     // Create a new calendar object with the date passed in.
         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
         calendar.set(Calendar.MINUTE, minute);
-
+        isSelected = true;
         callback.onTimePicked(calendar);
     }
 
@@ -60,7 +61,7 @@ public class TimePickerFragment extends DialogFragment implements TimePickerDial
     }
 
     public boolean isValidInput() {
-        return true;
+        return isSelected;
     }
 
     public Calendar getCalendar() {

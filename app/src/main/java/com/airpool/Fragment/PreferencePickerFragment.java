@@ -18,29 +18,35 @@ import java.util.List;
  */
 public class PreferencePickerFragment extends DialogFragment {
     OnPreferencePickedListener callback;
-    ArrayList<TransportationPreference> selectedPreferences = new ArrayList<TransportationPreference>();
-    List<String> preferences;
-    boolean[] preferencesBoolean;
+    List<TransportationPreference> preferences;
+    List<String> preferencesString;
+    boolean[] currentPreferences;
+    boolean[] savedPreferences;
 
     public int noPreferenceWhich = 0;
 
     public interface OnPreferencePickedListener {
-        public void onPreferencePicked(int which, boolean isChecked);
+        public void onPreferencePicked(ArrayList<TransportationPreference> preference);
     }
 
     public PreferencePickerFragment() {
-        preferences = new ArrayList<String>();
-        preferencesBoolean = new boolean[TransportationPreference.values().length];
+        preferences = new ArrayList<TransportationPreference>();
+        preferencesString = new ArrayList<String>();
+        currentPreferences = new boolean[TransportationPreference.values().length];
+        savedPreferences = new boolean[TransportationPreference.values().length];
 
         int i = 0;
         for (TransportationPreference preference : TransportationPreference.values()) {
             if (preference == TransportationPreference.NOPREF) {
                 noPreferenceWhich = i;
-                preferencesBoolean[i] = true;
+                currentPreferences[i] = true;
+                savedPreferences[i] = true;
             } else {
-                preferencesBoolean[i] = false;
+                currentPreferences[i] = false;
+                savedPreferences[i] = false;
             }
-            preferences.add(preference.toString());
+            preferences.add(preference);
+            preferencesString.add(preference.toString());
             i++;
         }
     }
@@ -58,7 +64,7 @@ public class PreferencePickerFragment extends DialogFragment {
         }
     }
 
-    public Dialog onCreateDialog(Bundle savedInstanceState) {
+    public Dialog onCreateDialog(final Bundle savedInstanceState) {
         // Build a new dialog.
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -67,58 +73,57 @@ public class PreferencePickerFragment extends DialogFragment {
 
         int i = 0;
         for (TransportationPreference preference : TransportationPreference.values()) {
-            preferencesBoolean[i++] = selectedPreferences.contains(preference);
+            currentPreferences[i] = savedPreferences[i++];
         }
 
-        builder = builder.setMultiChoiceItems(preferences.toArray(new CharSequence[preferences.size()]),
-                preferencesBoolean,
+        builder = builder.setMultiChoiceItems(preferencesString.toArray(new CharSequence[preferencesString.size()]),
+                currentPreferences,
                 new DialogInterface.OnMultiChoiceClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                         if (which == noPreferenceWhich && isChecked) {
                             int i = 0;
-                            while (i < preferencesBoolean.length) {
+                            while (i < currentPreferences.length) {
                                 if (i != noPreferenceWhich) {
-                                    preferencesBoolean[i] = false;
+                                    currentPreferences[i] = false;
                                     ((AlertDialog) dialog).getListView().setItemChecked(i, false);
                                 } else {
-                                    preferencesBoolean[noPreferenceWhich] = true;
+                                    currentPreferences[noPreferenceWhich] = true;
                                     ((AlertDialog) dialog).getListView().setItemChecked(noPreferenceWhich, true);
                                 }
 
                                 i++;
                             }
                         } else {
-                            preferencesBoolean[noPreferenceWhich] = false;
+                            currentPreferences[noPreferenceWhich] = false;
                             ((AlertDialog) dialog).getListView().setItemChecked(noPreferenceWhich, false);
                         }
-
-                        callback.onPreferencePicked(which, isChecked);
                     }
                 });
 
         builder = builder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                System.arraycopy(currentPreferences, 0, savedPreferences, 0, currentPreferences.length);
+                ArrayList<TransportationPreference> passedPreferences = new ArrayList<TransportationPreference>();
+                int j = 0;
+                while (j < savedPreferences.length) {
+                    if (savedPreferences[j]) {
+                        passedPreferences.add(preferences.get(j));
+                    }
+                    j++;
+                }
+                callback.onPreferencePicked(passedPreferences);
             }
         });
 
         builder = builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                System.arraycopy(savedPreferences, 0, currentPreferences, 0, currentPreferences.length);
             }
         });
 
         return builder.create();
-    }
-
-    public void updateSelectedTransportationPreferences(ArrayList<TransportationPreference> selectedPreferences) {
-        this.selectedPreferences = selectedPreferences;
-    }
-
-    public int getNoPreferenceWhich() {
-        return noPreferenceWhich;
     }
 }

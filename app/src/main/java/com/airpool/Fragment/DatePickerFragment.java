@@ -5,10 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
-import android.util.Log;
 import android.widget.DatePicker;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 /**
@@ -16,6 +14,7 @@ import java.util.Calendar;
  */
 public class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
     private Calendar calendar = Calendar.getInstance();
+    private boolean isSelected = false;
 
     OnDatePickedListener callback;
 
@@ -29,7 +28,6 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
 
         try {
             callback = (OnDatePickedListener) activity;
-            callback.onDatePicked(this.getCalendar());
         } catch (ClassCastException e) {
             throw new ClassCastException(activity.toString()
                     + " must implement OnDatePickedListener");
@@ -44,7 +42,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     public void onDateSet(DatePicker view, int year, int month, int day) {
         // Create a new calendar object with the date passed in.
         calendar.set(year, month, day);
-
+        isSelected = true;
         callback.onDatePicked(calendar);
     }
 
@@ -53,7 +51,7 @@ public class DatePickerFragment extends DialogFragment implements DatePickerDial
     }
 
     public boolean isValidInput() {
-        return true;
+        return isSelected;
     }
 
     public Calendar getCalendar() {
