@@ -13,21 +13,21 @@
     <Button
         android:id="@+id/selectDate_button"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginBottom="5dp"
         android:text="@string/selectDate" />
 
     <Button
         android:id="@+id/selectTime_button"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginBottom="5dp"
         android:text="@string/selectTime" />
 
     <Button
         android:id="@+id/selectPreferences_button"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_marginBottom="15dp"
         android:text="@string/select_transportation" />
 
@@ -35,7 +35,7 @@
     <Button
         android:id="@+id/search_results_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="@string/search" />
 
 
