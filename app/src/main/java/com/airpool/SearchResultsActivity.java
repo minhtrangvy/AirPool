@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -103,7 +104,10 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
                 query.whereEqualTo("college", passedInIntent.getStringExtra("college"));
 
                 ArrayList<String> preferences = passedInIntent.getStringArrayListExtra("preferences");
-                query.whereContainedIn("transportationPreference", preferences);
+                if (!preferences.isEmpty()) {
+                    Log.v("HAI", preferences.toString());
+                    query.whereContainedIn("transportationPreference", preferences);
+                }
 
                 // Do some math to return dates within a 12-hour window.
                 Long twelveHoursBefore = passedInIntent.getLongExtra("timeOfDeparture", 0) - (43200 * 1000);
