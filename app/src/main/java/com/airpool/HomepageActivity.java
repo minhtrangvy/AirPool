@@ -1,12 +1,18 @@
 package com.airpool;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
+import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.airpool.Fragment.HomepageFragment;
 import com.airpool.Model.User;
@@ -31,6 +37,16 @@ public class HomepageActivity extends FragmentActivity {
 
     private boolean isResumed = false;
 
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo ni = cm.getActiveNetworkInfo();
+        if (ni == null) {
+            // There are no active networks.
+            return false;
+        } else
+            return true;
+    }
+
     private Fragment[] fragments = new Fragment[FRAGMENT_COUNT];
 
     private UiLifecycleHelper uiHelper;
@@ -47,19 +63,20 @@ public class HomepageActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
+        Log.i("inCreate", "I am in create!");
 
-        FragmentManager fm = getSupportFragmentManager();
-        fragments[LOGIN] = fm.findFragmentById(R.id.login_fragment);
-        fragments[HOMEPAGE] = fm.findFragmentById(R.id.homepage_fragment);
+            FragmentManager fm = getSupportFragmentManager();
+            fragments[LOGIN] = fm.findFragmentById(R.id.login_fragment);
+            fragments[HOMEPAGE] = fm.findFragmentById(R.id.homepage_fragment);
 
-        FragmentTransaction transaction = fm.beginTransaction();
-        for(int i = 0; i < fragments.length; i++) {
-            transaction.hide(fragments[i]);
-        }
-        transaction.commit();
+            FragmentTransaction transaction = fm.beginTransaction();
+            for(int i = 0; i < fragments.length; i++) {
+                transaction.hide(fragments[i]);
+            }
+            transaction.commit();
 
-        uiHelper = new UiLifecycleHelper(this, callback);
-        uiHelper.onCreate(savedInstanceState);
+            uiHelper = new UiLifecycleHelper(this, callback);
+            uiHelper.onCreate(savedInstanceState);
     }
 
     @Override
@@ -164,7 +181,7 @@ public class HomepageActivity extends FragmentActivity {
         for (int i = 0; i < fragments.length; i++) {
             if (i == fragmentIndex) {
                 transaction.show(fragments[i]);
-                if (i == HOMEPAGE) {
+                if (i == HOMEPAGE && isNetworkConnected()) {
                     HomepageFragment fragment = (HomepageFragment) fragments[i];
                     fragment.populateGroups();
                 }
