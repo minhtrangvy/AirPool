@@ -3,7 +3,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:paddingTop="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -61,7 +62,7 @@
                 android:id="@+id/to_from_college_text"
                 android:layout_width="fill_parent"
                 android:layout_height="50dp"
-                android:gravity="center" />
+                android:gravity="center"/>
         </LinearLayout>
 
         <LinearLayout
@@ -74,7 +75,7 @@
             <com.airpool.View.CollegeSpinner
                 android:id="@+id/college_spinner"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="50dp"
                 android:prompt="@string/colleges_spinner"
                 />
 

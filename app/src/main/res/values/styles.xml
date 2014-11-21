@@ -1,26 +1,32 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppBaseTheme" parent="android:Theme.Holo.Light.DarkActionBar">
+    <style name="AppTheme" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:textSize">16dp</item>
+        <item name="android:spinnerItemStyle">@style/SpinnerItem</item>
+        <item name="android:spinnerDropDownItemStyle">@style/SpinnerDropDownItem</item>
         <item name="android:buttonStyle">@style/buttonStyle</item>
     </style>
 
-<!--    <style name="AppBaseTheme" parent="android:Theme.Light">
-    </style>-->
 
-    <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:spinnerDropDownItemStyle">@style/mySpinnerItemStyle</item>
+    <style name="SpinnerItem">
+        <item name="android:textColor">#fdb62a</item>
+        <item name="android:background">@drawable/spinner_rectangle</item>
+        <item name="android:gravity">center</item>
+        <item name="android:height">50dp</item>
     </style>
 
-    <style name="mySpinnerItemStyle" parent="@android:style/Widget.Holo.DropDownItem.Spinner">
+    <style name="SpinnerDropDownItem">
         <item name="android:textColor">#fdb62a</item>
-        <item name="android:background">#333333</item>
+        <item name="android:background">@drawable/spinner_rectangle</item>
+        <item name="android:gravity">center</item>
+        <item name="android:height">50dp</item>
     </style>
 
     <style name="buttonStyle" parent="android:style/Widget.Button">
         <item name="android:textColor">#fdb62a</item>
         <item name="android:background">#333333</item>
+        <item name="android:height">50dp</item>
     </style>
 
 </resources>
