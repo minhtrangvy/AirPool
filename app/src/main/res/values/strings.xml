@@ -69,25 +69,19 @@
     <!-- Toasts -->
     <string name="toast_successfully_marked_group_open">You\'ve successfully opened the group to new member.</string>
     <string name="toast_unsuccessfully_marked_group_opened">We had a problem opening the group to new members.</string>
-
     <string name="toast_successfully_marked_group_closed">You\'ve successfully closed the group to new member.</string>
     <string name="toast_unsuccessfully_marked_group_closed">We had a problem closing the group to new members.</string>
-
     <string name="toast_successfully_created_group">You\'ve successfully created the group.</string>
     <string name="toast_unsuccessfully_created_group">We had a problem creating the group.</string>
-
     <string name="toast_successfully_edited_group">You\'ve successfully edited the group.</string>
     <string name="toast_unsuccessfully_edited_group">We had a problem editing the group.</string>
-
     <string name="toast_successfully_joined_group">You\'ve successfully joined the group.</string>
     <string name="toast_unsuccessfully_joined_group">We had a problem adding you to the group.</string>
-
     <string name="toast_successfully_left_group">You\'ve successfully left the group.</string>
     <string name="toast_unsuccessfully_left_group">We had a problem removing you from the group.</string>
-
     <string name="toast_blank_spinner">Select a departure date and time.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
-
     <string name="toast_no_connection">No internet connection. Cannot load app.</string>
+    <string name="title_activity_splash_screen">SplashScreenActivity</string>
 
 </resources>
