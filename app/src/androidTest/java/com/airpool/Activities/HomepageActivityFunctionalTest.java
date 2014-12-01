@@ -51,24 +51,6 @@ public class HomepageActivityFunctionalTest extends ActivityInstrumentationTestC
         nextActivity.finish();
     }
 
-    public void testPreferencesButtonClick() {
-        getActivity().setIsLoggedIn(true);
-
-        // Register the activity that the button click will open.
-        Instrumentation.ActivityMonitor activityMonitor =
-                getInstrumentation().addMonitor(PreferencesActivity.class.getName(), null, false);
-
-        final Button preferencesButton = (Button) getActivity().findViewById(R.id.preferences_button);
-        assertNotNull(preferencesButton);
-        TouchUtils.clickView(this, preferencesButton);
-
-        // Ensure that the new activity finishes loading.
-        PreferencesActivity nextActivity = (PreferencesActivity)
-                activityMonitor.waitForActivityWithTimeout(500);
-        assertNotNull(nextActivity);
-        nextActivity.finish();
-    }
-
     public void testLogoutButtonClick() {
         // Should go to LoginActivity.
     }

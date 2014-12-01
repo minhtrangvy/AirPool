@@ -184,6 +184,9 @@ public class HomepageActivity extends FragmentActivity {
                 if (i == HOMEPAGE && isNetworkConnected()) {
                     HomepageFragment fragment = (HomepageFragment) fragments[i];
                     fragment.populateGroups();
+                } else if (i == HOMEPAGE && !isNetworkConnected()){
+                    HomepageFragment fragment = (HomepageFragment) fragments[i];
+                    fragment.noNetwork();
                 }
             } else {
                 transaction.hide(fragments[i]);

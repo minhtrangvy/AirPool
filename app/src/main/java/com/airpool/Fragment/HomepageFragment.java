@@ -46,7 +46,6 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
     ListView userGroupList;
     ArrayAdapter<Group> userGroupListAdapter;
     ArrayList<Group> userGroups;
-    TextView noNetwork;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -65,8 +64,6 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
         // Get the groups associated with this user.
         userGroups = new ArrayList<Group>();
 
-        noNetwork = (TextView) rootView.findViewById(R.id.noNetwork);
-
         return rootView;
     }
 
@@ -81,10 +78,14 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    public void noNetwork() {
+        // Indicate to the user that there is no network.
+        userGroupList.setEmptyView((TextView)
+                getView().findViewById(R.id.noNetwork));
+    }
+
     public void populateGroups() {
         userGroups.clear();
-
-        noNetwork.setVisibility(View.GONE);
 
         Session session = Session.getActiveSession();
         new Request(
