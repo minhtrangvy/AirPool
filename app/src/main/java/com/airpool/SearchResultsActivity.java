@@ -5,7 +5,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.app.NavUtils;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,6 +35,17 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
     ListView searchResultList;
     ArrayAdapter<Group> searchResultListAdapter;
     ArrayList<Group> searchResultGroups;
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // Respond to the action bar's Up/Home button
+            case android.R.id.home:
+                NavUtils.navigateUpFromSameTask(this);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +81,8 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
         // Perform the query on a background thread.
         FetchSearchResultsTask task = new FetchSearchResultsTask(this);
         task.execute();
+
+        getActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
