@@ -50,59 +50,59 @@ public class SearchActivityRobotiumTest extends
     }
 
 
-//    public void testAirportSpinner() {
-//        boolean actual;
-//
-//        solo.pressSpinnerItem(1, 0);
-//        actual = solo.isSpinnerTextSelected(1, "BUR - Bob Hope Airport");
-//        assertEquals("spinner item BUR is not selected", true, actual);
-//
-//        solo.pressSpinnerItem(1, 4);
-//        actual = solo.isSpinnerTextSelected(1, "SNA - John Wayne Airport/ Orange County");
-//        assertEquals("spinner item SNA is not selected",true, actual);
-//
-//        solo.pressSpinnerItem(1, -2);
-//        actual = solo.isSpinnerTextSelected(1, "LAX - Los Angeles International Airport");
-//        assertEquals("spinner item LAX is not selected",true, actual);
-//    }
+    public void testAirportSpinner() {
+        boolean actual;
 
-//    public void testCollegeSpinner() {
-//        boolean actual;
-//
-//        solo.pressSpinnerItem(2, 0);
-//        actual = solo.isSpinnerTextSelected(2, "California State Polytechnic University, Pomona");
-//        assertEquals("spinner item Cal Poly is not selected",true, actual);
-//
-//        solo.pressSpinnerItem(2, 7);
-//        actual = solo.isSpinnerTextSelected(2, "University of Southern California");
-//        assertEquals("spinner item USC is not selected",true, actual);
-//
-//        solo.pressSpinnerItem(2, -2);
-//        actual = solo.isSpinnerTextSelected(2, "University of California, Irvine");
-//        assertEquals("spinner item UC Irvine is not selected",true, actual);
-//    }
+        solo.pressSpinnerItem(1, 0);
+        actual = solo.isSpinnerTextSelected(1, "BUR - Bob Hope Airport");
+        assertEquals("spinner item BUR is not selected", true, actual);
 
-//    public void testDatePicker() {
-//        boolean correctDate;
-//
-//        solo.clickOnText("Departure Date");
-//        solo.setDatePicker(0, 2015, 0, 16);
-//        solo.clickOnText("Done");
-//
-//        correctDate = solo.searchText("Departure Date: 01/16/2015");
-//        assertEquals("Departure Date not correctly selected", true, correctDate);
-//    }
+        solo.pressSpinnerItem(1, 4);
+        actual = solo.isSpinnerTextSelected(1, "SNA - John Wayne Airport/ Orange County");
+        assertEquals("spinner item SNA is not selected",true, actual);
 
-//    public void testTimePicker() {
-//        boolean correctTime;
-//
-//        solo.clickOnText("Departure Time");
-//        solo.setTimePicker(0, 11, 45);
-//        solo.clickOnText("Done");
-//
-//        correctTime = solo.searchText("Departure Time: 10:45 AM");
-//        assertEquals("Departure Time not correctly selected", true, correctTime);
-//    }
+        solo.pressSpinnerItem(1, -2);
+        actual = solo.isSpinnerTextSelected(1, "LAX - Los Angeles International Airport");
+        assertEquals("spinner item LAX is not selected",true, actual);
+    }
+
+    public void testCollegeSpinner() {
+        boolean actual;
+
+        solo.pressSpinnerItem(2, 0);
+        actual = solo.isSpinnerTextSelected(2, "California State Polytechnic University, Pomona");
+        assertEquals("spinner item Cal Poly is not selected",true, actual);
+
+        solo.pressSpinnerItem(2, 7);
+        actual = solo.isSpinnerTextSelected(2, "University of Southern California");
+        assertEquals("spinner item USC is not selected",true, actual);
+
+        solo.pressSpinnerItem(2, -2);
+        actual = solo.isSpinnerTextSelected(2, "University of California, Irvine");
+        assertEquals("spinner item UC Irvine is not selected",true, actual);
+    }
+
+    public void testDatePicker() {
+        boolean correctDate;
+
+        solo.clickOnText("Departure Date");
+        solo.setDatePicker(0, 2015, 0, 16);
+        solo.clickOnText("Done");
+
+        correctDate = solo.searchText("Departure Date: 01/16/2015");
+        assertEquals("Departure Date not correctly selected", true, correctDate);
+    }
+
+    public void testTimePicker() {
+        boolean correctTime;
+
+        solo.clickOnText("Departure Time");
+        solo.setTimePicker(0, 11, 45);
+        solo.clickOnText("Done");
+
+        correctTime = solo.searchText("Departure Time: 10:45 AM");
+        assertEquals("Departure Time not correctly selected", true, correctTime);
+    }
 
     public void testSearchResultsText() {
         boolean correctText;
