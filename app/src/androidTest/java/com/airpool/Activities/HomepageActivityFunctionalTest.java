@@ -8,7 +8,6 @@ import android.test.TouchUtils;
 import android.widget.Button;
 
 import com.airpool.HomepageActivity;
-import com.airpool.PreferencesActivity;
 import com.airpool.R;
 import com.airpool.SearchActivity;
 
@@ -34,7 +33,9 @@ public class HomepageActivityFunctionalTest extends ActivityInstrumentationTestC
 
 
     public void testSearchButtonClick() {
+/*
         getActivity().setIsLoggedIn(true);
+*/
 
         // Register the activity that the button click will open.
         Instrumentation.ActivityMonitor activityMonitor =

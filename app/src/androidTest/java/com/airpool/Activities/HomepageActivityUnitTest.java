@@ -27,7 +27,7 @@ public class HomepageActivityUnitTest extends ActivityUnitTestCase<HomepageActiv
         // Does nothing.
     }
 
-    public void testIsLoggedIn() {
+/*    public void testIsLoggedIn() {
         getActivity().setIsLoggedIn(true);
         assertTrue(getActivity().getIsLoggedIn());
     }
@@ -43,7 +43,7 @@ public class HomepageActivityUnitTest extends ActivityUnitTestCase<HomepageActiv
 
     public void testPreferencesButton() {
         assertNotNull(getActivity().findViewById(R.id.preferences_button));
-    }
+    }*/
 
     public void testFacebookLogoutButton() {
         assertNotNull(getActivity().findViewById(R.id.facebook_login_button));

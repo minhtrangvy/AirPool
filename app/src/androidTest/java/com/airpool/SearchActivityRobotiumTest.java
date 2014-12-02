@@ -1,4 +1,4 @@
-package com.airpool.Activities;
+package com.airpool;
 
 import junit.framework.Assert;
 import android.test.ActivityInstrumentationTestCase2;
@@ -32,6 +32,14 @@ public class SearchActivityRobotiumTest extends
     public void testSearchResultsButtonClick() {
         // check that we have the right activity
         solo.assertCurrentActivity("wrong activity", SearchActivity.class);
+
+        solo.clickOnText("Departure Date");
+        solo.setDatePicker(0, 2015, 1, 16);
+        solo.clickOnText("Done");
+
+        solo.clickOnText("Departure Time");
+        solo.setTimePicker(0, 10, 45);
+        solo.clickOnText("Done");
 
         // Click a button which will start a new Activity
         // Here we use the ID of the string to find the right button
@@ -78,11 +86,11 @@ public class SearchActivityRobotiumTest extends
     public void testDatePicker() {
         boolean correctDate;
 
-        solo.clickOnText("Departure Date");
+        solo.clickOnText(solo.getString(R.string.selectDate));
         solo.setDatePicker(0, 2015, 1, 16);
         solo.clickOnText("Done");
 
-        correctDate = solo.searchText("Departure Date: 01/16/2015");
+        correctDate = solo.searchText("Departure Date: 02/16/2015");
         assertEquals("Departure Date not correctly selected", true, correctDate);
     }
 
@@ -90,10 +98,10 @@ public class SearchActivityRobotiumTest extends
         boolean correctTime;
 
         solo.clickOnText("Departure Time");
-        solo.setTimePicker(0, 10, 45);
+        solo.setTimePicker(0, 9, 45);
         solo.clickOnText("Done");
 
-        correctTime = solo.searchText("Departure Time: 10:45 AM");
+        correctTime = solo.searchText("Departure Time: 8:45 AM");
         assertEquals("Departure Time not correctly selected", true, correctTime);
     }
 
@@ -111,7 +119,7 @@ public class SearchActivityRobotiumTest extends
         solo.setTimePicker(0, 10, 45);
         solo.clickOnText("Done");
 
-        solo.pressSpinnerItem(2, 0);
+        solo.pressSpinnerItem(2, 1);
 
         // Click a button which will start a new Activity
         // Here we use the ID of the string to find the right button
