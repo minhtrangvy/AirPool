@@ -1,12 +1,11 @@
 package com.airpool.Activities;
 
-import junit.framework.Assert;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.airpool.R;
-import com.robotium.solo.Solo;
 import com.airpool.SearchActivity;
 import com.airpool.SearchResultsActivity;
+import com.robotium.solo.Solo;
 
 /**
  * Created by angelachin on 12/1/14.
@@ -86,16 +85,16 @@ public class SearchActivityRobotiumTest extends
         assertEquals("Departure Date not correctly selected", true, correctDate);
     }
 
-    public void testTimePicker() {
-        boolean correctTime;
-
-        solo.clickOnText("Departure Time");
-        solo.setTimePicker(0, 10, 45);
-        solo.clickOnText("Done");
-
-        correctTime = solo.searchText("Departure Time: 10:45 AM");
-        assertEquals("Departure Time not correctly selected", true, correctTime);
-    }
+//    public void testTimePicker() {
+//        boolean correctTime;
+//
+//        solo.clickOnText("Departure Time");
+//        solo.setTimePicker(0, 10, 45);
+//        solo.clickOnText("Done");
+//
+//        correctTime = solo.searchText("Departure Time: 10:45 AM");
+//        assertEquals("Departure Time not correctly selected", true, correctTime);
+//    }
 
     public void testSearchResultsText() {
         boolean correctText;

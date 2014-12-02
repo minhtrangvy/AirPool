@@ -27,23 +27,23 @@ public class HomepageActivityUnitTest extends ActivityUnitTestCase<HomepageActiv
         // Does nothing.
     }
 
-    public void testIsLoggedIn() {
-        getActivity().setIsLoggedIn(true);
-        assertTrue(getActivity().getIsLoggedIn());
-    }
+//    public void testIsLoggedIn() {
+//        getActivity().setIsLoggedIn(true);
+//        assertTrue(getActivity().getIsLoggedIn());
+//    }
 
-    public void testIsNotLoggedIn() {
-        getActivity().setIsLoggedIn(false);
-        assertFalse(getActivity().getIsLoggedIn());
-    }
+//    public void testIsNotLoggedIn() {
+//        getActivity().setIsLoggedIn(false);
+//        assertFalse(getActivity().getIsLoggedIn());
+//    }
 
     public void testSearchButton() {
         assertNotNull(getActivity().findViewById(R.id.search_button));
     }
 
-    public void testPreferencesButton() {
-        assertNotNull(getActivity().findViewById(R.id.preferences_button));
-    }
+//    public void testPreferencesButton() {
+//        assertNotNull(getActivity().findViewById(R.id.preferences_button));
+//    }
 
     public void testFacebookLogoutButton() {
         assertNotNull(getActivity().findViewById(R.id.facebook_login_button));
