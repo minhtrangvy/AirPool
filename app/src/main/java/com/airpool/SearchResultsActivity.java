@@ -78,7 +78,7 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
         progressBar.setIndeterminate(true);
         progressBar.setVisibility(View.VISIBLE);
 
-        // Perform the query on a background thread.
+        // Perform the query on a background_me_wallpost thread.
         FetchSearchResultsTask task = new FetchSearchResultsTask(this);
         task.execute();
 

@@ -67,7 +67,9 @@
     <string name="usernameHint">Username</string>
 
     <!-- Toasts -->
-    <string name="toast_successfully_marked_group_open">You\'ve successfully opened the group to new member.</string>
+    <string name="toast_successfully_marked_group_open">You\'ve successfully opened the group to new members.</string>
+    <string name="toast_successfully_posted_wallpost">You\'ve successfully posted your wall post.</string>
+    <string name="toast_unsuccessfully_posted_wallpost">We had a problem posting your wall post.</string>
     <string name="toast_unsuccessfully_marked_group_opened">We had a problem opening the group to new members.</string>
     <string name="toast_successfully_marked_group_closed">You\'ve successfully closed the group to new member.</string>
     <string name="toast_unsuccessfully_marked_group_closed">We had a problem closing the group to new members.</string>

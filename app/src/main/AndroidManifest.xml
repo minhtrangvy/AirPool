@@ -74,7 +74,8 @@
         <activity
             android:name=".GroupWallActivity"
             android:label="@string/title_activity_group_wall" >
-            android:parentActivityName="com.airpool.HomepageActivity" >
+            android:parentActivityName="com.airpool.HomepageActivity"
+            android:windowSoftInputMode="stateHidden">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.airpool.HomepageActivity" />

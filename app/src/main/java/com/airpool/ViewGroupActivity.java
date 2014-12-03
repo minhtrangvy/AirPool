@@ -159,6 +159,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         switch (view.getId()) {
             case R.id.groupWall_button:
                 Intent goToWall = new Intent(ViewGroupActivity.this, GroupWallActivity.class);
+                goToWall.putExtra("groupId", group.getObjectId());
                 startActivity(goToWall);
                 break;
             case R.id.join_group_button:

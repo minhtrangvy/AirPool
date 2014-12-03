@@ -3,6 +3,7 @@ package com.airpool.Model;
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 @ParseClassName("WallPost")
@@ -34,7 +35,21 @@ public class WallPost extends ParseObject {
         return calendar;
     }
 
+    public String getTimeSentString() {
+        SimpleDateFormat format = new SimpleDateFormat("MMMM dd, yyyy 'at' h:mm a");
+        Calendar timeOfDeparture = getTimeSent();
+        return format.format(timeOfDeparture.getTime());
+    }
+
     public void setTimeSent(Calendar timeSent) {
         put("timeSent", timeSent.getTimeInMillis());
+    }
+
+    public Group getGroup() {
+        return (Group) getParseObject("group");
+    }
+
+    public void setGroup(Group group) {
+        put("group", group);
     }
 }

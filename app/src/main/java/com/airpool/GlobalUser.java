@@ -4,6 +4,7 @@ import android.app.Application;
 
 import com.airpool.Model.Group;
 import com.airpool.Model.User;
+import com.airpool.Model.WallPost;
 import com.parse.Parse;
 import com.parse.ParseObject;
 
@@ -19,6 +20,7 @@ public class GlobalUser extends Application {
         super.onCreate();
         ParseObject.registerSubclass(Group.class);
         ParseObject.registerSubclass(User.class);
+        ParseObject.registerSubclass(WallPost.class);
         Parse.initialize(this, "JFLuGOh9LQsqGsbVwuunD9uSSXgp8hDuDGBgHguJ",
                 "0x2FoxHDKmIF81PqcK0wuh8OS8Ga2FsM6RTUmmcu");
     }
