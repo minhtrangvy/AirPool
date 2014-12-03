@@ -8,6 +8,10 @@ import android.test.TouchUtils;
 import android.widget.Button;
 
 import com.airpool.HomepageActivity;
+<<<<<<< HEAD
+=======
+//import com.airpool.PreferencesActivity;
+>>>>>>> 3b9817a67aae2439313a8e802a2d99935e649086
 import com.airpool.R;
 import com.airpool.SearchActivity;
 

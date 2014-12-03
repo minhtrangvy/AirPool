@@ -1,12 +1,11 @@
 package com.airpool;
 
-import junit.framework.Assert;
 import android.test.ActivityInstrumentationTestCase2;
 
 import com.airpool.R;
-import com.robotium.solo.Solo;
 import com.airpool.SearchActivity;
 import com.airpool.SearchResultsActivity;
+import com.robotium.solo.Solo;
 
 /**
  * Created by angelachin on 12/1/14.
@@ -31,7 +30,15 @@ public class SearchActivityRobotiumTest extends
 
     public void testSearchResultsButtonClick() {
         // check that we have the right activity
-        solo.assertCurrentActivity("wrong activity", SearchActivity.class);
+//        solo.assertCurrentActivity("wrong activity", SearchActivity.class);
+
+        solo.clickOnText("Departure Date");
+        solo.setDatePicker(0, 2015, 0, 16);
+        solo.clickOnText("Done");
+
+        solo.clickOnText("Departure Time");
+        solo.setTimePicker(0, 11, 45);
+        solo.clickOnText("Done");
 
         solo.clickOnText("Departure Date");
         solo.setDatePicker(0, 2015, 1, 16);
