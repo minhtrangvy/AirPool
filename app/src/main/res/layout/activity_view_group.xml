@@ -88,11 +88,18 @@
             android:layout_marginBottom="10dp"
             android:visibility="gone"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".75"
+            android:id="@+id/blank_space"
+            android:visibility="gone" />
+
         <Button
             android:id="@+id/join_group_button"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="0.50"
+            android:layout_weight="0.25"
             android:layout_marginBottom="10dp"
             android:text="@string/joinGroup"
             android:visibility="gone"/>

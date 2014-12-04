@@ -24,6 +24,8 @@ import com.parse.ParseQuery;
 import com.parse.ParseRelation;
 import com.parse.SaveCallback;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,6 +37,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
     TextView airportText;
     TextView collegeText;
     TextView transportationPreferenceText;
+    TextView blankSpace;
 
     ListView groupMembersList;
     GroupUsersAdapter groupMembersAdapter;
@@ -59,6 +62,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_group);
 
+        blankSpace = (TextView) findViewById(R.id.blank_space);
         departureTimeText = (TextView) findViewById(R.id.departure_time_text);
         airportText = (TextView) findViewById(R.id.airport_text);
         collegeText = (TextView) findViewById(R.id.college_text);
@@ -145,6 +149,7 @@ public class ViewGroupActivity extends Activity implements View.OnClickListener 
             leaveButton.setVisibility(View.VISIBLE);
             openCloseButton.setVisibility(View.VISIBLE);
         } else {
+            blankSpace.setVisibility(View.VISIBLE);
             joinButton.setVisibility(View.VISIBLE);
         }
 
