@@ -1,8 +1,12 @@
 AirPool
 ===============
 
+ABOUT:
+
 AirPool is an Android application that allows college students to coordinate
 rides to and from airports in the Los Angeles area.
+
+DEPENDENCIES:
 
 AirPool utilizes two main external APIs: Facebook API and Parse API.
 
@@ -17,38 +21,7 @@ can do via a group wall. Therefore, in our code we reference User Parse Objects,
 Objects, and WallPost Parse Objects. The three objects keep track of each other via many-to-many
 Parse relations.
 
-The structure of the directory is as follows: all main code is stored within the app/src/main
-folder. From here, we have two folders: java and res. The java folder holds most of the back-end
-code, while the res folder maintains the code for the user interface.
+TESTING:
 
-Within the java folder is a com.airpool folder. The com.airpool folder holds the java files that
-relate to a specific activity, as well as a GlobalUser.java file and four folders. The four folders
-are: Adapter, Fragment, Model, and View.
-
-The java files that relate to a specific activity hold the code that relates to the activity's
-xml file. All calls to Parse necessary are made within these files,rather than abstracted out.
-This is because we did not have enough time to refactor the code. The GlobalUser.java file sets
-the correct user and allows other activities to easily access the current user.
-
-The Adapter folder holds three classes. These three classes hold code to allow the population
-and display of the desired list of a specific group's members, the relevant groups given a
-specific search result, and a specific user's groups.
-
-The Fragment folder holds five classes. These classes are fragments that are called by the java
-files that relate to a specific activity.
-
-The Model folder holds six classes. Three of these classes store hard-coded information about
-the airports, colleges, and transportation preferences that can be selected by users (Aiport,
-College, and TransportationPreference). The other three classes subclass the User, Group, and
-WallPost Parse Object methods.
-
-The View folder holds five classes. Four of these classes relate to spinners, while the last class
-is code for the splash screen.
-
-Within the res folder are drawable folders, a layout folder, and values folder. The drawable
-folders hold all the relevant icons and pictures that are used in the app. The layout folder
-holds all the xml files for both the activities in the app and fragment views that are used
-in the app. The values folder holds all the strings and styles used in the app.
-
-All tests are within the app/src/androidTest folder. There is both JUnit tests and Robotium tests.
-All Robotium tests are labelled as such.
+All tests are within the app/src/androidTest folder. Our test suite uses both JUnit tests and
+Robotium tests. All Robotium tests are labelled with "Robotium" in the test class name.
