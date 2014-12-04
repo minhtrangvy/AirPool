@@ -132,6 +132,8 @@ public class GroupWallActivity extends Activity {
                 recreate();
             }
         });
+        
+        newMessage.setText("");
     }
 
     @Override
