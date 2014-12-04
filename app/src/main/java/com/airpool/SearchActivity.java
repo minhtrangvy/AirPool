@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -175,7 +174,6 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         Calendar calendar = dateFragment.getCalendar();
         calendar.set(Calendar.HOUR_OF_DAY, timeFragment.getHour());
         calendar.set(Calendar.MINUTE, timeFragment.getMinute());
-        Log.v("hai", calendar.toString());
 
         clickSearch.putExtra("timeOfDeparture", calendar.getTimeInMillis());
 

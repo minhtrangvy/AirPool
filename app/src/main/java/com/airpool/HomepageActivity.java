@@ -76,7 +76,6 @@ public class HomepageActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_homepage);
-        Log.i("inCreate", "I am in create!");
 
             FragmentManager fm = getSupportFragmentManager();
             fragments[LOGIN] = fm.findFragmentById(R.id.login_fragment);

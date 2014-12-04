@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -120,7 +119,6 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
 
                 ArrayList<String> preferences = passedInIntent.getStringArrayListExtra("preferences");
                 if (!preferences.isEmpty()) {
-                    Log.v("HAI", preferences.toString());
                     query.whereContainedIn("transportationPreference", preferences);
                 }
 
