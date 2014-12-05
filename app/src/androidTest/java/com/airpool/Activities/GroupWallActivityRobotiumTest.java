@@ -1,5 +1,6 @@
 package com.airpool.Activities;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.EditText;
 
@@ -20,6 +21,10 @@ public class GroupWallActivityRobotiumTest extends
     }
 
     public void setUp() throws Exception {
+        Intent i = new Intent(Intent.ACTION_MAIN);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("user", "xKSux1GHO6");
+        setActivityIntent(i);
         solo = new Solo(getInstrumentation(), getActivity());
     }
 

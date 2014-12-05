@@ -2,6 +2,7 @@ package com.airpool;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
@@ -38,6 +39,7 @@ public class GroupWallActivity extends Activity {
     private GroupWallPostsAdapter wallPostsAdapter;
     private ListView wallPostsListView;
     private ArrayList<WallPost> wallPosts;
+    private ParseObject user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +53,9 @@ public class GroupWallActivity extends Activity {
         wallPostsListView = (ListView) findViewById(R.id.group_wall_posts);
         newMessage = (EditText) findViewById(R.id.message_body_field);
 
-        GlobalUser context = (GlobalUser) getApplicationContext();
-        ParseObject user = context.getCurrentUser();
+
+        Bundle extras = getIntent().getExtras();
+        getCurrentUser(extras);
         assertNotNull(user);
 
         wallPostsAdapter = new GroupWallPostsAdapter(this, R.layout.item_wall_post,
@@ -145,5 +148,30 @@ public class GroupWallActivity extends Activity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getCurrentUser(Bundle extras) {
+        Log.i("in getCurrentUser", "I am in getCurrentUser");
+        if (extras == null) {
+            GlobalUser context = (GlobalUser) getApplicationContext();
+            user = context.getCurrentUser();
+        } else {
+            String userID = extras.getString("user");
+            Log.i("currentUser", userID);
+            if (userID != null) {
+                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
+                query.getInBackground(userID, new GetCallback<ParseObject>() {
+                    public void done(ParseObject object, ParseException e) {
+                        if (e == null) {
+                            user = object;
+                            // object will be your user
+                        } else {
+                            // something went wrong
+                        }
+                    }
+                });
+            }
+
+        }
     }
 }
