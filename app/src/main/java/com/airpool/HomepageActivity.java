@@ -155,7 +155,6 @@ public class HomepageActivity extends FragmentActivity {
                         if (user != null && extras == null) {
                             final String facebookId = user.getId();
 
-                            Log.i("error2", "Error finding in first check");
                             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
                             query.whereEqualTo("facebookID", facebookId);
                             query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -185,7 +184,6 @@ public class HomepageActivity extends FragmentActivity {
                         } else if (user != null && extras!=null) {
                             final String facebookId = extras.getString("fbID");
 
-                            Log.i("user", "error finding user in second check");
                             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
                             query.whereEqualTo("facebookID", facebookId);
                             query.getFirstInBackground(new GetCallback<ParseObject>() {
