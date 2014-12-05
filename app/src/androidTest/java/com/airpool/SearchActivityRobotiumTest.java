@@ -29,8 +29,7 @@ public class SearchActivityRobotiumTest extends
     }
 
     public void testSearchResultsButtonClick() {
-        // check that we have the right activity
-//        solo.assertCurrentActivity("wrong activity", SearchActivity.class);
+        solo.assertCurrentActivity("wrong activity", SearchActivity.class);
 
         solo.clickOnText("Departure Date");
         solo.setDatePicker(0, 2015, 0, 16);
