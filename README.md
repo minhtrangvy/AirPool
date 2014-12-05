@@ -1,12 +1,15 @@
-AirPool
+#AirPool
 ===============
 
-ABOUT:
+#ABOUT:
 
 AirPool is an Android application that allows college students to coordinate
 rides to and from airports in the Los Angeles area.
 
-DEPENDENCIES:
+Idea developed by: Jerry Hsiung, Perry Holen.
+Developer team: Angela Chin, Maury Quijada, Minhtrang Vy.
+
+#DEPENDENCIES:
 
 AirPool utilizes two main external APIs: Facebook API and Parse API.
 
@@ -21,7 +24,23 @@ can do via a group wall. Therefore, in our code we reference User Parse Objects,
 Objects, and WallPost Parse Objects. The three objects keep track of each other via many-to-many
 Parse relations.
 
-TESTING:
+#TESTING:
 
 All tests are within the app/src/androidTest folder. Our test suite uses both JUnit tests and
 Robotium tests. All Robotium tests are labelled with "Robotium" in the test class name.
+
+#LICENSE:
+
+Copyright [2014] [Angela Chin, Maury Quijada, Minhtrang Vy]
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
