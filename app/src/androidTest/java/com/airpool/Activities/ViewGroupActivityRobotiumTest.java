@@ -1,5 +1,6 @@
 package com.airpool.Activities;
 
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.ViewGroup;
 
@@ -20,6 +21,10 @@ public class ViewGroupActivityRobotiumTest extends
     }
 
     public void setUp() throws Exception {
+        Intent i = new Intent(Intent.ACTION_MAIN);
+        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        i.putExtra("fbID", "10152890848460992");
+        setActivityIntent(i);
         solo = new Solo(getInstrumentation(), getActivity());
     }
 
@@ -28,8 +33,6 @@ public class ViewGroupActivityRobotiumTest extends
         solo.finishOpenedActivities();
     }
 
-    // CANNOT TEST VIEW GROUP? because if we just open view group, it doesn't know which group to pick
-    // so we must test from homepageactivity?
 //    public void testLeaveGroup() throws Exception {
 //        solo.clickOnText("Leave");
 //        assertTrue(solo.waitForText("Cancel"));
