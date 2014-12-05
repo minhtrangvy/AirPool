@@ -155,6 +155,7 @@ public class HomepageActivity extends FragmentActivity {
                         if (user != null && extras == null) {
                             final String facebookId = user.getId();
 
+                            Log.i("error2", "Error finding in first check");
                             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
                             query.whereEqualTo("facebookID", facebookId);
                             query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -170,16 +171,17 @@ public class HomepageActivity extends FragmentActivity {
                                             @Override
                                             public void done(ParseException e) {
                                                 if (e == null) {
-                                                    Log.e(TAG, "Error saving new user.");
+                                                    Log.e(TAG, "Error saving new user 1.");
                                                 }
                                             }
                                         });
                                     }
                                 }
                             });
-                        } else if (user != null) {
+                        } else if (user != null && extras!=null) {
                             final String facebookId = extras.getString("fbID");
 
+                            Log.i("user", "error finding user in second check");
                             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
                             query.whereEqualTo("facebookID", facebookId);
                             query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -195,7 +197,7 @@ public class HomepageActivity extends FragmentActivity {
                                             @Override
                                             public void done(ParseException e) {
                                                 if (e == null) {
-                                                    Log.e(TAG, "Error saving new user.");
+                                                    Log.e(TAG, "Error saving new user 2.");
                                                 }
                                             }
                                         });

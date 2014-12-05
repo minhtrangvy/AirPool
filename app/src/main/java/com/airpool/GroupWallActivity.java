@@ -39,7 +39,6 @@ public class GroupWallActivity extends Activity {
     private GroupWallPostsAdapter wallPostsAdapter;
     private ListView wallPostsListView;
     private ArrayList<WallPost> wallPosts;
-    private ParseObject user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,8 +53,8 @@ public class GroupWallActivity extends Activity {
         newMessage = (EditText) findViewById(R.id.message_body_field);
 
 
-        Bundle extras = getIntent().getExtras();
-        getCurrentUser(extras);
+        GlobalUser context = (GlobalUser) getApplicationContext();
+        ParseObject user = context.getCurrentUser();
         assertNotNull(user);
 
         wallPostsAdapter = new GroupWallPostsAdapter(this, R.layout.item_wall_post,
@@ -150,22 +149,4 @@ public class GroupWallActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void getCurrentUser(Bundle extras) {
-        if (extras == null) {
-            GlobalUser context = (GlobalUser) getApplicationContext();
-            user = context.getCurrentUser();
-        } else {
-            String userID = extras.getString("user");
-            if (userID != null) {
-                try {
-                    ParseQuery<ParseObject> groupQuery = ParseQuery.getQuery("User");
-                    user = (User) groupQuery.get(userID);
-                }
-                catch(ParseException exception) {
-                    // Error
-                }
-            }
-
-        }
-    }
 }

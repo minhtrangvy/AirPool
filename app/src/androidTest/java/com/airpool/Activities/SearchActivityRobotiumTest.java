@@ -1,4 +1,4 @@
-package com.airpool;
+package com.airpool.Activities;
 
 import android.test.ActivityInstrumentationTestCase2;
 
