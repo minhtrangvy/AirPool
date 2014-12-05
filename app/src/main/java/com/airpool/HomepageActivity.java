@@ -177,7 +177,8 @@ public class HomepageActivity extends FragmentActivity {
                                                 showFragment(HOMEPAGE, false);
                                             }
                                         });
-
+                                    } else {
+                                        showFragment(HOMEPAGE, false);
                                     }
                                 }
                             });
@@ -206,7 +207,8 @@ public class HomepageActivity extends FragmentActivity {
                                                 showFragment(HOMEPAGE, false);
                                             }
                                         });
-
+                                    } else {
+                                        showFragment(HOMEPAGE, false);
                                     }
                                 }
                             });
