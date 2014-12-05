@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.airpool.Adapter.SearchResultGroupAdapter;
 import com.airpool.Model.College;
 import com.airpool.Model.Group;
+import com.airpool.Model.User;
 import com.parse.ParseException;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
@@ -25,6 +26,8 @@ import com.parse.ParseRelation;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static junit.framework.Assert.assertNotNull;
 
 
 public class SearchResultsActivity extends Activity implements View.OnClickListener {
@@ -80,6 +83,10 @@ public class SearchResultsActivity extends Activity implements View.OnClickListe
         // Perform the query on a background_me_wallpost thread.
         FetchSearchResultsTask task = new FetchSearchResultsTask(this);
         task.execute();
+
+        GlobalUser context = (GlobalUser) getApplicationContext();
+        User user = context.getCurrentUser();
+        assertNotNull(user);
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
     }

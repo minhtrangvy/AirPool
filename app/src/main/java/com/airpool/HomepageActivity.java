@@ -95,7 +95,7 @@ public class HomepageActivity extends FragmentActivity {
 
         Session session = Session.getActiveSession();
         if (session != null && session.isOpened()) {
-            showFragment(HOMEPAGE, false);
+            //showFragment(HOMEPAGE, false);
         } else {
             showFragment(LOGIN, false);
         }
@@ -163,18 +163,22 @@ public class HomepageActivity extends FragmentActivity {
                                 public void done(ParseObject parseObject, ParseException e) {
                                     // Create the user if they don't exist.
                                     if (parseObject == null) {
-                                        User newUser = new User();
+                                        final User newUser = new User();
                                         newUser.put("facebookID", user.getId());
                                         newUser.put("firstName", user.getFirstName());
                                         newUser.put("lastName", user.getLastName());
                                         newUser.saveInBackground(new SaveCallback() {
                                             @Override
                                             public void done(ParseException e) {
-                                                if (e == null) {
-                                                    Log.e(TAG, "Error saving new user 1.");
+                                                if (e != null) {
+                                                    Log.e(TAG, "Error saving new user 1: " + e.toString());
                                                 }
+                                                ((GlobalUser) getApplicationContext())
+                                                        .setCurrentUser((User) newUser);
+                                                showFragment(HOMEPAGE, false);
                                             }
                                         });
+
                                     }
                                 }
                             });
@@ -189,21 +193,27 @@ public class HomepageActivity extends FragmentActivity {
                                 public void done(ParseObject parseObject, ParseException e) {
                                     // Create the user if they don't exist.
                                     if (parseObject == null) {
-                                        User newUser = new User();
+                                        final User newUser = new User();
                                         newUser.put("facebookID", user.getId());
                                         newUser.put("firstName", user.getFirstName());
                                         newUser.put("lastName", user.getLastName());
                                         newUser.saveInBackground(new SaveCallback() {
                                             @Override
                                             public void done(ParseException e) {
-                                                if (e == null) {
+                                                if (e != null) {
                                                     Log.e(TAG, "Error saving new user 2.");
                                                 }
+                                                ((GlobalUser) getApplicationContext())
+                                                        .setCurrentUser((User) newUser);
+                                                showFragment(HOMEPAGE, false);
                                             }
                                         });
+
                                     }
                                 }
                             });
+                        } else {
+                            showFragment(HOMEPAGE, false);
                         }
                     }
                 }).executeAsync();

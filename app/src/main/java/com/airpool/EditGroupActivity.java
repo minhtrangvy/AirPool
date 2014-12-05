@@ -34,6 +34,8 @@ import com.parse.SaveCallback;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
+import static junit.framework.Assert.assertNotNull;
+
 public class EditGroupActivity extends FragmentActivity implements View.OnClickListener,
         DatePickerFragment.OnDatePickedListener, TimePickerFragment.OnTimePickedListener {
     boolean isGroupExisting = false;
@@ -206,6 +208,10 @@ public class EditGroupActivity extends FragmentActivity implements View.OnClickL
         }
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        GlobalUser context = (GlobalUser) getApplicationContext();
+        User user = context.getCurrentUser();
+        assertNotNull(user);
     }
 
     @Override

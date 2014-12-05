@@ -19,6 +19,7 @@ import com.airpool.Fragment.TimePickerFragment;
 import com.airpool.Model.Airport;
 import com.airpool.Model.College;
 import com.airpool.Model.TransportationPreference;
+import com.airpool.Model.User;
 import com.airpool.View.AirportSpinner;
 import com.airpool.View.CollegeSpinner;
 
@@ -27,6 +28,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+
+import static junit.framework.Assert.assertNotNull;
 
 
 public class SearchActivity extends FragmentActivity implements View.OnClickListener,
@@ -151,6 +154,10 @@ public class SearchActivity extends FragmentActivity implements View.OnClickList
         selectedPreferences = new ArrayList<TransportationPreference>();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
+
+        GlobalUser context = (GlobalUser) getApplicationContext();
+        User user = context.getCurrentUser();
+        assertNotNull(user);
     }
 
     @Override

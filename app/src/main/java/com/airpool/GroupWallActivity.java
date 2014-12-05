@@ -39,6 +39,7 @@ public class GroupWallActivity extends Activity {
     private GroupWallPostsAdapter wallPostsAdapter;
     private ListView wallPostsListView;
     private ArrayList<WallPost> wallPosts;
+    private User currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,9 +53,7 @@ public class GroupWallActivity extends Activity {
         wallPostsListView = (ListView) findViewById(R.id.group_wall_posts);
         newMessage = (EditText) findViewById(R.id.message_body_field);
 
-
-        GlobalUser context = (GlobalUser) getApplicationContext();
-        ParseObject user = context.getCurrentUser();
+        User user = getCurrentUser();
         assertNotNull(user);
 
         wallPostsAdapter = new GroupWallPostsAdapter(this, R.layout.item_wall_post,
@@ -149,4 +148,16 @@ public class GroupWallActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    public User getCurrentUser() {
+        if (currentUser == null) {
+            GlobalUser context = (GlobalUser) getApplicationContext();
+            return context.getCurrentUser();
+        } else {
+            return currentUser;
+        }
+    }
+
+    public void setCurrentUser(User currentUser) {
+        this.currentUser = currentUser;
+    }
 }

@@ -98,12 +98,9 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
                         ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
                         query.whereEqualTo("facebookID", response.getGraphObject().getProperty("id"));
                         try {
-                            ParseObject parseUser = query.getFirst();
+                            ParseObject user = query.getFirst();
                             ((GlobalUser) getActivity().getApplicationContext())
-                                    .setCurrentUser((User) parseUser);
-
-                            GlobalUser context = (GlobalUser) getActivity().getApplicationContext();
-                            ParseObject user = context.getCurrentUser();
+                                    .setCurrentUser((User) user);
                             assertNotNull(user);
 
                             // Then, get the associated groups.
@@ -118,7 +115,7 @@ public class HomepageFragment extends Fragment implements View.OnClickListener {
                                 userGroups.add((Group) group);
                             }
                         } catch (ParseException exception) {
-                            Log.e(TAG, "Error getting user.");
+                            Log.e(TAG, "Error getting user: " + exception.toString());
                         }
 
                         if (!userGroups.isEmpty()) {
