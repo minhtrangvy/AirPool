@@ -12,9 +12,6 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NavUtils;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.airpool.Fragment.HomepageFragment;
 import com.airpool.Model.User;
@@ -149,12 +146,39 @@ public class HomepageActivity extends FragmentActivity {
                 manager.popBackStack();
             }
             if (state.isOpened()) {
+                final Bundle extras = getIntent().getExtras();
+
                 // Get the Facebook User ID.
                 Request.newMeRequest(session, new Request.GraphUserCallback() {
                     @Override
                     public void onCompleted(final GraphUser user, Response response) {
-                        if (user != null) {
+                        if (user != null && extras == null) {
                             final String facebookId = user.getId();
+
+                            ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
+                            query.whereEqualTo("facebookID", facebookId);
+                            query.getFirstInBackground(new GetCallback<ParseObject>() {
+                                @Override
+                                public void done(ParseObject parseObject, ParseException e) {
+                                    // Create the user if they don't exist.
+                                    if (parseObject == null) {
+                                        User newUser = new User();
+                                        newUser.put("facebookID", user.getId());
+                                        newUser.put("firstName", user.getFirstName());
+                                        newUser.put("lastName", user.getLastName());
+                                        newUser.saveInBackground(new SaveCallback() {
+                                            @Override
+                                            public void done(ParseException e) {
+                                                if (e == null) {
+                                                    Log.e(TAG, "Error saving new user.");
+                                                }
+                                            }
+                                        });
+                                    }
+                                }
+                            });
+                        } else if (user != null) {
+                            final String facebookId = extras.getString("fbID");
 
                             ParseQuery<ParseObject> query = new ParseQuery<ParseObject>("User");
                             query.whereEqualTo("facebookID", facebookId);
