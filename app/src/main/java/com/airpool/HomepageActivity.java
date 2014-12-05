@@ -1,5 +1,6 @@
 package com.airpool;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -35,6 +36,7 @@ public class HomepageActivity extends FragmentActivity {
     private static final int FRAGMENT_COUNT = HOMEPAGE + 1;
 
     private boolean isResumed = false;
+    private ProgressDialog progress;
 
     private boolean isNetworkConnected() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -87,6 +89,11 @@ public class HomepageActivity extends FragmentActivity {
             uiHelper = new UiLifecycleHelper(this, callback);
             uiHelper.onCreate(savedInstanceState);
 
+            progress = new ProgressDialog(this);
+            progress.setMessage("Loading homepage...");
+            progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            progress.setIndeterminate(true);
+            progress.show();
     }
 
     @Override
@@ -174,10 +181,12 @@ public class HomepageActivity extends FragmentActivity {
                                                 }
                                                 ((GlobalUser) getApplicationContext())
                                                         .setCurrentUser((User) newUser);
+                                                progress.hide();
                                                 showFragment(HOMEPAGE, false);
                                             }
                                         });
                                     } else {
+                                        progress.hide();
                                         showFragment(HOMEPAGE, false);
                                     }
                                 }
@@ -204,15 +213,18 @@ public class HomepageActivity extends FragmentActivity {
                                                 }
                                                 ((GlobalUser) getApplicationContext())
                                                         .setCurrentUser((User) newUser);
+                                                progress.hide();
                                                 showFragment(HOMEPAGE, false);
                                             }
                                         });
                                     } else {
+                                        progress.hide();
                                         showFragment(HOMEPAGE, false);
                                     }
                                 }
                             });
                         } else {
+                            progress.hide();
                             showFragment(HOMEPAGE, false);
                         }
                     }
