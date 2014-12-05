@@ -151,25 +151,19 @@ public class GroupWallActivity extends Activity {
     }
 
     private void getCurrentUser(Bundle extras) {
-        Log.i("in getCurrentUser", "I am in getCurrentUser");
         if (extras == null) {
             GlobalUser context = (GlobalUser) getApplicationContext();
             user = context.getCurrentUser();
         } else {
             String userID = extras.getString("user");
-            Log.i("currentUser", userID);
             if (userID != null) {
-                ParseQuery<ParseObject> query = ParseQuery.getQuery("User");
-                query.getInBackground(userID, new GetCallback<ParseObject>() {
-                    public void done(ParseObject object, ParseException e) {
-                        if (e == null) {
-                            user = object;
-                            // object will be your user
-                        } else {
-                            // something went wrong
-                        }
-                    }
-                });
+                try {
+                    ParseQuery<ParseObject> groupQuery = ParseQuery.getQuery("User");
+                    user = (User) groupQuery.get(userID);
+                }
+                catch(ParseException exception) {
+                    // Error
+                }
             }
 
         }
